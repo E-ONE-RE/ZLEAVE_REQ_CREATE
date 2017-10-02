@@ -1,0 +1,84 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
+xmlns:mvc="sap.ui.core.mvc"
+xmlns="sap.m" 
+xmlns:sap.ui.layout.form="sap.ui.layout.form"
+xmlns:sap.ui.layout="sap.ui.layout"
+xmlns:sap.me="sap.me" 
+xmlns:sap.ui.core="sap.ui.core"
+xmlns:ui="sap.ca.ui"
+xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View1s" displayBlock="true">
+	<!--<App>-->
+		<!--<pages>-->
+			<Page id="V1S" title="{i18n>titles}" class="sapUiResponsiveContentPadding"
+			showNavButton="true"
+	     navButtonPress="onNavBackDirect">
+				
+					<content>
+
+							
+					 <sap.ui.layout:Grid width="auto" defaultSpan="L12 M12 S12" id="LRS4_FLX_TABLE">
+						<sap.ui.layout:content>
+							
+						
+							
+							<Table noDataText="Drop column list items here and columns in the area above" id="__table0" items="{/LeaveRequestSet}" updateFinished="onUpdateFinished">
+															    <items>
+															        <ColumnListItem id="__item2" type="Navigation" press="onPress">
+															            <cells>
+															            		<ObjectIdentifier title="{ZrequestId}" id="__text0"/>
+															                
+															                <Text text="{Tmsuser}" id="__text1"/>
+															                <Text text="{Tmsapprover}" id="__text2"/>
+															                <Text text="{ZabsType}" id="__text3"/>
+															                <Text text="{ZreqStatus}" id="__text4"/>
+															                <Text text="{ZdateRec}" id="__text5"/></cells>
+															        </ColumnListItem></items>
+															    <columns>
+															        <Column id="__column0">
+															            <header>
+															                <Label text="{/#LeaveRequest/ZrequestId/@sap:label}" id="__label0"/>
+															            </header>
+															        </Column>
+															        <Column id="__column1">
+															            <header>
+															                <Label text="{/#LeaveRequest/Tmsuser/@sap:label}" id="__label1"/>
+															            </header>
+															        </Column>
+															        <Column id="__column2">
+															            <header>
+															                <Label text="{/#LeaveRequest/Tmsapprover/@sap:label}" id="__label2"/>
+															            </header>
+															         </Column>    
+															             <Column id="__column3">
+															            <header>
+															                <Label text="{/#LeaveRequest/ZabsType/@sap:label}" id="__label3"/>
+															            </header>
+															             </Column>
+															             <Column id="__column4">
+															            <header>
+															                <Label text="{/#LeaveRequest/ZreqStatus/@sap:label}" id="__label4"/>
+															            </header>
+															             </Column>
+															             
+															          
+															             <Column id="__column5">
+															            <header>
+															                <Label text="{/#LeaveRequest/ZdateRec/@sap:label}" id="__label5"/>
+															            </header>
+															             </Column></columns></Table>
+															        
+			            </sap.ui.layout:content>
+					</sap.ui.layout:Grid>
+								
+						<!--</Panel>-->
+	
+		
+				</content>
+				
+
+			
+				
+			</Page>
+		<!--</pages>-->
+	<!--</App>-->
+</mvc:View>

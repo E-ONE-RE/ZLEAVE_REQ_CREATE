@@ -1,8 +1,9 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View1" displayBlock="true">
-	<!--<App>-->
-		<!--<pages>-->
-			<Page  id="V1" title="{i18n>title}" class="sapUiResponsiveContentPadding">
-				
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
+
+
+	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
+		
+		
 
 					<content>
 						<!--<Button id="displayNotFoundBtn" text="{i18n>DisplayNotFound}" press="onDisplayNotFound" class="sapUiTinyMarginEnd"/>
@@ -14,6 +15,8 @@
 							<VBox width="100%" direction="Column" id="__vbox0_ABSENCETYPE" alignItems="Center">
 							<items>
 							    
+		
+							
 							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item1" id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}">
 							    
 							    <items>
@@ -21,6 +24,8 @@
 							        <sap.ui.core:ListItem text="{TipoAbs}" key="{IdAbs}" id="__item1"/></items>
 							    
 							</Select>
+							
+							
 							    
 							</items>
 							</VBox>
@@ -54,9 +59,10 @@
 															
 															<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center">
 																<items>	
-															<sap.ui.layout:VerticalLayout width="100%">
-															<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1"/>
-													 <sap.ui.unified:CalendarLegend id="legend1"/>
+																		<sap.ui.layout:VerticalLayout width="100%">
+																			<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1"/>
+													                       <sap.ui.unified:CalendarLegend id="legend1"/>
+													<!--	<ToggleButton text="Special Days" press="handleShowSpecialDays"></ToggleButton>-->
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
 																			<sap.ui.layout:ResponsiveFlowLayoutData id="LRS4_LYO_LEGEND" minWidth="30" weight="15"/>
@@ -286,33 +292,36 @@
 							
 							</sap.ui.layout.form:Form>
 							
+							
+	
+							
 								</sap.ui.layout:content>
 					</sap.ui.layout:Grid>
-							
-			
 					
-			</content>
+					
+	
+		
+				</content>
+	
+		
 					
 					
 					
 				
 				<footer>
 					<OverflowToolbar id="footerToolbar">
-						
-					  
-						  	<Button id="btn_History" text="Storico" press="onHistoryPress" type="Emphasized" activeIcon="sap-icon://approvals">
+							<ToolbarSpacer/>
+		
+							<Button id="btn1" type="Accept" text="Modifica" press="showDialog">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
-		<ToolbarSpacer/>
-							<Button id="btn1" type="Accept" text="Invia" press="showDialog">
+						  
+						  	<Button id="btn2" type="Reject" text="Elimina" press="showDialog">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
-			
+	
 					</OverflowToolbar>
 				</footer>
 				
-				
-			</Page>
-		<!--</pages>-->
-	<!--</App>-->
+	</Page>
 </mvc:View>
