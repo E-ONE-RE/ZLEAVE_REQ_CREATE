@@ -1,14 +1,14 @@
 sap.ui.define([
 		"ZLEAVE_REQ_CREATE/controller/BaseController", "sap/ui/model/json/JSONModel",
-			"sap/ui/core/routing/History"
+			"sap/ui/core/routing/History", "ZLEAVE_REQ_CREATE/model/formatter"
 	
 
 	],
-	function(BaseController, JSONModel, History) {
+	function(BaseController, JSONModel, History, formatter) {
 		"use strict";
 
 
-	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
+//	jQuery.sap.require("ZLEAVE_REQ_CREATE.model.formatter");
 	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
 	jQuery.sap.require("sap.m.MessageBox");
 	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
@@ -24,6 +24,8 @@ sap.ui.define([
 	
 	
 		return BaseController.extend("ZLEAVE_REQ_CREATE.controller.View1s", {
+			
+			formatter: formatter,
 
 			onInit: function() {
 

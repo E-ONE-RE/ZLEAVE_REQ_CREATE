@@ -45,7 +45,7 @@ sap.ca.scfld.md.controller.BaseFullscreenController.extend("ZLEAVE_REQ_CREATE.vi
 	
 	
 		
-	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
+//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
 	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
 	jQuery.sap.require("sap.m.MessageBox");
 	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
@@ -79,7 +79,7 @@ oFormatYyyymmdd: null,
 		//this.resourceBundle = this.oApplicationFacade.getResourceBundle();
 		//this.oDataModel = this.oApplicationFacade.getODataModel();
 		//ZLEAVE_REQ_CREATE.utils.DataManager.init(this.oDataModel, this.resourceBundle);
-		ZLEAVE_REQ_CREATE.utils.Formatters.init(this.resourceBundle);
+//		ZLEAVE_REQ_CREATE.utils.Formatters.init(this.resourceBundle);
 	    //ZLEAVE_REQ_CREATE.utils.CalendarTools.init(this.resourceBundle);
 		//this.oDataModel = ZLEAVE_REQ_CREATE.utils.DataManager.getBaseODataModel();
 		

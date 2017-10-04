@@ -3,12 +3,13 @@ sap.ui.define([
 		"sap/ui/model/json/JSONModel",
 		'sap/ui/unified/CalendarLegendItem',
 		'sap/ui/unified/DateTypeRange',
-		"sap/ui/core/routing/History"
+		"sap/ui/core/routing/History",
+		"ZLEAVE_REQ_CREATE/model/formatter"
 	],
-	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange, History) {
+	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange, History, formatter) {
 		"use strict";
 
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
+//		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
 		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
 		jQuery.sap.require("sap.m.MessageBox");
 		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
@@ -23,6 +24,10 @@ sap.ui.define([
 		jQuery.sap.require("sap.ui.thirdparty.sinon");
 
 		return BaseController.extend("ZLEAVE_REQ_CREATE.controller.View2", {
+			
+				formatter: formatter,
+				
+			//	oModelDate: null,
 
 			//SE START CUSTOM CALENDAR
 			oFormatYyyymmdd: null,
@@ -31,6 +36,8 @@ sap.ui.define([
 			//SE END CUSTOM CALENDAR		
 			onInit: function() {
 
+			//	this.oModelDate = new JSONModel({selectedDates:[]});
+			//	this.getView().setModel(this.oModelDate);
 				ZLEAVE_REQ_CREATE.utils.Formatters.init(this.resourceBundle);
 				//ZLEAVE_REQ_CREATE.utils.CalendarTools.init(this.resourceBundle);
 				//this.oDataModel = ZLEAVE_REQ_CREATE.utils.DataManager.getBaseODataModel();
@@ -385,12 +392,15 @@ sap.ui.define([
 							Date: this.oFormatYyyymmdd.format(oDate)
 						});
 					}
-					//	this.oModel.setData(oData);
+				//		this.oModelDate.setData(oDataSel);
 				} else {
 					//	this._clearModel();
 				}
 			},
 
+
+
+		
 			handleRemoveSelection: function(oEvent) {
 				this.getView().byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
 				//	this._clearModel();

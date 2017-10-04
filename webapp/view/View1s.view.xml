@@ -4,6 +4,7 @@ xmlns="sap.m"
 xmlns:sap.ui.layout.form="sap.ui.layout.form"
 xmlns:sap.ui.layout="sap.ui.layout"
 xmlns:sap.me="sap.me" 
+xmlns:semantic="sap.m.semantic" 
 xmlns:sap.ui.core="sap.ui.core"
 xmlns:ui="sap.ca.ui"
 xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View1s" displayBlock="true">
@@ -21,17 +22,34 @@ xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controll
 							
 						
 							
-							<Table noDataText="Drop column list items here and columns in the area above" id="__table0" items="{/LeaveRequestSet}" updateFinished="onUpdateFinished">
+							<Table noDataText="Drop column list items here and columns in the area above" id="__table0" 
+							
+							 items= 	"{  path: '/LeaveRequestSet',      
+												parameters : {expand:'UnameToNameApprover'}}"
+							
+							updateFinished="onUpdateFinished">
 															    <items>
+															    	
+															    
+			
+			
 															        <ColumnListItem id="__item2" type="Navigation" press="onPress">
 															            <cells>
 															            		<ObjectIdentifier title="{ZrequestId}" id="__text0"/>
 															                
 															                <Text text="{Tmsuser}" id="__text1"/>
-															                <Text text="{Tmsapprover}" id="__text2"/>
-															                <Text text="{ZabsType}" id="__text3"/>
-															                <Text text="{ZreqStatus}" id="__text4"/>
-															                <Text text="{ZdateRec}" id="__text5"/></cells>
+															                <Text text="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst}" id="__text2"/>
+															                <Text text="{path: 'ZabsType', formatter:'.formatter.formatAbsence' }" id="__text3"/>
+															               
+																			
+																					<ObjectStatus
+															                 text="{ path: 'ZreqStatus', formatter: '.formatter.formatStatus'}"
+																					state = "{ path: 'ZreqStatus', formatter: '.formatter.formatReqStatus'}" id="__text4"
+																					/>
+																				
+																	
+																				
+															                <Text text=" { path: 'ZdateRec', formatter: '.formatter.formatDate'}" id="__text5"/></cells>
 															        </ColumnListItem></items>
 															    <columns>
 															        <Column id="__column0">

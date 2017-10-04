@@ -1,8 +1,22 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
+xmlns:smartTable="sap.ui.comp.smarttable" 
+xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" 
+xmlns:sap.ui.layout.form="sap.ui.layout.form"
+xmlns:sap.ui.layout="sap.ui.layout" 
+xmlns:semantic="sap.m.semantic" 
+xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core"
+xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 
 
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
-		
+		<ObjectHeader
+				id="objectHeader"
+				title="Richiesta n° {ZrequestId}"
+				numberUnit="Giorno/i"
+				icon="sap-icon://general-leave-request">
+				
+				
+			</ObjectHeader>
 		
 
 					<content>
@@ -77,6 +91,16 @@
 															<sap.ui.layout:VerticalLayout width="100%">
 															
 															<Button press="handleRemoveSelection" text="Remove All Selected Dates"/>
+															
+															<!--<List
+					id="selectedDatesList"
+					class="labelMarginLeft"
+					noDataText="No Dates Selected"
+					headerText="Selected Dates (yyyy-mm-dd)"
+					items="{path: '/selectedDates'}">
+				<StandardListItem
+						title="{Date}" id="datelist"/>
+			</List>-->
 
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
