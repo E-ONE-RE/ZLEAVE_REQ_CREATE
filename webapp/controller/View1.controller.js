@@ -300,9 +300,57 @@ oFormatYyyymmdd: null,
 		handleCalendarSelect: function(oEvent) {
 			var oCalendar = oEvent.oSource;
 			var aSelectedDates = oCalendar.getSelectedDates();
+			
+
 			var oDate;
+			var oSpecialDate;
 			var oDataSel = {selectedDates:[]};
-			if (aSelectedDates.length > 0 ) {
+			
+			var aSpecialDates = this.cale.getSpecialDates();
+			
+				if (aSelectedDates.length > 0 ) 
+				{
+					
+					for (var i = 0; i < aSelectedDates.length; i++)
+					{
+						
+							oDate = aSelectedDates[i].getStartDate();
+					//	var	oDater = aSelectedDates[i].getStartDate();
+							oDate = this.oFormatYyyymmdd.format(oDate);
+						for (var ii = 0; ii < aSpecialDates.length; ii++)
+						{
+						
+								oSpecialDate = aSpecialDates[ii].getStartDate();
+								oSpecialDate = this.oFormatYyyymmdd.format(oSpecialDate);
+								
+							
+								
+								if (oDate == oSpecialDate) 
+								    {
+								    	
+									jQuery.sap.require("sap.m.MessageBox");
+									sap.m.MessageBox.show(
+										"Attenzione: Non è possibile inserire più di una richiesta per giorno, controllare giorno " + oDate , {
+											icon: sap.m.MessageBox.Icon.WARNING,
+											title: "Error",
+											actions: [sap.m.MessageBox.Action.CLOSE]
+
+										});
+									//	alert("Errore sovrapposizione giorni");
+									//	oCalendar.removeSelectedDate(oDater);
+										oCalendar.removeAllSelectedDates();
+								        return;
+									}
+							
+						 }
+						 
+						 oDataSel.selectedDates.push({Date:oDate});
+						 
+					 }
+				 
+				}
+				
+		/*	if (aSelectedDates.length > 0 ) {
 				for (var i = 0; i < aSelectedDates.length; i++){
 					oDate = aSelectedDates[i].getStartDate();
 					oDataSel.selectedDates.push({Date:this.oFormatYyyymmdd.format(oDate)});
@@ -310,7 +358,7 @@ oFormatYyyymmdd: null,
 			//	this.oModel.setData(oData);
 			} else {
 			//	this._clearModel();
-			}
+			}*/
 		},
 		
 
@@ -348,6 +396,16 @@ oFormatYyyymmdd: null,
 						var that = this;
 						this.sButtonKey= oEvent.getSource().getId();//mi salvo il valore chiave del bottone per la gestione dei conflitti in actionTask
 						if (!that.Dialog) {
+						
+						
+						 
+              /*  //MP: Dialog di conferma con all'interno la logica per l'accettazione o il rifiuto di una richiesta
+                	sap.m.MessageBox.confirm(
+				    "Vuoi confermare l'azione?", {
+					styleClass: bCompact ? "sapUiSizeCompact" : "",
+					initialFocus : sap.m.MessageBox.Action.CANCEL,*/
+		            
+
 						
 			               that.Dialog = sap.ui.xmlfragment("ZLEAVE_REQ_CREATE.view.Dialog", this, "ZLEAVE_REQ_CREATE.controller.View1");
 							//to get access to the global model

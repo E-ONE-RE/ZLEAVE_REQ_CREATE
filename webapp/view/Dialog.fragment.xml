@@ -7,7 +7,7 @@
 	state="Warning"
 	title="Confirm">
 		<content>
-			<Label design="Bold" text="Are you sure you want to confirm?"
+			<Label design="Bold" text="Vuoi confermare l'azione?"
 			textAlign="Center"/>
 		</content> 
 		<beginButton>
