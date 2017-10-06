@@ -336,11 +336,11 @@ xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAV
 					<OverflowToolbar id="footerToolbar">
 							<ToolbarSpacer/>
 		
-							<Button id="btn1" type="Accept" text="Modifica" press="showDialog">
+							<Button id="btn1" type="Accept" text="Modifica" press="showDialog" enabled="false">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 						  
-						  	<Button id="btn2" type="Reject" text="Elimina" press="showDialog">
+						  	<Button id="btn2" type="Reject" text="Elimina" press="showDialog" enabled="false">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 	

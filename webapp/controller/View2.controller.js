@@ -57,10 +57,11 @@ sap.ui.define([
 			},
 
 			_onRouteMatched: function(oEvent) {
-				var oArgs, oView;
+				var oArgs, oView, oButtonMod, oButtonDel;
 				oArgs = oEvent.getParameter("arguments");
 				oView = this.getView();
 
+              
 				oView.bindElement({
 					path: "/LeaveRequestSet('" + oArgs.ZrequestId + "')",
 					//	parameters : {expand: 'ToLeaveReqPos'}, 
@@ -76,6 +77,20 @@ sap.ui.define([
 						}
 					}
 				});
+				
+				   //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
+                oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
+                oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
+                	// MP: logica per abilitare i bottoni in View2 (modifica ed eliminazione richiesta)
+                	var oBindingContext = this.getView().getBindingContext();
+                	var sReqStatus = oBindingContext.getProperty("ZreqStatus");
+				if (sReqStatus == "I"){
+					oButtonMod.setEnabled(true);
+					oButtonDel.setEnabled(true);
+				}else{
+					oButtonMod.setEnabled(false);
+					oButtonDel.setEnabled(false);
+				}
 
 			},
 

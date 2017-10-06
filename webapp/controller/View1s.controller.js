@@ -57,7 +57,9 @@ sap.ui.define([
 			onPress: function(oEvent) {
 
 				var oItem, oCtx, zid;
-
+                
+              
+                
 				oItem = oEvent.getSource();
 				oCtx = oItem.getBindingContext();
 				zid = oCtx.getProperty("ZrequestId");
@@ -65,6 +67,8 @@ sap.ui.define([
 				this.getRouter().navTo("view2", {
 					ZrequestId: zid
 				});
+				
+			
 			},
 
 			_showObject: function(oItem) {
