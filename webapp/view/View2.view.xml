@@ -1,19 +1,8 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
-xmlns:smartTable="sap.ui.comp.smarttable" 
-xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" 
-xmlns:sap.ui.layout.form="sap.ui.layout.form"
-xmlns:sap.ui.layout="sap.ui.layout" 
-xmlns:semantic="sap.m.semantic" 
-xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core"
-xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:semantic="sap.m.semantic" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 
 
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
-		<ObjectHeader
-				id="objectHeader"
-				title="Richiesta n° {ZrequestId}"
-				numberUnit="Giorno/i"
-				icon="sap-icon://general-leave-request">
+		<ObjectHeader id="objectHeader" title="Richiesta n°: {ZrequestId} - { path: 'ZreqStatus', formatter: '.formatter.formatStatus'}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
 				
 				
 			</ObjectHeader>
@@ -90,7 +79,7 @@ xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAV
 																<items>	
 															<sap.ui.layout:VerticalLayout width="100%">
 															
-															<Button press="handleRemoveSelection" text="Remove All Selected Dates"/>
+															<Button press="handleRemoveSelection" text="Rimuovi date selezionate" id="removeAll_btn"/>
 															
 															<!--<List
 					id="selectedDatesList"
@@ -201,13 +190,18 @@ xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAV
 												<sap.ui.layout.form:fields>
 													<sap.ui.layout:Grid width="100%" defaultSpan="L6 M6 S6">
 														<sap.ui.layout:content>
-															<sap.ui.layout:VerticalLayout width="100%">
+																<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_STARTTIME" text="{i18n>LR_START_TIME}"/>
-																<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>
+																<!--<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
+															<!--<sap.ui.layout:content>-->
+															    <TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false"/>
+															<!--</sap.ui.layout:content>-->
 															</sap.ui.layout:VerticalLayout>
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_ENDTIME" text="{i18n>LR_END_TIME}"/>
-																<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>
+																<!--<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
+																<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false"/>
+														
 															</sap.ui.layout:VerticalLayout>
 														</sap.ui.layout:content>
 													</sap.ui.layout:Grid>
@@ -248,6 +242,12 @@ xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAV
 															</Select>
 														
 															</sap.ui.layout:VerticalLayout>
+															
+															<sap.ui.layout:VerticalLayout width="100%">
+															<Label id="LRS4_ORETOT" text="{i18n>LR_ORETOT}">
+																</Label>
+															<Input width="100%" id="LRS4_DAT_ORETOT" editable="false"/>
+															</sap.ui.layout:VerticalLayout>
 														
 														</sap.ui.layout:content>
 													</sap.ui.layout:Grid>
@@ -272,6 +272,11 @@ xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAV
 															<sap.ui.layout:content>
 															</sap.ui.layout:content>
 															</sap.ui.layout:VerticalLayout>
+															
+															
+														
+															
+															
 															
 															
 														</sap.ui.layout:content>
@@ -336,11 +341,11 @@ xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAV
 					<OverflowToolbar id="footerToolbar">
 							<ToolbarSpacer/>
 		
-							<Button id="btn1" type="Accept" text="Modifica" press="showDialog">
+							<Button id="btn1_mod" type="Accept" text="Modifica" press="onActionDialog">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 						  
-						  	<Button id="btn2" type="Reject" text="Elimina" press="showDialog">
+						  	<Button id="btn2_del" type="Reject" text="Elimina" press="onActionDialog">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 	
