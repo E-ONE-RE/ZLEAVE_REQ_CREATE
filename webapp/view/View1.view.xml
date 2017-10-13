@@ -1,7 +1,7 @@
 <mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View1" displayBlock="true">
 	<!--<App>-->
 		<!--<pages>-->
-			<Page  id="V1" title="{i18n>title}" class="sapUiResponsiveContentPadding">
+			<Page id="V1" title="{i18n>title}" class="sapUiResponsiveContentPadding">
 				
 
 					<content>
@@ -70,7 +70,7 @@
 																<items>	
 															<sap.ui.layout:VerticalLayout width="100%">
 															
-															<Button press="handleRemoveSelection" text="Remove All Selected Dates"/>
+															<Button press="handleRemoveSelection" text="Rimuovi date selezionate"/>
 
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
@@ -173,11 +173,16 @@
 														<sap.ui.layout:content>
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_STARTTIME" text="{i18n>LR_START_TIME}"/>
-																<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>
+																<!--<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
+															<!--<sap.ui.layout:content>-->
+															    <TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false"/>
+															<!--</sap.ui.layout:content>-->
 															</sap.ui.layout:VerticalLayout>
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_ENDTIME" text="{i18n>LR_END_TIME}"/>
-																<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>
+																<!--<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
+																<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false"/>
+														
 															</sap.ui.layout:VerticalLayout>
 														</sap.ui.layout:content>
 													</sap.ui.layout:Grid>
@@ -218,7 +223,13 @@
 															</Select>
 														
 															</sap.ui.layout:VerticalLayout>
-														
+															
+															<sap.ui.layout:VerticalLayout width="100%">
+															<Label id="LRS4_ORETOT" text="{i18n>LR_ORETOT}">
+																</Label>
+															<Input width="100%" id="LRS4_DAT_ORETOT" editable="false"/>
+															</sap.ui.layout:VerticalLayout>
+															
 														</sap.ui.layout:content>
 													</sap.ui.layout:Grid>
 												</sap.ui.layout.form:fields>
@@ -304,7 +315,7 @@
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 		<ToolbarSpacer/>
-							<Button id="btn1" type="Accept" text="Invia" press="showDialog">
+							<Button id="btn1" type="Accept" text="Invia" press="onActionDialog">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 			

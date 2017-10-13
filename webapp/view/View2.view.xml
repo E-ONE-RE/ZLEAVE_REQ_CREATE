@@ -1,11 +1,29 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
-	xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:semantic="sap.m.semantic" xmlns:sap.me="sap.me"
-	xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" 	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
-	controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
-	<Page id="V2" title="Visualizza/modifica richiesta" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
-		<ObjectHeader title="Richiesta n° {ZrequestId}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request"></ObjectHeader>
-		<content>
-			<!--<Button id="displayNotFoundBtn" text="{i18n>DisplayNotFound}" press="onDisplayNotFound" class="sapUiTinyMarginEnd"/>
+
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
+xmlns:smartTable="sap.ui.comp.smarttable" 
+xmlns:mvc="sap.ui.core.mvc" 
+xmlns="sap.m" 
+xmlns:sap.ui.layout.form="sap.ui.layout.form" 
+xmlns:sap.ui.layout="sap.ui.layout" 
+xmlns:semantic="sap.m.semantic" 
+xmlns:sap.me="sap.me" 
+xmlns:sap.ui.core="sap.ui.core" 
+xmlns:ui="sap.ca.ui"
+xmlns:sap.ui.unified="sap.ui.unified" 
+xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
+
+
+	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
+		<ObjectHeader id="objectHeader" title="Richiesta n°: {ZrequestId} - { path: 'ZreqStatus', formatter: '.formatter.formatStatus'}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
+				
+				
+			</ObjectHeader>
+		
+
+					<content>
+						<!--<Button id="displayNotFoundBtn" text="{i18n>DisplayNotFound}" press="onDisplayNotFound" class="sapUiTinyMarginEnd"/>
+
 		-->
 			<sap.ui.layout:Grid width="auto" defaultSpan="L12 M12 S12" id="LRS4_FLX_TOP">
 				<sap.ui.layout:content>
@@ -54,8 +72,12 @@
 													<VBox width="100%" direction="Column" id="__vbox0_CALBUTTON" alignItems="Center">
 														<items>
 															<sap.ui.layout:VerticalLayout width="100%">
-																<Button press="handleRemoveSelection" text="Remove All Selected Dates"/>
-																<!--<List
+
+															
+															<Button press="handleRemoveSelection" text="Rimuovi date selezionate" id="removeAll_btn"/>
+															
+															<!--<List
+
 					id="selectedDatesList"
 					class="labelMarginLeft"
 					noDataText="No Dates Selected"
@@ -142,26 +164,35 @@
 													</sap.ui.layout:Grid>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>-->
-								<sap.ui.layout.form:FormElement id="LRS4_FELEM_TIMEINPUT" visible="true">
-									<sap.ui.layout.form:layoutData>
-										<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
-									</sap.ui.layout.form:layoutData>
-									<sap.ui.layout.form:fields>
-										<sap.ui.layout:Grid width="100%" defaultSpan="L6 M6 S6">
-											<sap.ui.layout:content>
-												<sap.ui.layout:VerticalLayout width="100%">
-													<Label id="LRS4_LBL_STARTTIME" text="{i18n>LR_START_TIME}"/>
-													<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>
-												</sap.ui.layout:VerticalLayout>
-												<sap.ui.layout:VerticalLayout width="100%">
-													<Label id="LRS4_LBL_ENDTIME" text="{i18n>LR_END_TIME}"/>
-													<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>
-												</sap.ui.layout:VerticalLayout>
-											</sap.ui.layout:content>
-										</sap.ui.layout:Grid>
-									</sap.ui.layout.form:fields>
-								</sap.ui.layout.form:FormElement>
-								<!--<sap.ui.layout.form:FormElement id="LRS4_FELEM_ABSENCE" visible="true">
+
+											
+											<sap.ui.layout.form:FormElement id="LRS4_FELEM_TIMEINPUT" visible="true">
+												<sap.ui.layout.form:layoutData>
+													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
+												</sap.ui.layout.form:layoutData>
+												<sap.ui.layout.form:fields>
+													<sap.ui.layout:Grid width="100%" defaultSpan="L6 M6 S6">
+														<sap.ui.layout:content>
+																<sap.ui.layout:VerticalLayout width="100%">
+																<Label id="LRS4_LBL_STARTTIME" text="{i18n>LR_START_TIME}"/>
+																<!--<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
+															<!--<sap.ui.layout:content>-->
+															    <TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false"/>
+															<!--</sap.ui.layout:content>-->
+															</sap.ui.layout:VerticalLayout>
+															<sap.ui.layout:VerticalLayout width="100%">
+																<Label id="LRS4_LBL_ENDTIME" text="{i18n>LR_END_TIME}"/>
+																<!--<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
+																<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false"/>
+														
+															</sap.ui.layout:VerticalLayout>
+														</sap.ui.layout:content>
+													</sap.ui.layout:Grid>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											
+											<!--<sap.ui.layout.form:FormElement id="LRS4_FELEM_ABSENCE" visible="true">
+
 												<sap.ui.layout.form:layoutData>
 													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
 												</sap.ui.layout.form:layoutData>
@@ -176,47 +207,70 @@
 													</sap.ui.layout:Grid>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>-->
-								<sap.ui.layout.form:FormElement id="LR_FELEM_APPROVER">
-									<sap.ui.layout.form:layoutData>
-										<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
-									</sap.ui.layout.form:layoutData>
-									<sap.ui.layout.form:fields id="LR_APP_FIELD">
-										<sap.ui.layout:Grid id="LR_APPROVER" width="100%" defaultSpan="L6 M6 S6">
-											<sap.ui.layout:content>
-												<sap.ui.layout:VerticalLayout width="100%">
-													<Label id="LRS4_LBL_APPROVER" text="{i18n>LR_APPROVER}"></Label>
-													<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER"
-														items="{/ApproverSet}">
-														<items>
-															<sap.ui.core:ListItem text="{Tmsuser}" key="{Tmsuser}" id="__item0"/>
-														</items>
-													</Select>
-												</sap.ui.layout:VerticalLayout>
-											</sap.ui.layout:content>
-										</sap.ui.layout:Grid>
-									</sap.ui.layout.form:fields>
-								</sap.ui.layout.form:FormElement>
-								<sap.ui.layout.form:FormElement id="LRS4_FELEM_NOTE">
-									<sap.ui.layout.form:layoutData>
-										<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
-									</sap.ui.layout.form:layoutData>
-									<sap.ui.layout.form:fields>
-										<sap.ui.layout:Grid id="LRS4_NOTE" width="100%" defaultSpan="L12 M12 S12">
-											<sap.ui.layout:content>
-												<sap.ui.layout:VerticalLayout width="100%">
-													<Label id="LRS4_LBL_NOTE" text="{i18n>LR_NOTE}"></Label>
-													<TextArea id="LRS4_TXA_NOTE" width="100%" height="6rem" wrapping="None" maxLength="255">
-														<layoutData>
-															<sap.ui.layout:ResponsiveFlowLayoutData weight="8" linebreak="true"/>
-														</layoutData>
-													</TextArea>
-													<sap.ui.layout:content></sap.ui.layout:content>
-												</sap.ui.layout:VerticalLayout>
-											</sap.ui.layout:content>
-										</sap.ui.layout:Grid>
-									</sap.ui.layout.form:fields>
-								</sap.ui.layout.form:FormElement>
-								<!--	<sap.ui.layout.form:FormElement visible="false" id="LRS4_FELEM_FILEATTACHMENTS">
+
+											
+											<sap.ui.layout.form:FormElement id="LR_FELEM_APPROVER">
+												<sap.ui.layout.form:layoutData>
+													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
+												</sap.ui.layout.form:layoutData>
+												<sap.ui.layout.form:fields id="LR_APP_FIELD">
+													<sap.ui.layout:Grid id="LR_APPROVER" width="100%" defaultSpan="L6 M6 S6">
+														<sap.ui.layout:content>
+															<sap.ui.layout:VerticalLayout width="100%">
+																<Label id="LRS4_LBL_APPROVER" text="{i18n>LR_APPROVER}">
+																</Label>
+																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER" items="{/ApproverSet}">
+															    <items>
+															        <sap.ui.core:ListItem text="{Tmsuser}" key="{Tmsuser}" id="__item0"/>
+														
+															        </items>
+															</Select>
+														
+															</sap.ui.layout:VerticalLayout>
+															
+															<sap.ui.layout:VerticalLayout width="100%">
+															<Label id="LRS4_ORETOT" text="{i18n>LR_ORETOT}">
+																</Label>
+															<Input width="100%" id="LRS4_DAT_ORETOT" editable="false"/>
+															</sap.ui.layout:VerticalLayout>
+														
+														</sap.ui.layout:content>
+													</sap.ui.layout:Grid>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+										
+											<sap.ui.layout.form:FormElement id="LRS4_FELEM_NOTE">
+												<sap.ui.layout.form:layoutData>
+													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
+												</sap.ui.layout.form:layoutData>
+												<sap.ui.layout.form:fields>
+													<sap.ui.layout:Grid id="LRS4_NOTE" width="100%" defaultSpan="L12 M12 S12">
+														<sap.ui.layout:content>
+															<sap.ui.layout:VerticalLayout width="100%">
+																<Label id="LRS4_LBL_NOTE" text="{i18n>LR_NOTE}">
+																</Label>
+																<TextArea id="LRS4_TXA_NOTE" width="100%" height="6rem" wrapping="None" maxLength="255">
+																	<layoutData>
+																		<sap.ui.layout:ResponsiveFlowLayoutData weight="8" linebreak="true"/>
+																	</layoutData>
+																</TextArea>
+															<sap.ui.layout:content>
+															</sap.ui.layout:content>
+															</sap.ui.layout:VerticalLayout>
+															
+															
+														
+															
+															
+															
+															
+														</sap.ui.layout:content>
+													</sap.ui.layout:Grid>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											
+										<!--	<sap.ui.layout.form:FormElement visible="false" id="LRS4_FELEM_FILEATTACHMENTS">
+
 												<sap.ui.layout.form:layoutData>
 													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
 												</sap.ui.layout.form:layoutData>
@@ -363,17 +417,20 @@
 		<!--MP: fine-->
 		
 		
+
 		</content>
 		<footer>
 			<OverflowToolbar id="footerToolbar2">
 				<ToolbarSpacer/>
-				<Button id="btn1" type="Accept" text="Modifica" press="showDialog" enabled="false">
-					<layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
-				</Button>
-				<Button id="btn2" type="Reject" text="Elimina" press="showDialog" enabled="false">
-					<layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
-				</Button>
+				<Button id="btn1_mod" type="Accept" text="Modifica" press="onActionDialog">
+						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
+						  </Button>
+						  
+						  	<Button id="btn2_del" type="Reject" text="Elimina" press="onActionDialog">
+						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
+						  </Button>
 			</OverflowToolbar>
 		</footer>
+
 	</Page>
 </mvc:View>

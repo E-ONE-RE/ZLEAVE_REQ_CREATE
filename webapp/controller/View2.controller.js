@@ -1,56 +1,40 @@
 sap.ui.define([
-		"ZLEAVE_REQ_CREATE/controller/BaseController",
-		"sap/ui/model/json/JSONModel",
+		"ZLEAVE_REQ_CREATE/controller/BaseController", "sap/ui/model/json/JSONModel",
 		'sap/ui/unified/CalendarLegendItem',
 		'sap/ui/unified/DateTypeRange',
-		"sap/ui/core/routing/History",
+		'sap/m/Button',
+		'sap/m/Dialog',
+		'sap/m/Label',
 		"ZLEAVE_REQ_CREATE/model/formatter"
 	],
-	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange, History, formatter) {
+	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange, Button, Dialog, Label, formatter) {
 		"use strict";
 
-//		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
 		jQuery.sap.require("sap.m.MessageBox");
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.ConcurrentEmployment");
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.CalendarTools");
-		jQuery.sap.require("sap.ca.ui.dialog.factory");
-		jQuery.sap.require("sap.ca.ui.dialog.Dialog");
 		jQuery.sap.require("sap.m.MessageToast");
-		jQuery.support.useFlexBoxPolyfill = false;
-		jQuery.sap.require("sap.ca.ui.model.format.FileSizeFormat");
-		jQuery.sap.require("sap.ca.ui.message.message");
-		jQuery.sap.require("sap.ui.thirdparty.sinon");
 
 		return BaseController.extend("ZLEAVE_REQ_CREATE.controller.View2", {
 			
-				formatter: formatter,
+			formatter: formatter,
 				
-			//	oModelDate: null,
-
-			//SE START CUSTOM CALENDAR
 			oFormatYyyymmdd: null,
 			oFormatYYyyymmdd: null,
-			//	oModel: null,
-			//SE END CUSTOM CALENDAR		
+			oFormatDaysShort: null,
+		
 			onInit: function() {
 
-			//	this.oModelDate = new JSONModel({selectedDates:[]});
-			//	this.getView().setModel(this.oModelDate);
-				ZLEAVE_REQ_CREATE.utils.Formatters.init(this.resourceBundle);
-				//ZLEAVE_REQ_CREATE.utils.CalendarTools.init(this.resourceBundle);
-				//this.oDataModel = ZLEAVE_REQ_CREATE.utils.DataManager.getBaseODataModel();
-		
 				this._initCntrls();
-				// sap.ui.getCore().getEventBus().subscribe("ZLEAVE_REQ_CREATE.LeaveCollection", "refresh", this._onLeaveCollRefresh, this);
-
+				
 				this.oFormatYyyymmdd = sap.ui.core.format.DateFormat.getInstance({
 					pattern: "yyyyMMdd",
 					calendarType: sap.ui.core.CalendarType.Gregorian
 				});
-				//this.oFormatYYyyymmdd = sap.ui.core.format.DateFormat.getInstance({pattern: "yyyy-MM-dd", calendarType: sap.ui.core.CalendarType.Gregorian});
-
+				
+				this.oFormatDaysShort = sap.ui.core.format.DateFormat.getInstance({
+					pattern: "E",
+					calendarType: sap.ui.core.CalendarType.Gregorian
+				});
+				
 				var oRouter = this.getRouter();
 				oRouter.getRoute("view2").attachMatched(this._onRouteMatched, this);
 
@@ -95,59 +79,134 @@ sap.ui.define([
 				 var oView = this.getView();
 					var oModel = this.getView().getModel();
                       sap.ui.getCore().setModel(oModel);
+
+                
+                var oCal2 = oView.byId("LRS4_DAT_CALENDAR");
+				var oLeg2 = oView.byId("legend1");
+				
+					//ripulisco i campi	calendario	
+
                       
                       
                       
-                //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
-                var oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
-                var oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
-                // MP: logica per abilitare i bottoni in View2 (modifica ed eliminazione richiesta)
-                	var oBindingContext = oView.getBindingContext();
-                	var sReqStatus = oBindingContext.getProperty("ZreqStatus");
-				if (sReqStatus == "I"){
-					oButtonMod.setEnabled(true);
-					oButtonDel.setEnabled(true);
-				}else{
-					oButtonMod.setEnabled(false);
-					oButtonDel.setEnabled(false);
-				}
-				//MP:  fine
+               
                       
 				//ripulisco i campi		
+
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSpecialDates();
+				oLeg2.destroyItems();
 				
-					var oCal2 = oView.byId("LRS4_DAT_CALENDAR");
-						var oLeg2 = oView.byId("legend1");
-							oLeg2.destroyItems();
-
-				oView.byId("LRS4_DAT_STARTTIME").setValue("");
-				oView.byId("LRS4_DAT_STARTTIME").rerender();
+				
+				
+				/*oView.byId("LRS4_DAT_STARTTIME").setValue("");
 				oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
+				oView.byId("LRS4_DAT_STARTTIME").rerender();
+				
 
 				oView.byId("LRS4_DAT_ENDTIME").setValue("");
-				oView.byId("LRS4_DAT_ENDTIME").rerender();
 				oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
+				oView.byId("LRS4_DAT_ENDTIME").rerender();
+				
 
 				oView.byId("LRS4_TXA_NOTE").setValue("");
-				oView.byId("LRS4_TXA_NOTE").rerender();
 				oView.byId("LRS4_TXA_NOTE").setEnabled(true);
+				oView.byId("LRS4_TXA_NOTE").rerender();*/
 				
-				var oCtx, zid;
+				var oCtx, zid, zstatus;
 				oCtx = oView.getBindingContext();
 				zid = oCtx.getProperty("ZrequestId");
+				zstatus = oCtx.getProperty("ZreqStatus");
 				////zid = oView.getBindingContext().getProperty("ZrequestId");
-
+				
 				// setto i valori in base ai valori del binding corrente
 				oView.byId("SLCT_LEAVETYPE").setSelectedKey(oCtx.getProperty("ZabsType"));
 				oView.byId("SLCT_APPROVER").setSelectedKey(oCtx.getProperty("Tmsapprover"));
-				oView.byId("LRS4_DAT_STARTTIME").setValue("");
-				oView.byId("LRS4_DAT_ENDTIME").setValue("");
+				oView.byId("LRS4_DAT_ORETOT").setValue(oCtx.getProperty("ZoreTotali"));
+				
 				oView.byId("LRS4_TXA_NOTE").setValue(oCtx.getProperty("Znote"));
-
+        
+         //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
+             //   var oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
+            //    var oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
+        
+       
+        
+            
 			
 				
-				//leggo le posizioni per ricavare i giorni
+				if (zstatus === 'A' || zstatus === 'R')
+				{
+					oView.byId("SLCT_LEAVETYPE").setEnabled(false);
+					oView.byId("SLCT_LEAVETYPE").rerender();
+					
+					oView.byId("SLCT_APPROVER").setEnabled(false);
+					oView.byId("SLCT_APPROVER").rerender();
+					
+					oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_STARTTIME").rerender();
+					
+					oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_ENDTIME").rerender();
+					
+					oView.byId("LRS4_TXA_NOTE").setEnabled(false);
+					oView.byId("LRS4_TXA_NOTE").rerender();
+					
+					oCal2.setVisible(false);
+					oCal2.rerender();
+					
+					oLeg2.setVisible(false);
+					oLeg2.rerender();
+					
+					oView.byId("removeAll_btn").setEnabled(false);	
+					oView.byId("removeAll_btn").rerender();	
+          
+          oView.byId("btn1_mod").setEnabled(false);
+          oView.byId("btn1_mod").rerender();	
+          
+          oView.byId("btn1_del").setEnabled(false);
+          oView.byId("btn2_del").rerender();	
+          	
+					
+          
+                }
+                else  
+					{
+
+
+                	oView.byId("SLCT_LEAVETYPE").setEnabled(true);
+					oView.byId("SLCT_LEAVETYPE").rerender();
+					
+					oView.byId("SLCT_APPROVER").setEnabled(true);
+					oView.byId("SLCT_APPROVER").rerender();
+					
+					oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
+					oView.byId("LRS4_DAT_STARTTIME").rerender();
+					
+					oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
+					oView.byId("LRS4_DAT_ENDTIME").rerender();
+					
+					oView.byId("LRS4_TXA_NOTE").setEnabled(true);
+					oView.byId("LRS4_TXA_NOTE").rerender();
+					
+					oCal2.setVisible(true);
+					oCal2.rerender();
+					
+					oLeg2.setVisible(true);
+					oLeg2.rerender();
+					
+					oView.byId("removeAll_btn").setEnabled(true);	
+					oView.byId("removeAll_btn").rerender();	
+            
+          oView.byId("btn1_mod").setEnabled(true);
+          oView.byId("btn1_mod").rerender();	
+          
+          oView.byId("btn1_del").setEnabled(true);
+          oView.byId("btn2_del").rerender();	
+          	
+          
+					
+				//leggo le posizioni per ricavare i giorni selezionati della singola richiesta in modifica
 				
 				var sRead = "/LeaveRequestSet('" + zid + "')/ToLeaveReqPos";
 
@@ -165,87 +224,45 @@ sap.ui.define([
 					// controllo che la funzione è andata a buon fine 
 					if (response.statusCode == "200") {
 						////////////////////////////////				
-
+                           
+                        // setto valori orario
+                        oView.byId("LRS4_DAT_STARTTIME").setValue(oData.results[0].Ztimestart);
+				        oView.byId("LRS4_DAT_ENDTIME").setValue(oData.results[0].Ztimeend);
+                           
 						var oFormatYYyyymmdd = sap.ui.core.format.DateFormat.getInstance({
 							pattern: "yyyyMMdd",
 							calendarType: sap.ui.core.CalendarType.Gregorian
 						});
-
+                       
 						var oRefDate = new Date();
 
 						var oDateRange;
+						
+						
+						if (oData.results.length > 1) {
+
+							oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+				            oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+						}    
 
 						if (oData.results.length > 0) {
 							for (var i = 0; i < oData.results.length; i++) {
 
-								//						var res = oData.results[i].Zdate.substring(8);
-								var res = oData.results[i].Zdate;
-
-						/*if ( oData.results[i].ZabsType == "0001") {		
-								
-									oCal2.addSpecialDate(new DateTypeRange({
-									startDate : oFormatYYyyymmdd.parse(res),
-									type : "Type01",
-									tooltip : "Permesso"
-						
-									
-									}));
-						}
-						
-							if ( oData.results[i].ZabsType == "0002") {		
-								
-									oCal2.addSpecialDate(new DateTypeRange({
-									startDate : oFormatYYyyymmdd.parse(res),
-									type : "Type05",
-									tooltip : "Ferie"
-						
-									
-									}));
-						}
-						
-							if ( oData.results[i].ZabsType == "0003") {		
-								
-									oCal2.addSpecialDate(new DateTypeRange({
-									startDate : oFormatYYyyymmdd.parse(res),
-									type : "Type09",
-									tooltip : "Recupero"
-						
-									
-									}));
-						}*/
-
+								 var oZdate = oData.results[i].Zdate;
+							
                           // aggiungere date selezionate quando si è in modifica
 								oCal2.addSelectedDate(new DateTypeRange({
-									startDate: oFormatYYyyymmdd.parse(res)
+									startDate: oFormatYYyyymmdd.parse(oZdate)
 
 								}));
 								
 							}
 							
-				/*		oLeg2.addItem(new CalendarLegendItem({
-						text : "Permesso",
-						id : "leg11",
-						type : "Type01"
-						
-					}));
-					
-						oLeg2.addItem(new CalendarLegendItem({
-						text : "Ferie",
-						id : "leg22",
-						type : "Type05"
-					}));
-					
-						oLeg2.addItem(new CalendarLegendItem({
-						text : "Recupero",
-						id : "leg33",
-						type : "Type09"
-					}));*/
-
 						}
 
 					} else {
 
-						jQuery.sap.require("sap.m.MessageBox");
+						//jQuery.sap.require("sap.m.MessageBox");
 						sap.m.MessageBox.show(
 							"Error: Nessun record recuperato", {
 								icon: sap.m.MessageBox.Icon.WARNING,
@@ -269,7 +286,7 @@ sap.ui.define([
 				
 				//////////////////////////
 				
-				//leggo le posizioni per ricavare i giorni
+				//leggo le posizioni per ricavare i giorni delle richieste già attive
 				
 				var sReadPos = "/LeaveRequestPosSet";
 
@@ -300,74 +317,73 @@ sap.ui.define([
 						if (oData.results.length > 0) {
 							for (var i = 0; i < oData.results.length; i++) {
 
-								//						var res = oData.results[i].Zdate.substring(8);
 								var res = oData.results[i].Zdate;
-
-						if ( oData.results[i].ZabsType == "0001") {		
 								
-									oCal2.addSpecialDate(new DateTypeRange({
-									startDate : oFormatYYyyymmdd.parse(res),
-									type : "Type01",
-									tooltip : "Permesso"
-						
+								//escludo specialDate di richiesta già presente per la richiesta in modifica
+								// per non far scattare il controllo di data sovrapposta nel caso in cui l'utente
+								// deseleziona il giorno e lo riseleziona
+	                        	if (oData.results[i].ZrequestId !== zid){
+	                           
+									if ( oData.results[i].ZabsType == "0001") {		
+											
+												oCal2.addSpecialDate(new DateTypeRange({
+												startDate : oFormatYYyyymmdd.parse(res),
+												type : "Type01",
+												tooltip : "Permesso"
 									
-									}));
-						}
-						
-							if ( oData.results[i].ZabsType == "0002") {		
-								
-									oCal2.addSpecialDate(new DateTypeRange({
-									startDate : oFormatYYyyymmdd.parse(res),
-									type : "Type05",
-									tooltip : "Ferie"
-						
+												
+												}));
+									}
 									
-									}));
-						}
-						
-							if ( oData.results[i].ZabsType == "0003") {		
-								
-									oCal2.addSpecialDate(new DateTypeRange({
-									startDate : oFormatYYyyymmdd.parse(res),
-									type : "Type09",
-									tooltip : "Recupero"
-						
+										if ( oData.results[i].ZabsType == "0002") {		
+											
+												oCal2.addSpecialDate(new DateTypeRange({
+												startDate : oFormatYYyyymmdd.parse(res),
+												type : "Type05",
+												tooltip : "Ferie"
 									
-									}));
-						}
-
-                          // aggiungere date selezionate quando si è in modifica
-						//		oCal2.addSelectedDate(new DateTypeRange({
-						//			startDate: oFormatYYyyymmdd.parse(res)
-
-						//		}));
-
+												
+												}));
+									}
+									
+										if ( oData.results[i].ZabsType == "0003") {		
+											
+												oCal2.addSpecialDate(new DateTypeRange({
+												startDate : oFormatYYyyymmdd.parse(res),
+												type : "Type09",
+												tooltip : "Recupero"
+									
+												
+												}));
+									}
+	                        	}
+                        
 							}
 							
-						oLeg2.addItem(new CalendarLegendItem({
-						text : "Permesso",
-						id : "leg11",
-						type : "Type01"
-						
-					}));
-					
-						oLeg2.addItem(new CalendarLegendItem({
-						text : "Ferie",
-						id : "leg22",
-						type : "Type05"
-					}));
-					
-						oLeg2.addItem(new CalendarLegendItem({
-						text : "Recupero",
-						id : "leg33",
-						type : "Type09"
-					}));
+								oLeg2.addItem(new CalendarLegendItem({
+								text : "Permesso",
+								id : "leg11",
+								type : "Type01"
+								
+							}));
+							
+								oLeg2.addItem(new CalendarLegendItem({
+								text : "Ferie",
+								id : "leg22",
+								type : "Type05"
+							}));
+							
+								oLeg2.addItem(new CalendarLegendItem({
+								text : "Recupero",
+								id : "leg33",
+								type : "Type09"
+							}));
 
 						}
 
 					} else {
 
-						jQuery.sap.require("sap.m.MessageBox");
+					//	jQuery.sap.require("sap.m.MessageBox");
 						sap.m.MessageBox.show(
 							"Error: Nessun record recuperato", {
 								icon: sap.m.MessageBox.Icon.WARNING,
@@ -385,336 +401,236 @@ sap.ui.define([
 
 					alert("Error in read: " + oError.message);
 				}
-
+					}
 
 			},
 
 			/////////////////////
 
 			onAfterRendering: function(oEvent) {
+		//			onBeforeRendering: function(oEvent) {
+				
+			/*	var oView = this.getView();
+				var oCtx, zstatus;
+                var oCal2 = oView.byId("LRS4_DAT_CALENDAR");
+				var oLeg2 = oView.byId("legend1");
+				
+				oCtx = oView.getBindingContext();
+				zstatus = oCtx.getProperty("ZreqStatus");
 
+				if (zstatus === 'A' || zstatus === 'R')
+				{
+					oView.byId("SLCT_LEAVETYPE").setEnabled(false);
+					oView.byId("SLCT_APPROVER").setEnabled(false);
+					oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+					oView.byId("LRS4_TXA_NOTE").setEnabled(false);
+					oCal2.setVisible(false);
+					oLeg2.setVisible(false);
+					oView.byId("removeAll_btn").setEnabled(false);	
+                }	
+				*/
+			
+//oCal2.setVisible(false);
 			},
-
-			handleAbsTypeSelect: function(oEvent) {
-				var oAbsType = oEvent.oSource;
-				var aAbsTypeKey = oAbsType.getSelectedKey();
-
-			},
-
-			//SE START CUSTOM CALENDAR
-			handleCalendarSelect: function(oEvent) {
-				var oCalendar = oEvent.oSource;
-				var aSelectedDates = oCalendar.getSelectedDates();
-				var oDate;
-				var oDataSel = {
-					selectedDates: []
-				};
-				if (aSelectedDates.length > 0) {
-					for (var i = 0; i < aSelectedDates.length; i++) {
-						oDate = aSelectedDates[i].getStartDate();
-						oDataSel.selectedDates.push({
-							Date: this.oFormatYyyymmdd.format(oDate)
-						});
-					}
-				//		this.oModelDate.setData(oDataSel);
-				} else {
-					//	this._clearModel();
-				}
-			},
-
-
 
 		
-			handleRemoveSelection: function(oEvent) {
-				this.getView().byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
-				//	this._clearModel();
-			},
+		/////////////////////////////////////////////////////////////////////  
+		/*actionTask: function(oEvent) 
+	{
+		
+        var oView = this.getView();
 
-			/*_clearModel: function() {
-			var oData = {selectedDates:[]};
-			this.oModel.setData(oData);
-		},*/
-			//SE END CUSTOM CALENDAR
-
-			handleShowSpecialDays: function(oEvent) {
-				var oCal1 = this.getView().byId("LRS4_DAT_CALENDAR");
-				var oLeg1 = this.getView().byId("legend1");
-
-				var bPressed = oEvent.getParameter("pressed");
-
-				if (bPressed) {
-					var oRefDate = new Date();
-					for (var i = 1; i <= 10; i++) {
-						oRefDate.setDate(i);
-						var sType = "";
-						if (i < 10) {
-							sType = "Type0" + i;
-						} else {
-							sType = "Type" + i;
-						}
-						oCal1.addSpecialDate(new DateTypeRange({
-							startDate: new Date(oRefDate),
-							type: sType,
-							tooltip: "Placeholder " + i
-						}));
-
-						oLeg1.addItem(new CalendarLegendItem({
-							text: "Placeholder " + i
-						}));
-
-					}
-
-					oCal1.addSpecialDate(new DateTypeRange({
-						startDate: new Date(oRefDate.setDate(11)),
-						endDate: new Date(oRefDate.setDate(21)),
-						type: sap.ui.unified.CalendarDayType.NonWorking
-					}));
-
-					oCal1.addSpecialDate(new DateTypeRange({
-						startDate: new Date(oRefDate.setDate(25)),
-						type: sap.ui.unified.CalendarDayType.NonWorking
-					}));
-
-					//			oDateRange = new sap.ui.unified.DateRange({startDate: oDate});
-					oCal1.addSelectedDate(new DateTypeRange({
-						startDate: new Date(oRefDate.setDate(26))
-
-					}));
-
-				} else {
-					oCal1.destroySpecialDates();
-
-					oLeg1.destroyItems();
-
-				}
-			},
-
-			//Show confirmation dialog
-			showDialog: function(oEvent) {
-				var that = this;
-				this.sButtonKey = oEvent.getSource().getId(); //mi salvo il valore chiave del bottone per la gestione dei conflitti in actionTask
-				if (!that.Dialog) {
-
-					that.Dialog = sap.ui.xmlfragment("ZLEAVE_REQ_CREATE.view.Dialog", this, "ZLEAVE_REQ_CREATE.controller.View2");
-					//to get access to the global model
-					this.getView().addDependent(that.Dialog);
-					if (sap.ui.Device.system.phone) {
-						that.Dialog.setStretch(true);
-					}
-				}
-				if (sap.ui.Device.system.phone) {
-					that.Dialog.setStretch(true);
-				}
-				that.Dialog.open();
-			},
-
-			//Close Dialog
-			closeDialog: function() {
-				this.Dialog.close();
-				this.sButtonKey = undefined; //per controllare i conflitti in actionTask N.B.
-			},
-
-			onDisplayNotFound: function(oEvent) {
-				//display the "notFound" target without changing the hash
-				this.getRouter().getTargets().display("notFound", {
-					fromTarget: "view1"
-				});
-			},
-			/////////////////////////////////////////////////////////////////////  
-			actionTask: function(oEvent) {
-
-				// richiamare handleAbsTypeSelect
-
-				var sButtonId;
-				var oView, oViewW;
-				var sTypeAction;
-				var sSelectedTaskid;
-				var sZabsType;
-				var sDeleted;
-
-				var sAction, sUser, sUname; //sUser e sUname rappresentano delle variabili di appoggio
-
-				oView = this.getView();
 				var oModel = this.getView().getModel();
 				sap.ui.getCore().setModel(oModel);
+                      
+                      //causa bug di versione sopno costretto a forzare xml, altrimenti i campi di tipo 
+                      //decimali fanno andare la chiamata post create_deep_entity in errore: CX_SXML_PARSE_ERROR
+                      //note sap:
+                      //1751991 - OData Channel - Deep Insert in JSON Format Leads to Error
+					 //1874920 - Error in "deep insert" case when parsing JSON
+					 // https://archive.sap.com/discussions/thread/3936579
+					 ////
+                      oModel.oHeaders.Accept="application/atom+xml,application/atomsvc+xml,application/xml";
 
-				//          oModel.setUseBatch(false);
-				//var oObject = oView.getBindingContext().getObject();
-
-				if (this.Dialog) {
-					this.Dialog.close();
-				}
-
-				sButtonId = this.sButtonKey;
-
-				sUser = "";
-				sAction = undefined;
-				sDeleted = "";
-
-				sTypeAction = undefined;
-				if (sButtonId == oView.byId("btn1").getId()) {
-					sAction = "MOD";
-					sTypeAction = "Richiesta modificata";
-					sUname = undefined;
-				} else if (sButtonId == oView.byId("btn2").getId()) {
-					sAction = "DEL";
-					sTypeAction = "Richiesta Eliminata";
-					sUname = undefined;
-					sDeleted = "X";
-					//(SE)
-				}
+                      oModel.bJSON = false;
+                    /////  
+            //          oModel.setUseBatch(false);
+			//var oObject = oView.getBindingContext().getObject();
 			
-           
-				var oObject = oView.getBindingContext().getObject();
-
-				var aSelectedDates = this.cale.getSelectedDates();
-				var oDate;
-
-
-				var oUrlParams = {
-					ZrequestId: oObject.ZrequestId,
-					Tmsapprover: this.slctApprover.getSelectedKey(),
-					ZabsType: this.slctLvType.getSelectedKey(),
-					ZreqStatus: "I",
-					Znote: this.note.getValue(),
-					Zdeleted: sDeleted
-
-				};
-
-				oUrlParams.ToLeaveReqPos = [];
-				if (aSelectedDates.length > 0) {
-					for (var i = 0; i < aSelectedDates.length; i++) {
-						oDate = aSelectedDates[i].getStartDate();
-						oUrlParams.ToLeaveReqPos.push({
-							Zdate: this.oFormatYyyymmdd.format(oDate),
-							Ztimestart: this.timeFrom.getValue(),
-							Ztimeend: this.timeTo.getValue()
-						});
+		
+						 
 						
-
-					}
-				
-				} 
-
-				jQuery.sap.require("sap.ui.commons.MessageBox");
-				oModel.create('/LeaveRequestSet', oUrlParams, {
-					method: "POST",
-					success: fnS,
-
-					error: fnE
-				});
-
+//			var aSelectedDates = oCalendar.getSelectedDates();
+            var aSelectedDates = this.cale.getSelectedDates();
+			var oDate;
 			
-				function fnS(oData, response) {
-					console.log(oData);
-					console.log(response);
+			var aZtimestart = this.timeFrom.getValue();
+			var	aZtimeend = this.timeTo.getValue();
+			var aOreTot,
+			    aOrep;
+			    var aOreDay = 8.0;
+			    
+			
+			if ( aZtimestart ===  "" & aZtimeend === "" ) {
+				
+				  aOreTot = parseFloat(aSelectedDates.length * 8);
 
-					// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
+				  aOrep = 8;
+			}
+			else {
+		
+					var tim1=aZtimestart,tim2=aZtimeend;
+				var ary1=tim1.split(':'),ary2=tim2.split(':');
+				var minsdiff=parseInt(ary2[0],10)*60+parseInt(ary2[1],10)-parseInt(ary1[0],10)*60-parseInt(ary1[1],10);
+				var aTstart = parseInt(ary1[0],10);
+				var aTend = parseInt(ary2[0],10);
+				var aTendMin = parseInt(ary2[1],10);
+				aOrep = parseFloat(minsdiff/60);
+				Number(aOrep).toFixed(1);    
+				   
+				   
+					//sottraggo ore pausa in caso di assenza a cavallo tra mattina e rientro nel pome
+						if ( aTstart < 13 & ((aTend > 14) || (aTend === 14 & aTendMin >= 30)) ) {
+						  aOrep = aOrep - 1.5;
+						}
+						
+						if ( aOrep > 8 ) {
+						  aOrep = 8;
+						}
+						
+				aOreTot = parseFloat(aSelectedDates.length * aOrep);
+				Number(aOreTot).toFixed(1); 
+			
+					
+				}
+
+   var oUrlParams = {
+				 //ZWfTaskid : "0000025000",
+				 Tmsapprover : this.slctApprover.getSelectedKey(),
+				 ZabsType : this.slctLvType.getSelectedKey(),
+				 ZreqStatus : "I",
+				 ZoreTotali : aOreTot,
+                 Znote : this.note.getValue()
+		
+					 };
+					 
+	oUrlParams.ToLeaveReqPos = [];				 
+			if (aSelectedDates.length > 0 ) {
+				for (var i = 0; i < aSelectedDates.length; i++){
+					oDate = aSelectedDates[i].getStartDate();
+					oUrlParams.ToLeaveReqPos.push({ 
+						Zdate:this.oFormatYyyymmdd.format(oDate), 
+						Ztimestart:aZtimestart,
+						Ztimeend:aZtimeend, 
+						Tmsapprover:this.slctApprover.getSelectedKey(),
+						ZabsType:this.slctLvType.getSelectedKey(),
+						Zorep:aOrep,
+						ZreqStatus:"I"} );
+				
+				}
+			//	this.oModel.setData(oData);
+			} else {
+			//	this._clearModel();
+			}
+
+					  
+					  // jQuery.sap.require("sap.ui.commons.MessageBox");
+						oModel.create('/LeaveRequestSet', oUrlParams, {
+							method: "POST",
+						       success : fnS,
+						       
+						       error : fnE
+						  });
+					   
+				//}
+			//}	
+				   function fnS(oData, response) {
+						console.log(oData);
+						console.log(response);
+		
+						// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
 					//	if (oData.Type == "S") {
-					if (response.statusCode == "201") {
+						if (response.statusCode == "201") {	
 
 						//	var msg = "Success: "+oData.Message+", "+sTypeAction;
-						var msg = "Success";
-						sap.m.MessageToast.show(msg, {
-							duration: 5000,
-							autoClose: true,
-							closeOnBrowserNavigation: false
+								var msg = "Success";
+		        					sap.m.MessageToast.show(msg, { duration: 5000,
+		        					autoClose: true,
+		        					 closeOnBrowserNavigation: false
+		        						
+		        					});
+		        					
+		     // ripulisco campi  	
+			  oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+			
+				oView.byId("LRS4_DAT_STARTTIME").setValue("");
+				oView.byId("LRS4_DAT_STARTTIME").rerender();
+				oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
+				
+				oView.byId("LRS4_DAT_ENDTIME").setValue("");
+				oView.byId("LRS4_DAT_ENDTIME").rerender();
+				oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
+				
+			    oView.byId("LRS4_TXA_NOTE").setValue("");
+				oView.byId("LRS4_TXA_NOTE").rerender();
+				oView.byId("LRS4_TXA_NOTE").setEnabled(true);
+				
+	
+						} else {
+							
+									
+								jQuery.sap.require("sap.m.MessageBox");
+					            sap.m.MessageBox.show(
+							      "Error: "+oData.Message, {
+							          icon: sap.m.MessageBox.Icon.WARNING,
+							          title: "Error",
+							          actions: [sap.m.MessageBox.Action.CLOSE]
+							          
+							      });
+								  
+								}
+
+					}// END FUNCTION SUCCESS
+
+					function fnE(oError) {
+						console.log(oError);
+		
+						alert("Error in read: " + oError.message);
+					}
+					  
+	}, */
+            //NON USATA, abbiamo deciso di nascondere il calendario in caso di richieste già apporvate o rifutate
+            handleCalendarSelectV2: function(oEvent) {
+            	
+            	var oCtx, zid, zstatus;
+            	var oView = this.getView();
+            	var that = this;
+				
+				oCtx = oView.getBindingContext();
+			
+				zstatus = oCtx.getProperty("ZreqStatus");
+				////zid = oView.getBindingContext().getProperty("ZrequestId");
+				
+				if (zstatus === 'A' || zstatus === 'R')
+				{
+						sap.m.MessageBox.show(
+						"Nessun modifica consentita su questo tipo di richiesta in quanto già approvata o rifiutata.", {
+							icon: sap.m.MessageBox.Icon.ERROR,
+							title: "Error",
+							actions: [sap.m.MessageBox.Action.CLOSE]
 
 						});
-
-						// ripulisco campi  	
-						oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
-
-						oView.byId("LRS4_DAT_STARTTIME").setValue("");
-						oView.byId("LRS4_DAT_STARTTIME").rerender();
-						oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
-
-						oView.byId("LRS4_DAT_ENDTIME").setValue("");
-						oView.byId("LRS4_DAT_ENDTIME").rerender();
-						oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
-
-						oView.byId("LRS4_TXA_NOTE").setValue("");
-						oView.byId("LRS4_TXA_NOTE").rerender();
-						oView.byId("LRS4_TXA_NOTE").setEnabled(true);
-
-						// faccio refresh tabella riepilogativa delle richieste
-						var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; 
-						oViewW = sap.ui.getCore().byId(sPrefix + "V1S");
-						var oTable = oViewW.byId("__table0");
-						oTable.getBinding("items").refresh();
-						sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View2").onNavBackDirect(); 
-
-					} else {
-						//richiama una funzione di Object.Controller con questa sintassi
-
-						//		alert("Error: "+oData.Message); 
-
-						jQuery.sap.require("sap.m.MessageBox");
-						sap.m.MessageBox.show(
-							"Error: " + oData.Message, {
-								icon: sap.m.MessageBox.Icon.WARNING,
-								title: "Error",
-								actions: [sap.m.MessageBox.Action.CLOSE]
-
-							});
-
-					}
-
-				} // END FUNCTION SUCCESS
-
-				function fnE(oError) {
-					console.log(oError);
-
-					alert("Error in read: " + oError.message);
-				}
-
-			},
-
-
-			_initCntrls: function() {
-				this.changeMode = false;
-				this.withdrawMode = false;
-				this.oChangeModeData = {};
-				this.selRange = {};
-				this.selRange.start = null;
-				this.selRange.end = null;
-				this.aLeaveTypes = [];
-				this.leaveType = {};
-				this.iPendingRequestCount = 0;
-				this.bSubmitOK = null;
-				this.bApproverOK = null;
-				this.oSubmitResult = {};
-				this.sApprover = "";
-				this.sApproverPernr = "";
-				this.bSimulation = true;
-				this._isLocalReset = false;
-				this.oBusy = new sap.m.BusyDialog();
-				this.formContainer = this.byId("LRS4_FRM_CNT_BALANCES");
-				this.timeInputElem = this.byId("LRS4_FELEM_TIMEINPUT");
-				this.balanceElem = this.byId("LRS4_FELEM_BALANCES");
-				this.noteElem = this.byId("LRS4_FELEM_NOTE");
-				this.timeFrom = this.byId("LRS4_DAT_STARTTIME");
-				this.timeTo = this.byId("LRS4_DAT_ENDTIME");
-				this.legend = this.byId("LRS4_LEGEND");
-				this.remainingVacation = this.byId("LRS4_TXT_REMAINING_DAYS");
-				this.bookedVacation = this.byId("LRS4_TXT_BOOKED_DAYS");
-				this.note = this.byId("LRS4_TXA_NOTE");
-				this.cale = this.byId("LRS4_DAT_CALENDAR");
-				this.slctLvType = this.byId("SLCT_LEAVETYPE");
-				this.slctApprover = this.byId("SLCT_APPROVER");
-				this.calSelResetData = [];
-				//SE
-				//this._initCalendar();
-				//		this._deviceDependantLayout();
-				this.objectResponse = null;
-				this.ResponseMessage = null;
-			},
-
-			/*	_onLeaveCollRefresh: function() {
-					ZLEAVE_REQ_CREATE.utils.CalendarTools.clearCache();
-				},*/
-
-
+					
+					return;
+                }
+                else 	{
+                			that.handleCalendarSelect(oEvent);
+                		}
+            	
+            },
+             		
+             		
 			// NON USATA
 			onChange: function(oEvent) {
 
