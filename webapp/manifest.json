@@ -39,14 +39,11 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_bluecrystal"
-		]
+		"supportedThemes": ["sap_hcb", "sap_bluecrystal"]
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "ZLEAVE_REQ_CREATE.view.View1",
+			"viewName": "ZLEAVE_REQ_CREATE.view.App",
 			"type": "XML"
 		},
 		"dependencies": {
@@ -89,12 +86,69 @@
 				"preload": true
 			}
 		},
-		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"targetClass": "sap.m.routing.Targets",
+				"viewType": "XML",
+				"viewPath": "ZLEAVE_REQ_CREATE.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"targetParent": "Page",
+				"transition": "slide",
+				"clearAggregation": false,
+				"bypassed": {
+					"target": "notFound"
 				}
-			]
+			},
+			"routes": [{
+				"name": "view1",
+				"pattern": "",
+				"greedy": false,
+				"target": "view1",
+				"view": "View1"
+			}, {
+			
+				"name": "view1s",
+				"pattern": "view1s",
+				"greedy": false,
+				"target": "view1s",
+				"view": "View1s"
+			}, {
+				"name": "view2",
+				"pattern": "view2/{ZrequestId}",
+				"greedy": false,
+				"target": "view2",
+				"view": "View2"
+			}],
+			"targets": {
+				"view1": {
+					"viewName": "View1",
+					"viewId": "V1",
+					"viewLevel": 1
+				},
+				"view2": {
+					"viewName": "View2",
+					"viewId": "V2",
+					"viewLevel": 3,
+					"transition": "flip"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"transition": "show"
+				},
+				"view1s": {
+					"transition": "slide",
+					"viewName": "View1s",
+					"viewId": "V1S",
+					"viewLevel": 2
+				}
+			}
+		},
+		"resources": {
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		}
 	}
 }

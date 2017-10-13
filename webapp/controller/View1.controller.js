@@ -34,13 +34,18 @@ sap.ca.scfld.md.controller.BaseFullscreenController.extend("ZLEAVE_REQ_CREATE.vi
 	"use strict";*/
 
 //SE	
-	sap.ui.define(['sap/ui/core/mvc/Controller','sap/ui/model/json/JSONModel'],
-	function(Controller, JSONModel) {
+
+	sap.ui.define([
+	"ZLEAVE_REQ_CREATE/controller/BaseController" , "sap/ui/model/json/JSONModel",
+		'sap/ui/unified/CalendarLegendItem',
+		'sap/ui/unified/DateTypeRange'
+	],
+	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange) {
 	"use strict";
-
-
+	
+	
 		
-	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
+//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
 	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
 	jQuery.sap.require("sap.m.MessageBox");
 	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
@@ -56,10 +61,11 @@ sap.ca.scfld.md.controller.BaseFullscreenController.extend("ZLEAVE_REQ_CREATE.vi
 
 
   
-	return Controller.extend("ZLEAVE_REQ_CREATE.controller.View1", {
+	return BaseController.extend("ZLEAVE_REQ_CREATE.controller.View1", {
 
 //SE START CUSTOM CALENDAR
 oFormatYyyymmdd: null,
+
 //	oModel: null,
 //SE END CUSTOM CALENDAR		
 		
@@ -73,30 +79,215 @@ oFormatYyyymmdd: null,
 		//this.resourceBundle = this.oApplicationFacade.getResourceBundle();
 		//this.oDataModel = this.oApplicationFacade.getODataModel();
 		//ZLEAVE_REQ_CREATE.utils.DataManager.init(this.oDataModel, this.resourceBundle);
-		ZLEAVE_REQ_CREATE.utils.Formatters.init(this.resourceBundle);
+//		ZLEAVE_REQ_CREATE.utils.Formatters.init(this.resourceBundle);
 	    //ZLEAVE_REQ_CREATE.utils.CalendarTools.init(this.resourceBundle);
 		//this.oDataModel = ZLEAVE_REQ_CREATE.utils.DataManager.getBaseODataModel();
+		
+		
+				
 		//this.oRouter.attachRouteMatched(this._handleRouteMatched, this);
-		this._buildHeaderFooter();
+		//this._buildHeaderFooter();
 		this._initCntrls();
 	    // sap.ui.getCore().getEventBus().subscribe("ZLEAVE_REQ_CREATE.LeaveCollection", "refresh", this._onLeaveCollRefresh, this);
 		
 
-		this.oFormatYyyymmdd = sap.ui.core.format.DateFormat.getInstance({pattern: "yyyy-MM-dd", calendarType: sap.ui.core.CalendarType.Gregorian});
+		this.oFormatYyyymmdd = sap.ui.core.format.DateFormat.getInstance({pattern: "yyyyMMdd", calendarType: sap.ui.core.CalendarType.Gregorian});
 
 	//		this.oModel = new JSONModel({selectedDates:[]});
 	//		this.getView().setModel(this.oModel);
 			
+
 			
+			var oRouter = this.getRouter();
+			oRouter.getRoute("view1").attachMatched(this._onRouteMatched, this);
+			
+
+	
+
 		},
 		
-	/*	onAfterRendering: function() {
+
+		
+		
+			_onRouteMatched: function(oEvent) {
+				
+			var		oView = this.getView();
+				
+				oView.bindElement({
+					path: "/LeaveRequestPosSet",
+					//	parameters : {expand: 'ToLeaveReqPos'}, 
+
+					events: {
+						change: this._onBindingChange.bind(this),
+						dataRequested: function(oEvent) {
+							oView.setBusy(true);
+						},
+						dataReceived: function(oEvent) {
+							oView.setBusy(false);
+
+						}
+					}
+				});
+
+			},
 			
-			var oAbsType = "__xmlview0--__select0";
-			var aSelectedKey = oAbsType.getSelectedKey();	
-		},*/
+			onAfterRendering: function(oEvent) {
+
+
+			},
+			
+			
+			onUpdateFinished: function(oEvent) {
+
+			
+			},
 		
 		
+				_onBindingChange: function() {
+			
+
+			 var oView = this.getView();
+			 var oModel = this.getView().getModel();
+                      sap.ui.getCore().setModel(oModel);
+                      
+				//ripulisco i campi		
+				oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+				oView.byId("LRS4_DAT_CALENDAR").removeAllSpecialDates();
+				
+					var oCal1 = oView.byId("LRS4_DAT_CALENDAR");
+						var oLeg1 = oView.byId("legend1");
+							oLeg1.destroyItems();
+
+				oView.byId("LRS4_DAT_STARTTIME").setValue("");
+				oView.byId("LRS4_DAT_STARTTIME").rerender();
+				oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
+
+				oView.byId("LRS4_DAT_ENDTIME").setValue("");
+				oView.byId("LRS4_DAT_ENDTIME").rerender();
+				oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
+
+				oView.byId("LRS4_TXA_NOTE").setValue("");
+				oView.byId("LRS4_TXA_NOTE").rerender();
+				oView.byId("LRS4_TXA_NOTE").setEnabled(true);
+
+				var sRead = "/LeaveRequestPosSet";
+
+				oModel.read(sRead, {
+
+					success: fnReadS,
+
+					error: fnReadE
+				});
+
+				function fnReadS(oData, response) {
+					console.log(oData);
+					console.log(response);
+
+					// controllo che la funzione è andata a buon fine 
+					if (response.statusCode == "200") {
+						////////////////////////////////				
+
+
+						var oFormatYYyyymmdd = sap.ui.core.format.DateFormat.getInstance({
+							pattern: "yyyyMMdd",
+							calendarType: sap.ui.core.CalendarType.Gregorian
+						});
+
+						var oRefDate = new Date();
+
+						var oDateRange;
+
+						if (oData.results.length > 0) {
+							for (var i = 0; i < oData.results.length; i++) {
+
+								//						var res = oData.results[i].Zdate.substring(8);
+								var res = oData.results[i].Zdate;
+
+						if ( oData.results[i].ZabsType == "0001") {		
+								
+									oCal1.addSpecialDate(new DateTypeRange({
+									startDate : oFormatYYyyymmdd.parse(res),
+									type : "Type01",
+									tooltip : "Permesso"
+						
+									
+									}));
+						}
+						
+							if ( oData.results[i].ZabsType == "0002") {		
+								
+									oCal1.addSpecialDate(new DateTypeRange({
+									startDate : oFormatYYyyymmdd.parse(res),
+									type : "Type05",
+									tooltip : "Ferie"
+						
+									
+									}));
+						}
+						
+							if ( oData.results[i].ZabsType == "0003") {		
+								
+									oCal1.addSpecialDate(new DateTypeRange({
+									startDate : oFormatYYyyymmdd.parse(res),
+									type : "Type09",
+									tooltip : "Recupero"
+						
+									
+									}));
+						}
+
+                          // aggiungere date selezionate quando si è in modifica
+								/*oCal1.addSelectedDate(new DateTypeRange({
+									startDate: oFormatYYyyymmdd.parse(res)
+
+								}));*/
+
+							}
+							
+						oLeg1.addItem(new CalendarLegendItem({
+						text : "Permesso",
+						id : "leg1",
+						type : "Type01"
+						
+					}));
+					
+						oLeg1.addItem(new CalendarLegendItem({
+						text : "Ferie",
+						id : "leg2",
+						type : "Type05"
+					}));
+					
+						oLeg1.addItem(new CalendarLegendItem({
+						text : "Recupero",
+						id : "leg3",
+						type : "Type09"
+					}));
+
+						}
+
+					} else {
+
+						jQuery.sap.require("sap.m.MessageBox");
+						sap.m.MessageBox.show(
+							"Error: Nessun record recuperato", {
+								icon: sap.m.MessageBox.Icon.WARNING,
+								title: "Error",
+								actions: [sap.m.MessageBox.Action.CLOSE]
+
+							});
+
+					}
+
+				} // END FUNCTION SUCCESS
+
+				function fnReadE(oError) {
+					console.log(oError);
+
+					alert("Error in read: " + oError.message);
+				}
+
+			},
+				
 
         handleAbsTypeSelect: function(oEvent) {
 			var oAbsType = oEvent.oSource;
@@ -104,6 +295,7 @@ oFormatYyyymmdd: null,
 			
 		},
 		
+	
 	//SE START CUSTOM CALENDAR
 		handleCalendarSelect: function(oEvent) {
 			var oCalendar = oEvent.oSource;
@@ -136,21 +328,40 @@ oFormatYyyymmdd: null,
 
 	//Show confirmation dialog
 			showDialog: function (oEvent) {
-			var that = this;
-			this.sButtonKey= oEvent.getSource().getId();//mi salvo il valore chiave del bottone per la gestione dei conflitti in actionTask
-			if (!that.Dialog) {
-			
-               that.Dialog = sap.ui.xmlfragment("ZLEAVE_REQ_CREATE.view.Dialog", this, "ZLEAVE_REQ_CREATE.controller.View1");
-				//to get access to the global model
-				this.getView().addDependent(that.Dialog);
-				if(sap.ui.Device.system.phone){
-					that.Dialog.setStretch(true);
+				
+				var aSelectedDates = this.cale.getSelectedDates();
+				
+				if (aSelectedDates.length == 0 ) {
+				
+				
+					jQuery.sap.require("sap.m.MessageBox");
+					            sap.m.MessageBox.show(
+							      "Selezionare almeno un giorno!", {
+							          icon: sap.m.MessageBox.Icon.WARNING,
+							          title: "Error",
+							          actions: [sap.m.MessageBox.Action.CLOSE]
+							          
+							      });
 				}
-			}
-			if(sap.ui.Device.system.phone){
-					that.Dialog.setStretch(true);
+				else  {
+							      
+						var that = this;
+						this.sButtonKey= oEvent.getSource().getId();//mi salvo il valore chiave del bottone per la gestione dei conflitti in actionTask
+						if (!that.Dialog) {
+						
+			               that.Dialog = sap.ui.xmlfragment("ZLEAVE_REQ_CREATE.view.Dialog", this, "ZLEAVE_REQ_CREATE.controller.View1");
+							//to get access to the global model
+							this.getView().addDependent(that.Dialog);
+							if(sap.ui.Device.system.phone){
+								that.Dialog.setStretch(true);
+							}
+						}
+						if(sap.ui.Device.system.phone){
+								that.Dialog.setStretch(true);
+							}
+			        that.Dialog.open();
+        
 				}
-        that.Dialog.open();
 		},
 		
 		//Close Dialog
@@ -160,7 +371,12 @@ oFormatYyyymmdd: null,
 		},
 
 
-
+	onDisplayNotFound : function (oEvent) {
+			//display the "notFound" target without changing the hash
+			this.getRouter().getTargets().display("notFound", {
+				fromTarget : "view1"
+			});
+		},
 /////////////////////////////////////////////////////////////////////  
 		actionTask: function(oEvent) 
 	{
@@ -189,7 +405,6 @@ oFormatYyyymmdd: null,
 		
         
            sButtonId = this.sButtonKey;
-           
            
            /** MP
             * La forma oView.byId(<sID statico>).getId() è importante da mantenere
@@ -221,35 +436,7 @@ oFormatYyyymmdd: null,
 							sUser = sUname;
 						}
 		
-						//recupero taskid (SE)	
-					//	sSelectedTaskid = oObject.ZWfTaskid;
-     
-	//	  var oObject = oView.getBindingContext().getObject();
-	//		sSelectedTaskid = oObject.ZWfTaskid;
-  
-// al momento posso selzionare solo un task per volta, in questa fase di test non mi interessa 
-//una seleziona massiva che probailmente il cliente non chiederà, altre al fatto del probela degli  START_PO
-// che richiedono la scelta di un nuovo processo da far partire
-
-            //trovo il task id andando a vedere il routing path ricavando la stringa con substring e indexOf
-			//sSelectedTaskid = this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.substring(this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.indexOf(",") + 1);
-			//////////////////////////////////////////
-			
-			//if (aSelectedTaskid.length) 
-			//{
-				//for (i = 0; i < aSelectedTaskid.length; i++) 
-				//{
-					//oTask = aSelectedTaskid[i];
 					
-			//sZabsType =
-			//	 this.getView().byId("SLCT_LEAVETYPE").getText();
-			//	 var sZabsType = this.slctLvType.getSelectedKey(); 
-				 
-		    ///////////////////////////////////////////
-					// recupero il taskid selezionato
-					//oTaskId = oTask.getBindingContext().getProperty("ZWfTaskid");
-					
-//						var oCalendar = oEvent.oSource;
 //			var aSelectedDates = oCalendar.getSelectedDates();
             var aSelectedDates = this.cale.getSelectedDates();
 			var oDate;
@@ -260,7 +447,7 @@ var oUrlParams = {
 				 //ZWfTaskid : "0000025000",
 				 Tmsapprover : this.slctApprover.getSelectedKey(),
 				 ZabsType : this.slctLvType.getSelectedKey(),
-				 ZreqStatus : "C",
+				 ZreqStatus : "I",
                  Znote : this.note.getValue()
 		
 					 };
@@ -269,55 +456,20 @@ var oUrlParams = {
 			if (aSelectedDates.length > 0 ) {
 				for (var i = 0; i < aSelectedDates.length; i++){
 					oDate = aSelectedDates[i].getStartDate();
-					oUrlParams.ToLeaveReqPos.push({Zdate:this.oFormatYyyymmdd.format(oDate), Ztimestart:this.timeFrom.getValue(), Ztimeend:this.timeTo.getValue()} );
-	//				oUrlParams.ToLeaveReqPos.push({Ztime:this.timeFrom.getValue()});
-					 
-					
-//oDataSel.push({Zdate:this.oFormatYyyymmdd.format(oDate)});
-					
+					oUrlParams.ToLeaveReqPos.push({ 
+						Zdate:this.oFormatYyyymmdd.format(oDate), 
+						Ztimestart:this.timeFrom.getValue(),
+						Ztimeend:this.timeTo.getValue(), 
+						Tmsapprover:this.slctApprover.getSelectedKey(),
+						ZabsType:this.slctLvType.getSelectedKey(),
+						ZreqStatus:"I"} );
+				
 				}
 			//	this.oModel.setData(oData);
 			} else {
 			//	this._clearModel();
 			}
-			
 
-
-    
-  /*  				 ToLeaveReqPos : [ {
-        Tmsuser : "SELMO",
-        Zdate : "01011999",
-    }, {
-        Tmsuser : "SELMO",
-        Zdate : "02011999",
-    }, {
-         Tmsuser : "SELMO",
-        Zdate : "03011999",
-    }, ],*/
-    
-    
-				 
-//					  };
-
-
-					  
-					  
-   
-   
- 
-  // <d:Zdate/>
- //  <d:Ztime/>
- //  <d:Zdeleted/>
-					  //var oView = this.getView();
-					  //oModel = this.getModel(),
-					   //var oModel = this.getModel();
-					  // lancio la function import creata sull'odata
-					  /*oModel.callFunction("/ZWfAction", {
-					  method:"POST",
-					  urlParameters: oUrlParams,
-					  success: fnS,
-					  error: fnE });*/
-					 
 					  
 					   jQuery.sap.require("sap.ui.commons.MessageBox");
 						oModel.create('/LeaveRequestSet', oUrlParams, {
@@ -336,12 +488,7 @@ var oUrlParams = {
 						// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
 					//	if (oData.Type == "S") {
 						if (response.statusCode == "201") {	
-							
-		
-			
-	
-		
-	
+
 						//	var msg = "Success: "+oData.Message+", "+sTypeAction;
 								var msg = "Success";
 		        					sap.m.MessageToast.show(msg, { duration: 5000,
@@ -351,7 +498,7 @@ var oUrlParams = {
 		        					});
 		        					
 		     // ripulisco campi  	
-			oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+			  oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
 			
 				oView.byId("LRS4_DAT_STARTTIME").setValue("");
 				oView.byId("LRS4_DAT_STARTTIME").rerender();
@@ -365,47 +512,9 @@ var oUrlParams = {
 				oView.byId("LRS4_TXA_NOTE").rerender();
 				oView.byId("LRS4_TXA_NOTE").setEnabled(true);
 				
-		//			var oLeaveType = oView.byId("SLCT_LEAVETYPE");
-		//			oLeaveType.getBinding("items").refresh();
-			
-		/*		this.timeFrom = this.byId("LRS4_DAT_STARTTIME");
-			this.timeTo = this.byId("LRS4_DAT_ENDTIME");
-			this.legend = this.byId("LRS4_LEGEND");
-			this.remainingVacation = this.byId("LRS4_TXT_REMAINING_DAYS");
-			this.bookedVacation = this.byId("LRS4_TXT_BOOKED_DAYS");
-			this.note = this.byId("LRS4_TXA_NOTE");
-			this.cale = this.byId("LRS4_DAT_CALENDAR");
-			this.slctLvType = this.byId("SLCT_LEAVETYPE");
-			this.slctApprover = this.byId("SLCT_APPROVER");
-			
-				this.note.setValue("");
-				
-		
-				this.timeFrom.setValue("");
-				this.timeFrom.rerender();
-				this.timeFrom.setEnabled(true);
-		
-				this.timeTo.setValue("");
-				this.timeTo.rerender();
-				this.timeTo.setEnabled(true);*/
-				
-							//	alert("Success: "+oData.Message);
-							/** MP
-							 *  Recupero il prefisso che viene messo di default alle viste nell'app.
-							 *  Stesso discorso fatto sopra per i bottoni. Piuttosto che avere il 
-							 *  prefisso statico dichiarato me lo ricavo. In questo modo l'applicazione
-							 *  svolge le correttamente le funzionalità indipendentemente dall'ambiente
-							 *  di run.
-							 */
-							/*var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; // equivale ad "application-zworkflow-display-component---"
-							oViewW = sap.ui.getCore().byId(sPrefix + "worklist");
-							var oTable = oViewW.byId("table");
-							oTable.getBinding("items").refresh();
-							sap.ui.controller("Workflow.controller.Object").onNavBack(); //richiama una funzione di Object.Controller con questa sintassi
-					*/	} else {
-							//richiama una funzione di Object.Controller con questa sintassi
-		
-									//		alert("Error: "+oData.Message); 
+	
+						} else {
+							
 									
 								jQuery.sap.require("sap.m.MessageBox");
 					            sap.m.MessageBox.show(
@@ -430,194 +539,6 @@ var oUrlParams = {
 
 
 
-/////////////////////////////////////////////////////////////////////  
-// 		actionTask: function(oEvent) 
-// 	{
-		
-// 		// richiamare handleAbsTypeSelect
-		
-// 		var sButtonId;
-// 		var oView, oViewW;
-// 		var sTypeAction;
-// 		var sSelectedTaskid;
-// 		var sZabsType; 
-				 
-// 		var sAction, sUser, sUname; //sUser e sUname rappresentano delle variabili di appoggio
-	
-	
-// 			oView = this.getView();
-// 			 var oModel = this.getView().getModel();
-//                       sap.ui.getCore().setModel(oModel);
-                      
-//                       oModel.setUseBatch(false);
-// 			//var oObject = oView.getBindingContext().getObject();
-			
-// 		if(this.Dialog){
-// 			this.Dialog.close();
-// 		}
-		
-        
-//           sButtonId = this.sButtonKey;
-           
-           
-//           /** MP
-//             * La forma oView.byId(<sID statico>).getId() è importante da mantenere
-//             * in quanto una volta che l'applicazione è deployata ed eseguita sul server
-//             * il prefisso dell'id statico cambia. Referenziando il controllo con il suo 
-//             * id staticoutilizzando questa forma fa si che il controllo e la logica 
-//             * applicata ad esso o a partire da azioni su di esso non cambi in dipendenza 
-//             * dell'ambiente di esecuzione e del prefisso applicato. 
-//             * FORMA PRECEDENTE: (sButtonId == "application-zworkflow-display-component---object--btn1") 
-//             */ 
-            
-            
-//                          sUser  = "";
-// 						 sAction = undefined;
-						 
-// 						 sTypeAction = undefined;
-// 						if (sButtonId == oView.byId("btn1").getId()) {
-// 							sAction = "OK";
-// 							sTypeAction = "Task approved";
-// 							sUname = undefined;
-// 						} else if (sButtonId == oView.byId("btn2").getId()) {
-// 							sAction = "KO";
-// 							sTypeAction = "Task rejected";
-// 							sUname = undefined;
-// 						//(SE)
-// 				    	} else if ((sButtonId == oView.byId("btn3").getId()) && (sUname != undefined))  {
-// 						    sAction = "MOVE";
-// 						    sTypeAction = "Task moved";
-// 							sUser = sUname;
-// 						}
-		
-// 						//recupero taskid (SE)	
-// 					//	sSelectedTaskid = oObject.ZWfTaskid;
-     
-// 	//	  var oObject = oView.getBindingContext().getObject();
-// 	//		sSelectedTaskid = oObject.ZWfTaskid;
-  
-// // al momento posso selzionare solo un task per volta, in questa fase di test non mi interessa 
-// //una seleziona massiva che probailmente il cliente non chiederà, altre al fatto del probela degli  START_PO
-// // che richiedono la scelta di un nuovo processo da far partire
-
-//             //trovo il task id andando a vedere il routing path ricavando la stringa con substring e indexOf
-// 			//sSelectedTaskid = this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.substring(this.getRouter().getRoute("object")._oRouter._oRouter._prevMatchedRequest.indexOf(",") + 1);
-// 			//////////////////////////////////////////
-			
-// 			//if (aSelectedTaskid.length) 
-// 			//{
-// 				//for (i = 0; i < aSelectedTaskid.length; i++) 
-// 				//{
-// 					//oTask = aSelectedTaskid[i];
-					
-// 			//sZabsType =
-// 			//	 this.getView().byId("SLCT_LEAVETYPE").getText();
-// 			//	 var sZabsType = this.slctLvType.getSelectedKey(); 
-				 
-// 		    ///////////////////////////////////////////
-// 					// recupero il taskid selezionato
-// 					//oTaskId = oTask.getBindingContext().getProperty("ZWfTaskid");
-// 					 var oUrlParams = {
-// 				 //ZWfTaskid : "0000025000",
-// 				 Tmsapprover : this.slctApprover.getSelectedKey(),
-// 				 ZabsType : this.slctLvType.getSelectedKey()
-				 
-				 
-				 
-// 				 //     ZWfTaskid : sSelectedTaskid, //modificato passando la stringa come parametro
-// 				//	  ZWfActionType : sAction,
-// 				//	  ZWfUser: sUser
-// 					  };
-					  
-					  
-   
-   
- 
-//   // <d:Zdate/>
-//  //  <d:Ztime/>
-//  //  <d:Zdeleted/>
-// 					  //var oView = this.getView();
-// 					  //oModel = this.getModel(),
-// 					   //var oModel = this.getModel();
-// 					  // lancio la function import creata sull'odata
-// 					  /*oModel.callFunction("/ZWfAction", {
-// 					  method:"POST",
-// 					  urlParameters: oUrlParams,
-// 					  success: fnS,
-// 					  error: fnE });*/
-					 
-					  
-// 					   jQuery.sap.require("sap.ui.commons.MessageBox");
-// 						oModel.create('/LeaveRequestSet', oUrlParams, {
-// 							method: "POST",
-// 						       success : fnS,
-						       
-// 						       error : fnE
-// 						  });
-					   
-// 				//}
-// 			//}	
-// 				   function fnS(oData, response) {
-// 						console.log(oData);
-// 						console.log(response);
-		
-// 						// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
-// 					//	if (oData.Type == "S") {
-// 						if (response.statusCode == "201") {	
-							
-
-
-// 						//	var msg = "Success: "+oData.Message+", "+sTypeAction;
-// 								var msg = "Success";
-// 		        					sap.m.MessageToast.show(msg, { duration: 5000,
-// 		        					autoClose: true,
-// 		        					 closeOnBrowserNavigation: false
-		        						
-// 		        					});
-// 							//	alert("Success: "+oData.Message);
-// 							/** MP
-// 							 *  Recupero il prefisso che viene messo di default alle viste nell'app.
-// 							 *  Stesso discorso fatto sopra per i bottoni. Piuttosto che avere il 
-// 							 *  prefisso statico dichiarato me lo ricavo. In questo modo l'applicazione
-// 							 *  svolge le correttamente le funzionalità indipendentemente dall'ambiente
-// 							 *  di run.
-// 							 */
-// 							/*var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; // equivale ad "application-zworkflow-display-component---"
-// 							oViewW = sap.ui.getCore().byId(sPrefix + "worklist");
-// 							var oTable = oViewW.byId("table");
-// 							oTable.getBinding("items").refresh();
-// 							sap.ui.controller("Workflow.controller.Object").onNavBack(); //richiama una funzione di Object.Controller con questa sintassi
-// 					*/	} else {
-// 							//richiama una funzione di Object.Controller con questa sintassi
-		
-// 									//		alert("Error: "+oData.Message); 
-									
-// 								jQuery.sap.require("sap.m.MessageBox");
-// 					            sap.m.MessageBox.show(
-// 							      "Error: "+oData.Message, {
-// 							          icon: sap.m.MessageBox.Icon.WARNING,
-// 							          title: "Error",
-// 							          actions: [sap.m.MessageBox.Action.CLOSE]
-							          
-// 							      });
-								  
-// 								}
-
-// 					}// END FUNCTION SUCCESS
-
-// 					function fnE(oError) {
-// 						console.log(oError);
-		
-// 						alert("Error in read: " + oError.message);
-// 					}
-					  
-// 	}, 
-
-	/*	onExit: function() {
-			ZLEAVE_REQ_CREATE.utils.DataManager.clearcachedData();
-			var e = sap.ui.getCore().getEventBus();
-			e.unsubscribe("ZLEAVE_REQ_CREATE.LeaveCollection", "refresh", this._onLeaveCollRefresh, this);
-		},*/
 
 		_initCntrls: function() {
 			this.changeMode = false;
@@ -658,13 +579,23 @@ var oUrlParams = {
 			this.ResponseMessage = null;
 		},
 
-	/*	_onLeaveCollRefresh: function() {
-			ZLEAVE_REQ_CREATE.utils.CalendarTools.clearCache();
-		},*/
 		
+				onHistoryPress: function() {
+					
+	//this.getRouter().getTargets().display("view1s");
+			
+					this.getRouter().navTo("view1s", {});
+					
+				},
+
 		
+		getRouter: function() {
+			return sap.ui.core.UIComponent.getRouterFor(this);
+			
 		
-		_buildHeaderFooter: function() {
+		}
+		
+	/*	_buildHeaderFooter: function() {
 			var _ = this;
 			this.objHeaderFooterOptions = {
 				sI18NFullscreenTitle: "",
@@ -704,8 +635,10 @@ var oUrlParams = {
 			if (this.extHookChangeFooterButtons) {
 				this.objHeaderFooterOptions = this.extHookChangeFooterButtons(this.objHeaderFooterOptions);
 			}
-		},
-		_handleRouteMatched: function(a) {
+		},*/
+		
+		
+	/*	_handleRouteMatched: function(a) {
 			var _ = this;
 			this.withdrawMode = false;
 			this.changeMode = false;
@@ -857,8 +790,10 @@ var oUrlParams = {
 					this.extHookRouteMatchedChange();
 				}
 			}
-		},
-		_copyChangeModeData: function() {
+		},*/
+		
+		
+		/*_copyChangeModeData: function() {
 			var _ = null;
 			var a = null;
 			var b = 0;
@@ -998,8 +933,9 @@ var oUrlParams = {
 			} catch (e) {
 				jQuery.sap.log.warning("falied to copy values to additional fields" + e, "_copyChangeModeData", "ZLEAVE_REQ_CREATE.view.S1");
 			}
-		},
-		_clearData: function() {
+		},*/
+		
+		/*_clearData: function() {
 			this._clearDateSel();
 			if (this._isLocalReset) {
 				for (var i = 0; i < this.calSelResetData.length; i++) {
@@ -1049,7 +985,9 @@ var oUrlParams = {
 			if (this.extHookClearData) {
 				this.extHookClearData();
 			}
-		},
+		},*/
+		
+/*		
 		_clearDateSel: function() {
 			if (this.cale) {
 				this.cale.unselectAllDates();
@@ -1067,7 +1005,7 @@ var oUrlParams = {
 				this.cale.setWeeksPerRow(1);
 			}
 			//SE
-			/*if (this.legend) {
+			if (this.legend) {
 				this.legend.setLegendForNormal(this.resourceBundle.getText("LR_WORKINGDAY"));
 				this.legend.setLegendForType00(this.resourceBundle.getText("LR_NONWORKING"));
 				this.legend.setLegendForType01(this.resourceBundle.getText("LR_APPROVELEAVE"));
@@ -1079,7 +1017,7 @@ var oUrlParams = {
 			}
 			if (this.extHookInitCalendar) {
 				this.extHookInitCalendar();
-			}*/
+			}
 		},
 		registerForOrientationChange: function(a) {
 			if (sap.ui.Device.system.tablet) {
@@ -1089,8 +1027,10 @@ var oUrlParams = {
 		},
 		_onOrientationChanged: function() {
 			this._leaveTypeDependantSettings(this.leaveType, false);
-		},
-		_onTapOnDate: function(e) {
+		},*/
+		
+		
+	/*	_onTapOnDate: function(e) {
 			var _;
 			if (this.cale) {
 				_ = this.cale.getSelectedDates();
@@ -2652,7 +2592,7 @@ var oUrlParams = {
 				c.DialogInstance.addContent(L);
 				c.DialogInstance.open();
 			}, function(r) {});
-		}
+		}*/
 
 		// SE
 	});
