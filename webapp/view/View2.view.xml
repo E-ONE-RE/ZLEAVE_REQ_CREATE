@@ -1,4 +1,17 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:semantic="sap.m.semantic" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
+
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
+xmlns:smartTable="sap.ui.comp.smarttable" 
+xmlns:mvc="sap.ui.core.mvc" 
+xmlns="sap.m" 
+xmlns:sap.ui.layout.form="sap.ui.layout.form" 
+xmlns:sap.ui.layout="sap.ui.layout" 
+xmlns:semantic="sap.m.semantic" 
+xmlns:sap.me="sap.me" 
+xmlns:sap.ui.core="sap.ui.core" 
+xmlns:ui="sap.ca.ui"
+xmlns:sap.ui.unified="sap.ui.unified" 
+xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 
 
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
@@ -10,78 +23,61 @@
 
 					<content>
 						<!--<Button id="displayNotFoundBtn" text="{i18n>DisplayNotFound}" press="onDisplayNotFound" class="sapUiTinyMarginEnd"/>
+
 		-->
-			
-					
-					<sap.ui.layout:Grid width="auto" defaultSpan="L12 M12 S12" id="LRS4_FLX_TOP">
-						<sap.ui.layout:content>
-							<VBox width="100%" direction="Column" id="__vbox0_ABSENCETYPE" alignItems="Center">
-							<items>
-							    
-		
-							
-							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item1" id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}">
-							    
-							    <items>
-							    
-							        <sap.ui.core:ListItem text="{TipoAbs}" key="{IdAbs}" id="__item1"/></items>
-							    
+			<sap.ui.layout:Grid width="auto" defaultSpan="L12 M12 S12" id="LRS4_FLX_TOP">
+				<sap.ui.layout:content>
+					<VBox width="100%" direction="Column" id="__vbox0_ABSENCETYPE" alignItems="Center">
+						<items>
+							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item1"
+								id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}">
+								<items>
+									<sap.ui.core:ListItem text="{TipoAbs}" key="{IdAbs}" id="it"/></items>
 							</Select>
-							
-							
-							    
-							</items>
-							</VBox>
-						</sap.ui.layout:content>
-					</sap.ui.layout:Grid>
-					
-						<sap.ui.layout:Grid id="LRS4_FLX_CONTENT" defaultSpan="L12 M12 S12" width="auto">
-						<sap.ui.layout:content>
-							
-								
-							<sap.ui.layout.form:Form id="LRS4_FRM_MAIN">
-								
+						</items>
+					</VBox>
+				</sap.ui.layout:content>
+			</sap.ui.layout:Grid>
+			<sap.ui.layout:Grid id="LRS4_FLX_CONTENT" defaultSpan="L12 M12 S12" width="auto">
+				<sap.ui.layout:content>
+					<sap.ui.layout.form:Form id="LRS4_FRM_MAIN">
 						<sap.ui.layout.form:layout>
 							<sap.ui.layout.form:ResponsiveGridLayout labelSpanL="3" labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="2" columnsM="1"/>
 						</sap.ui.layout.form:layout>
-								
-								
-								<sap.ui.layout.form:formContainers>
-									
-									<sap.ui.layout.form:FormContainer id="LRS4_FRM_CNT_CALENDAR">
-
-										<sap.ui.layout.form:formElements>
-											
-											<sap.ui.layout.form:FormElement id="LRS4_FELEM_CALENDAR">
-												<sap.ui.layout.form:layoutData>
-													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
-												</sap.ui.layout.form:layoutData>
-												<sap.ui.layout.form:fields>
-														<sap.ui.layout:Grid id="LR_CALENDAR" defaultSpan="L12 M12 S12" width="100%">
-														<sap.ui.layout:content>
-															
-															<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center">
-																<items>	
-																		<sap.ui.layout:VerticalLayout width="100%">
-																			<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1"/>
-													                       <sap.ui.unified:CalendarLegend id="legend1"/>
-													<!--	<ToggleButton text="Special Days" press="handleShowSpecialDays"></ToggleButton>-->
+						<sap.ui.layout.form:formContainers>
+							<sap.ui.layout.form:FormContainer id="LRS4_FRM_CNT_CALENDAR">
+								<sap.ui.layout.form:formElements>
+									<sap.ui.layout.form:FormElement id="LRS4_FELEM_CALENDAR">
+										<sap.ui.layout.form:layoutData>
+											<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
+										</sap.ui.layout.form:layoutData>
+										<sap.ui.layout.form:fields>
+											<sap.ui.layout:Grid id="LR_CALENDAR" defaultSpan="L12 M12 S12" width="100%">
+												<sap.ui.layout:content>
+													<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center">
+														<items>
+															<sap.ui.layout:VerticalLayout width="100%">
+																<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false"
+																	legend="legend1"/>
+																<sap.ui.unified:CalendarLegend id="legend1"/>
+																<!--	<ToggleButton text="Special Days" press="handleShowSpecialDays"></ToggleButton>-->
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
 																			<sap.ui.layout:ResponsiveFlowLayoutData id="LRS4_LYO_LEGEND" minWidth="30" weight="15"/>
 																		</sap.me:layoutData>
 																	</sap.me:CalendarLegend>-->
-																		</sap.ui.layout:VerticalLayout>
-																</items>
-															</VBox>
-															
-															<VBox width="100%" direction="Column" id="__vbox0_CALBUTTON" alignItems="Center">
-																<items>	
+															</sap.ui.layout:VerticalLayout>
+														</items>
+													</VBox>
+													<VBox width="100%" direction="Column" id="__vbox0_CALBUTTON" alignItems="Center">
+														<items>
 															<sap.ui.layout:VerticalLayout width="100%">
+
 															
 															<Button press="handleRemoveSelection" text="Rimuovi date selezionate" id="removeAll_btn"/>
 															
 															<!--<List
+
 					id="selectedDatesList"
 					class="labelMarginLeft"
 					noDataText="No Dates Selected"
@@ -90,22 +86,19 @@
 				<StandardListItem
 						title="{Date}" id="datelist"/>
 			</List>-->
-
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
 																			<sap.ui.layout:ResponsiveFlowLayoutData id="LRS4_LYO_LEGEND" minWidth="30" weight="15"/>
 																		</sap.me:layoutData>
 																	</sap.me:CalendarLegend>-->
-																		</sap.ui.layout:VerticalLayout>
-																</items>
-															</VBox>
-							
-														</sap.ui.layout:content>
-													</sap.ui.layout:Grid>	
-												</sap.ui.layout.form:fields>
-											</sap.ui.layout.form:FormElement>
-											
-										<!--	<sap.ui.layout.form:FormElement id="LRS4_FELEM_DATESELECTED">
+															</sap.ui.layout:VerticalLayout>
+														</items>
+													</VBox>
+												</sap.ui.layout:content>
+											</sap.ui.layout:Grid>
+										</sap.ui.layout.form:fields>
+									</sap.ui.layout.form:FormElement>
+									<!--	<sap.ui.layout.form:FormElement id="LRS4_FELEM_DATESELECTED">
 												
 												<sap.ui.layout.form:layoutData>
 													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
@@ -129,23 +122,12 @@
 												
 											</sap.ui.layout.form:FormElement>
 											-->
-											
-											
-										</sap.ui.layout.form:formElements>
-										
-									</sap.ui.layout.form:FormContainer>
-									
-									
-									
-								</sap.ui.layout.form:formContainers>
-								
-								
-								<sap.ui.layout.form:FormContainer id="LRS4_FRM_CNT_BALANCES">
-										
-										
-										<sap.ui.layout.form:formElements>
-											
-											<!--<sap.ui.layout.form:FormElement id="LRS4_FELEM_BALANCES">
+								</sap.ui.layout.form:formElements>
+							</sap.ui.layout.form:FormContainer>
+						</sap.ui.layout.form:formContainers>
+						<sap.ui.layout.form:FormContainer id="LRS4_FRM_CNT_BALANCES">
+							<sap.ui.layout.form:formElements>
+								<!--<sap.ui.layout.form:FormElement id="LRS4_FELEM_BALANCES">
 												<sap.ui.layout.form:layoutData>
 													<sap.ui.layout:ResponsiveFlowLayoutData/>
 												</sap.ui.layout.form:layoutData>
@@ -182,6 +164,7 @@
 													</sap.ui.layout:Grid>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>-->
+
 											
 											<sap.ui.layout.form:FormElement id="LRS4_FELEM_TIMEINPUT" visible="true">
 												<sap.ui.layout.form:layoutData>
@@ -209,6 +192,7 @@
 											</sap.ui.layout.form:FormElement>
 											
 											<!--<sap.ui.layout.form:FormElement id="LRS4_FELEM_ABSENCE" visible="true">
+
 												<sap.ui.layout.form:layoutData>
 													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
 												</sap.ui.layout.form:layoutData>
@@ -223,6 +207,7 @@
 													</sap.ui.layout:Grid>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>-->
+
 											
 											<sap.ui.layout.form:FormElement id="LR_FELEM_APPROVER">
 												<sap.ui.layout.form:layoutData>
@@ -285,6 +270,7 @@
 											</sap.ui.layout.form:FormElement>
 											
 										<!--	<sap.ui.layout.form:FormElement visible="false" id="LRS4_FELEM_FILEATTACHMENTS">
+
 												<sap.ui.layout.form:layoutData>
 													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
 												</sap.ui.layout.form:layoutData>
@@ -299,8 +285,7 @@
 													</sap.ui.layout:Grid>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>-->
-											
-										<!--	<sap.ui.layout.form:FormElement id="LRS4_FR_ADDN_FIELDS">
+								<!--	<sap.ui.layout.form:FormElement id="LRS4_FR_ADDN_FIELDS">
 												<sap.ui.layout.form:layoutData>
 													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
 												</sap.ui.layout.form:layoutData>
@@ -308,49 +293,144 @@
 													<sap.ui.layout:Grid width="100%" id="LRS4_FR_ADDN_FIELDS_GRID" defaultSpan="L12 M12 S12"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>-->
-											
-										
-										</sap.ui.layout.form:formElements>
-									</sap.ui.layout.form:FormContainer>
-									
-									
-							
-								<sap.ui.layout.form:layout>
-									<sap.ui.layout.form:ResponsiveGridLayout id="__layout_FORM_CONTENT"/>
-								</sap.ui.layout.form:layout>
-							
-							</sap.ui.layout.form:Form>
-							
-							
-	
-							
-								</sap.ui.layout:content>
-					</sap.ui.layout:Grid>
-					
-					
-	
+							</sap.ui.layout.form:formElements>
+						</sap.ui.layout.form:FormContainer>
+						<sap.ui.layout.form:layout>
+							<sap.ui.layout.form:ResponsiveGridLayout id="__layout_FORM_CONTENT"/>
+						</sap.ui.layout.form:layout>
+					</sap.ui.layout.form:Form>
+				</sap.ui.layout:content>
+			
+			</sap.ui.layout:Grid>
+			
+			
+			<!--MP: aggiunti IconTabFilters e smarttable con riepilogo delle posizioni-->
+			
+				<IconTabBar
+				id="iconTabBar1"
+				class="sapUiResponsiveContentPadding"
+					backgroundDesign="Translucent"
+					applyContentPadding="true">	
+					<items>
+					<IconTabFilter
+				     	key="ST"
+						id="filt"
+						icon="sap-icon://accept"
+						tooltip="Lista posizioni"
+						text="Giorni">
+				<smartTable:SmartTable id="ST_Pos" entitySet="LeaveRequestPosSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
+					    showVariantManagement="false" header="Posizioni" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true"  tableBindingPath="ToLeaveReqPos"
+						class="sapUiResponsiveContentPadding"  customData:p13nDialogSettings='{filter:{visible:false}}'>
+						<Table noDataText="Drop column list items here and columns in the area above" id="__table1" updateFinished="onUpdateFinished">
+							<items>
+								<ColumnListItem id="__item2">
+									<cells>
+										<ObjectIdentifier title="{ZrequestId}" id="txt0"/>
+									</cells>
+									<cells>
+										<ObjectIdentifier title="{ZrequestPos}" id="txt1"/>
+									</cells>
+									<cells>
+										<ObjectIdentifier title="{path: 'Zdate', formatter:'.formatter.formatDate' }" id="txt3"/>
+									</cells>
+									<cells>
+										<ObjectIdentifier title="{Ztimestart}" id="txt4"/>
+									</cells>
+									<cells>
+										<ObjectIdentifier title="{Ztimeend}" id="txt5"/>
+									</cells>
+									<cells>
+										<ObjectIdentifier title=" { path: 'ZdateRec', formatter: '.formatter.formatDate'}" id="txt6"/>
+									</cells>
+									<cells>
+										<ObjectIdentifier title=" {Zorep}" id="txt7"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+							<columns>
+								<Column id="clmn0" customData:p13nData='\{"leadingProperty":"ZrequestId", "columnKey":"ZrequestId"}'  
+								width="auto" 
+								minScreenWidth="tablet" 
+								demandPopin="false" 
+								visible="true">
+									<Label text="{/#LeaveRequestPosSet/ZrequestId/@sap:label}" id="lbl0"/>
+								</Column>
+								<Column id="clmn1" customData:p13nData='\{"leadingProperty":"ZrequestPos", "columnKey":"ZrequestPos"}'
+									width="auto" 
+								minScreenWidth="tablet" 
+								demandPopin="false" 
+								visible="true">
+									<Label text="{/#LeaveRequestPosSet/ZrequestPos/@sap:label}" id="lbl1"/>
+								</Column>
+								<Column id="clmn3" customData:p13nData='\{"leadingProperty":"Zdate", "columnKey":"Zdate"}'
+									width="auto" 
+								minScreenWidth="phone" 
+								demandPopin="true" 
+								visible="true">
+									<Label text="{/#LeaveRequestPosSet/Zdate/@sap:label}" id="lbl3"/>
+								</Column>
+								<Column id="clmn4" customData:p13nData='\{"leadingProperty":"Ztimestart", "columnKey":"Ztimestart"}'
+									width="auto" 
+								minScreenWidth="phone" 
+								demandPopin="true" 
+								visible="true">
+									<Label text="{/#LeaveRequestPosSet/Ztimestart/@sap:label}" id="lbl4"/>
+								</Column>
+								<Column id="clmn5" customData:p13nData='\{"leadingProperty":"Ztimeend", "columnKey":"Ztimeend"}'
+									width="auto" 
+								minScreenWidth="phone" 
+								demandPopin="true" 
+								visible="true">
+									<Label text="{/#LeaveRequestPosSet/Ztimeend/@sap:label}" id="lbl5"/>
+								</Column>
+								<Column id="clmn6" customData:p13nData='\{"leadingProperty":"ZdateRec", "columnKey":"ZdateRec"}'
+									width="auto" 
+								minScreenWidth="tablet" 
+								demandPopin="false" 
+								visible="true">
+									<Label text="{/#LeaveRequestPosSet/ZdateRec/@sap:label}" id="lbl6"/>
+								</Column>
+								<Column id="clmn7" customData:p13nData='\{"leadingProperty":"Zorep", "columnKey":"Zorep"}'
+									width="auto" 
+								minScreenWidth="tablet" 
+								demandPopin="false" 
+								visible="true">
+									<Label text="{/#LeaveRequestPosSet/Zorep/@sap:label}" id="lbl7"/>
+								</Column>
+							</columns>
+						</Table>
+						<smartTable:layoutData>
+							<FlexItemData growFactor="1" baseSize="0%"/>
+						</smartTable:layoutData>
+					</smartTable:SmartTable>
+			</IconTabFilter>
+						<IconTabFilter
+			    	key="note"
+					id="filt2"
+						icon="sap-icon://accept"
+					tooltip="Note Team Leader o Admin"
+						text="Note">
+						
+							</IconTabFilter>
+					</items>
+				</IconTabBar>
+		<!--MP: fine-->
 		
-				</content>
-	
 		
-					
-					
-					
-				
-				<footer>
-					<OverflowToolbar id="footerToolbar">
-							<ToolbarSpacer/>
-		
-							<Button id="btn1_mod" type="Accept" text="Modifica" press="onActionDialog">
+
+		</content>
+		<footer>
+			<OverflowToolbar id="footerToolbar2">
+				<ToolbarSpacer/>
+				<Button id="btn1_mod" type="Accept" text="Modifica" press="onActionDialog">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 						  
 						  	<Button id="btn2_del" type="Reject" text="Elimina" press="onActionDialog">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
-	
-					</OverflowToolbar>
-				</footer>
-				
+			</OverflowToolbar>
+		</footer>
+
 	</Page>
 </mvc:View>

@@ -68,7 +68,7 @@ sap.ui.define([
 		    sMonth,
 		    sDay;
 		    
-		
+		if(sDate){
 		if(sDate.indexOf("-") == -1){
 		sYear = sDate.substring(0,4);
 	    sMonth = sDate.substring(4,6);
@@ -77,6 +77,8 @@ sap.ui.define([
 		sYear = sDate.substring(0,4);
 		sMonth = sDate.substring(5,7);
 	    sDay = sDate.substring(8,10);
+		}
+			
 		}
   // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
   var oDate= new Date(sYear, sMonth - 1, sDay); 

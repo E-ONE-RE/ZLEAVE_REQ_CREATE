@@ -39,12 +39,17 @@ sap.ui.define([
 				oRouter.getRoute("view2").attachMatched(this._onRouteMatched, this);
 
 			},
+			
+			
+		
+			
 
 			_onRouteMatched: function(oEvent) {
 				var oArgs, oView;
 				oArgs = oEvent.getParameter("arguments");
 				oView = this.getView();
 
+              
 				oView.bindElement({
 					path: "/LeaveRequestSet('" + oArgs.ZrequestId + "')",
 					//	parameters : {expand: 'ToLeaveReqPos'}, 
@@ -60,6 +65,8 @@ sap.ui.define([
 						}
 					}
 				});
+				
+				
 
 			},
 
@@ -72,11 +79,20 @@ sap.ui.define([
 				 var oView = this.getView();
 					var oModel = this.getView().getModel();
                       sap.ui.getCore().setModel(oModel);
+
                 
                 var oCal2 = oView.byId("LRS4_DAT_CALENDAR");
 				var oLeg2 = oView.byId("legend1");
 				
 					//ripulisco i campi	calendario	
+
+                      
+                      
+                      
+               
+                      
+				//ripulisco i campi		
+
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSpecialDates();
 				oLeg2.destroyItems();
@@ -109,6 +125,15 @@ sap.ui.define([
 				oView.byId("LRS4_DAT_ORETOT").setValue(oCtx.getProperty("ZoreTotali"));
 				
 				oView.byId("LRS4_TXA_NOTE").setValue(oCtx.getProperty("Znote"));
+        
+         //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
+             //   var oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
+            //    var oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
+        
+       
+        
+            
+			
 				
 				if (zstatus === 'A' || zstatus === 'R')
 				{
@@ -135,6 +160,15 @@ sap.ui.define([
 					
 					oView.byId("removeAll_btn").setEnabled(false);	
 					oView.byId("removeAll_btn").rerender();	
+          
+          oView.byId("btn1_mod").setEnabled(false);
+          oView.byId("btn1_mod").rerender();	
+          
+          oView.byId("btn1_del").setEnabled(false);
+          oView.byId("btn2_del").rerender();	
+          	
+					
+          
                 }
                 else  
 					{
@@ -163,6 +197,14 @@ sap.ui.define([
 					
 					oView.byId("removeAll_btn").setEnabled(true);	
 					oView.byId("removeAll_btn").rerender();	
+            
+          oView.byId("btn1_mod").setEnabled(true);
+          oView.byId("btn1_mod").rerender();	
+          
+          oView.byId("btn1_del").setEnabled(true);
+          oView.byId("btn2_del").rerender();	
+          	
+          
 					
 				//leggo le posizioni per ricavare i giorni selezionati della singola richiesta in modifica
 				
@@ -213,7 +255,7 @@ sap.ui.define([
 									startDate: oFormatYYyyymmdd.parse(oZdate)
 
 								}));
-
+								
 							}
 							
 						}
@@ -613,10 +655,14 @@ sap.ui.define([
 			//	},
 
 			_showObject: function(oItem) {
+				var oButtonMod, oButtonDel;
 				this.getRouter().navTo("change", {
 					objectId: oItem.getBindingContext().getProperty("ZrequestId")
 
 				});
+				
+				
+			
 			},
 
 			getRouter: function() {
