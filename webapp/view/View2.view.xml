@@ -1,4 +1,3 @@
-
 <mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
 xmlns:smartTable="sap.ui.comp.smarttable" 
 xmlns:mvc="sap.ui.core.mvc" 
@@ -15,8 +14,11 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 
 
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
-		<ObjectHeader id="objectHeader" title="Richiesta n°: {ZrequestId} - { path: 'ZreqStatus', formatter: '.formatter.formatStatus'}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
-				
+		<ObjectHeader id="objectHeader" title="Richiesta n° {ZrequestId} del { path: 'ZdateRec', formatter: '.formatter.formatDate'}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
+				<statuses>
+				<ObjectStatus title="Stato" text="{ path: 'ZreqStatus', formatter: '.formatter.formatStatus'} il { path: 'ZdateAction', formatter: '.formatter.formatDate'}"/>
+			     
+			</statuses>	
 				
 			</ObjectHeader>
 		
@@ -324,12 +326,12 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 						<Table noDataText="Drop column list items here and columns in the area above" id="__table1" updateFinished="onUpdateFinished">
 							<items>
 								<ColumnListItem id="__item2">
-									<cells>
+								<!--	<cells>
 										<ObjectIdentifier title="{ZrequestId}" id="txt0"/>
 									</cells>
 									<cells>
 										<ObjectIdentifier title="{ZrequestPos}" id="txt1"/>
-									</cells>
+									</cells>-->
 									<cells>
 										<ObjectIdentifier title="{path: 'Zdate', formatter:'.formatter.formatDate' }" id="txt3"/>
 									</cells>
@@ -339,16 +341,16 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 									<cells>
 										<ObjectIdentifier title="{Ztimeend}" id="txt5"/>
 									</cells>
-									<cells>
+									<!--<cells>
 										<ObjectIdentifier title=" { path: 'ZdateRec', formatter: '.formatter.formatDate'}" id="txt6"/>
-									</cells>
+									</cells>-->
 									<cells>
 										<ObjectIdentifier title=" {Zorep}" id="txt7"/>
 									</cells>
 								</ColumnListItem>
 							</items>
 							<columns>
-								<Column id="clmn0" customData:p13nData='\{"leadingProperty":"ZrequestId", "columnKey":"ZrequestId"}'  
+							<!--	<Column id="clmn0" customData:p13nData='\{"leadingProperty":"ZrequestId", "columnKey":"ZrequestId"}'  
 								width="auto" 
 								minScreenWidth="tablet" 
 								demandPopin="false" 
@@ -361,7 +363,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 								demandPopin="false" 
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/ZrequestPos/@sap:label}" id="lbl1"/>
-								</Column>
+								</Column>-->
 								<Column id="clmn3" customData:p13nData='\{"leadingProperty":"Zdate", "columnKey":"Zdate"}'
 									width="auto" 
 								minScreenWidth="phone" 
@@ -383,13 +385,13 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/Ztimeend/@sap:label}" id="lbl5"/>
 								</Column>
-								<Column id="clmn6" customData:p13nData='\{"leadingProperty":"ZdateRec", "columnKey":"ZdateRec"}'
+								<!--<Column id="clmn6" customData:p13nData='\{"leadingProperty":"ZdateRec", "columnKey":"ZdateRec"}'
 									width="auto" 
 								minScreenWidth="tablet" 
 								demandPopin="false" 
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/ZdateRec/@sap:label}" id="lbl6"/>
-								</Column>
+								</Column>-->
 								<Column id="clmn7" customData:p13nData='\{"leadingProperty":"Zorep", "columnKey":"Zorep"}'
 									width="auto" 
 								minScreenWidth="tablet" 
@@ -409,7 +411,23 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 					id="filt2"
 						icon="sap-icon://accept"
 					tooltip="Note Team Leader o Admin"
-						text="Note">
+						text="Note Approvatore">
+							
+							<List id="commentList"
+								showSeparators="Inner"
+							    noDataText="Nessun commento alla richiesta"
+						        backgroundDesign="Translucent">
+								<items>
+								<FeedListItem
+								    id="FLI"
+								    sender="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst}"
+								    timestamp="{ path: 'ZdateAction', formatter: '.formatter.formatDate'} { path: 'ZtimeAction', formatter: '.formatter.formatTime'}"
+								    info="Richiesta {path : 'ZabsType', formatter: '.formatter.formatAbsence'}"
+									icon="sap-icon://employee-approvals"
+									iconDensityAware="false"
+									text="{ZnoteAPP}"/>
+									</items>
+								</List>
 						
 							</IconTabFilter>
 					</items>

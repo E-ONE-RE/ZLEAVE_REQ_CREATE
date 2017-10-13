@@ -52,17 +52,40 @@ sap.ui.define([
  	
  	
  },
+ 
+ 	formatIconStatus : function(sValue) {
+			
+		switch (sValue){
+			case "I":
+			    return "sap-icon://pending";
+				break;
+			case "A":	
+					return "sap-icon://accept";
+				break;
+			case "R":	
+				return "sap-icon://decline";
+				
+		}
+			
+		},	
+
 
 	formatTime	: function(oTime) { 
 		if(oTime){
 			var oTimeFormat = sap.ui.core.format.DateFormat.getTimeInstance({pattern: "HH:mm:ss"});
 			var TZOffsetMs = new Date(0).getTimezoneOffset()*60*1000;                             
-			var timeStr = oTimeFormat.format(new Date(oTime.ms + TZOffsetMs));                      
+			var timeStr = oTimeFormat.format(new Date(oTime.ms + TZOffsetMs));       
+				if (timeStr === "00:00:00") 
+					{
+						timeStr = "";
+					}
 			return timeStr;}
-			else{
+			else {
 				return oTime;
 			}
 },
+
+
 	formatDate: function(sDate){
 		var sYear,
 		    sMonth,
