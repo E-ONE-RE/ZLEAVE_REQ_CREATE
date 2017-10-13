@@ -55,9 +55,13 @@ sap.ui.define([
 				oRouter.getRoute("view2").attachMatched(this._onRouteMatched, this);
 
 			},
+			
+			
+		
+			
 
 			_onRouteMatched: function(oEvent) {
-				var oArgs, oView, oButtonMod, oButtonDel;
+				var oArgs, oView;
 				oArgs = oEvent.getParameter("arguments");
 				oView = this.getView();
 
@@ -78,19 +82,7 @@ sap.ui.define([
 					}
 				});
 				
-				   //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
-                oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
-                oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
-                	// MP: logica per abilitare i bottoni in View2 (modifica ed eliminazione richiesta)
-                	var oBindingContext = this.getView().getBindingContext();
-                	var sReqStatus = oBindingContext.getProperty("ZreqStatus");
-				if (sReqStatus == "I"){
-					oButtonMod.setEnabled(true);
-					oButtonDel.setEnabled(true);
-				}else{
-					oButtonMod.setEnabled(false);
-					oButtonDel.setEnabled(false);
-				}
+				
 
 			},
 
@@ -103,6 +95,23 @@ sap.ui.define([
 				 var oView = this.getView();
 					var oModel = this.getView().getModel();
                       sap.ui.getCore().setModel(oModel);
+                      
+                      
+                      
+                //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
+                var oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
+                var oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
+                // MP: logica per abilitare i bottoni in View2 (modifica ed eliminazione richiesta)
+                	var oBindingContext = oView.getBindingContext();
+                	var sReqStatus = oBindingContext.getProperty("ZreqStatus");
+				if (sReqStatus == "I"){
+					oButtonMod.setEnabled(true);
+					oButtonDel.setEnabled(true);
+				}else{
+					oButtonMod.setEnabled(false);
+					oButtonDel.setEnabled(false);
+				}
+				//MP:  fine
                       
 				//ripulisco i campi		
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
@@ -210,7 +219,7 @@ sap.ui.define([
 									startDate: oFormatYYyyymmdd.parse(res)
 
 								}));
-
+								
 							}
 							
 				/*		oLeg2.addItem(new CalendarLegendItem({
@@ -730,10 +739,14 @@ sap.ui.define([
 			//	},
 
 			_showObject: function(oItem) {
+				var oButtonMod, oButtonDel;
 				this.getRouter().navTo("change", {
 					objectId: oItem.getBindingContext().getProperty("ZrequestId")
 
 				});
+				
+				
+			
 			},
 
 			getRouter: function() {
