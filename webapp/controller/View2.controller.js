@@ -161,11 +161,11 @@ sap.ui.define([
 					oView.byId("removeAll_btn").setEnabled(false);	
 					oView.byId("removeAll_btn").rerender();	
           
-          oView.byId("btn1_mod").setEnabled(false);
-          oView.byId("btn1_mod").rerender();	
-          
-          oView.byId("btn1_del").setEnabled(false);
-          oView.byId("btn2_del").rerender();	
+			          oView.byId("btn1_mod").setEnabled(false);
+			          oView.byId("btn1_mod").rerender();	
+			          
+			          oView.byId("btn2_del").setEnabled(false);
+			          oView.byId("btn2_del").rerender();	
           	
 					
           
@@ -198,11 +198,11 @@ sap.ui.define([
 					oView.byId("removeAll_btn").setEnabled(true);	
 					oView.byId("removeAll_btn").rerender();	
             
-          oView.byId("btn1_mod").setEnabled(true);
-          oView.byId("btn1_mod").rerender();	
-          
-          oView.byId("btn1_del").setEnabled(true);
-          oView.byId("btn2_del").rerender();	
+			          oView.byId("btn1_mod").setEnabled(true);
+			          oView.byId("btn1_mod").rerender();	
+			          
+			          oView.byId("btn2_del").setEnabled(true);
+			          oView.byId("btn2_del").rerender();	
           	
           
 					
