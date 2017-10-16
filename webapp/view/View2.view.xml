@@ -16,7 +16,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
 		<ObjectHeader id="objectHeader" title="Richiesta n° {ZrequestId} del { path: 'ZdateRec', formatter: '.formatter.formatDate'}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
 				<statuses>
-				<ObjectStatus title="Stato" text="{ path: 'ZreqStatus', formatter: '.formatter.formatStatus'} il { path: 'ZdateAction', formatter: '.formatter.formatDate'}"/>
+				<ObjectStatus title="Stato" text="{ path: 'ZreqStatus', formatter: '.formatter.formatStatus'} { path: 'ZdateAction', formatter: '.formatter.formatDate'}"/>
 			     
 			</statuses>	
 				
