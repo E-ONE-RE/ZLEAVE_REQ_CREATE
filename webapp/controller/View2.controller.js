@@ -98,6 +98,17 @@ sap.ui.define([
 				oLeg2.destroyItems();
 				
 				
+				//imposto la data minima selezionabile dietro di un anno
+				   var nowP = new Date();
+				
+				   var  nowF = new Date();
+				    nowP.setDate(nowP.getDate()-365);
+					oCal2.setMinDate(nowP);
+					
+					//imposto la data massima selezionabile avanti di un anno
+				  
+				    nowF.setDate(nowF.getDate()+365);
+					oCal2.setMaxDate(nowF);
 				
 				/*oView.byId("LRS4_DAT_STARTTIME").setValue("");
 				oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
@@ -166,7 +177,10 @@ sap.ui.define([
 			          oView.byId("btn1_mod").rerender();	
 			          
 			          oView.byId("btn2_del").setEnabled(false);
-			          oView.byId("btn2_del").rerender();	
+			          oView.byId("btn2_del").rerender();
+			          
+			        oView.byId("elab_text").setVisible(true);
+					oView.byId("elab_text").rerender();	
           	
 					
           
@@ -174,7 +188,12 @@ sap.ui.define([
                 else  
 					{
 
+					//nascondo riga di testo ELaborata: in caso di richiesta pending
 
+					oView.byId("elab_text").setVisible(false);	
+					oView.byId("elab_text").rerender();	
+				
+					
                 	oView.byId("SLCT_LEAVETYPE").setEnabled(true);
 					oView.byId("SLCT_LEAVETYPE").rerender();
 					
@@ -251,10 +270,17 @@ sap.ui.define([
 							for (var i = 0; i < oData.results.length; i++) {
 
 								 var oZdate = oData.results[i].Zdate;
-							
+								 
+								// setto il mese visualizzato in base al primo giorno della richiesta 
+								if (i === 0) {
+									oCal2.displayDate(oFormatYYyyymmdd.parse(oZdate));
+								}
+								
                           // aggiungere date selezionate quando si è in modifica
 								oCal2.addSelectedDate(new DateTypeRange({
 									startDate: oFormatYYyyymmdd.parse(oZdate)
+									
+							
 
 								}));
 								
@@ -318,46 +344,55 @@ sap.ui.define([
 
 						if (oData.results.length > 0) {
 							for (var i = 0; i < oData.results.length; i++) {
-
-								var res = oData.results[i].Zdate;
-								
-								//escludo specialDate di richiesta già presente per la richiesta in modifica
-								// per non far scattare il controllo di data sovrapposta nel caso in cui l'utente
-								// deseleziona il giorno e lo riseleziona
-	                        	if (oData.results[i].ZrequestId !== zid){
-	                           
-									if ( oData.results[i].ZabsType == "0001") {		
+								//escludo richieste rifiutate
+		                            if (oData.results[i].ZreqStatus === 'A' || oData.results[i].ZreqStatus === 'I') {
+										var res = oData.results[i].Zdate;
+										
+										
+	                               
+										//escludo specialDate di richiesta già presente per la richiesta in modifica
+										// per non far scattare il controllo di data sovrapposta nel caso in cui l'utente
+										// deseleziona il giorno e lo riseleziona
+			                        	if (oData.results[i].ZrequestId !== zid){
+			                        		
+			                        		  // disabilito giorni che contengono già una richiesta tranne per la richiesta corrente  
+			                               oCal2.addDisabledDate(new DateTypeRange({   
+			                               startDate: oFormatYYyyymmdd.parse(res)
+			                               }));
+			                           
+											if ( oData.results[i].ZabsType == "0001") {		
+													
+														oCal2.addSpecialDate(new DateTypeRange({
+														startDate : oFormatYYyyymmdd.parse(res),
+														type : "Type01",
+														tooltip : "Permesso Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
 											
-												oCal2.addSpecialDate(new DateTypeRange({
-												startDate : oFormatYYyyymmdd.parse(res),
-												type : "Type01",
-												tooltip : "Permesso"
-									
-												
-												}));
-									}
-									
-										if ( oData.results[i].ZabsType == "0002") {		
+														
+														}));
+											}
 											
-												oCal2.addSpecialDate(new DateTypeRange({
-												startDate : oFormatYYyyymmdd.parse(res),
-												type : "Type05",
-												tooltip : "Ferie"
-									
-												
-												}));
-									}
-									
-										if ( oData.results[i].ZabsType == "0003") {		
+												if ( oData.results[i].ZabsType == "0002") {		
+													
+														oCal2.addSpecialDate(new DateTypeRange({
+														startDate : oFormatYYyyymmdd.parse(res),
+														type : "Type05",
+														tooltip : "Ferie Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
 											
-												oCal2.addSpecialDate(new DateTypeRange({
-												startDate : oFormatYYyyymmdd.parse(res),
-												type : "Type09",
-												tooltip : "Recupero"
-									
-												
-												}));
-									}
+														
+														}));
+											}
+											
+												if ( oData.results[i].ZabsType == "0003") {		
+													
+														oCal2.addSpecialDate(new DateTypeRange({
+														startDate : oFormatYYyyymmdd.parse(res),
+														type : "Type09",
+														tooltip : "Recupero Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
+											
+														
+														}));
+											}
+			                        }	
 	                        	}
                         
 							}
@@ -396,16 +431,16 @@ sap.ui.define([
 
 					}
 
-				} // END FUNCTION SUCCESS
+						} // END FUNCTION SUCCESS
+		
+						function fnReadE_Pos(oError) {
+							console.log(oError);
+		
+							alert("Error in read: " + oError.message);
+						}
+			}
 
-				function fnReadE_Pos(oError) {
-					console.log(oError);
-
-					alert("Error in read: " + oError.message);
-				}
-					}
-
-			},
+		},
 
 			/////////////////////
 

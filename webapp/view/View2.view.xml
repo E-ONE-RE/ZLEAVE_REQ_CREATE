@@ -14,10 +14,14 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 
 
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
-		<ObjectHeader id="objectHeader" title="Richiesta n° {ZrequestId} del { path: 'ZdateRec', formatter: '.formatter.formatDate'}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
+		<ObjectHeader id="objectHeader" title="Richiesta n° {ZrequestId}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
+				<ObjectAttribute/>
+				<ObjectAttribute id = "inser_text" title="Inserita il" text="{ path: 'ZdateRec', formatter: '.formatter.formatDate'} {path: 'ZtimeRec', formatter: '.formatter.formatTime'}"/>
+			    <ObjectAttribute id = "elab_text" title="Elaborata da" text="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst} { path: 'ZdateAction', formatter: '.formatter.formatDate'} { path: 'ZtimeAction', formatter: '.formatter.formatTime'}"/>
+			    
 				<statuses>
-				<ObjectStatus title="Stato" text="{ path: 'ZreqStatus', formatter: '.formatter.formatStatus'} { path: 'ZdateAction', formatter: '.formatter.formatDate'}"/>
-			     
+			     <ObjectStatus title="Stato" 	icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}"/>
+			<!--	<ObjectStatus title="Ore totali" text="{ZoreTotali}"/>-->
 			</statuses>	
 				
 			</ObjectHeader>
@@ -223,7 +227,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 																</Label>
 																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER" items="{/ApproverSet}">
 															    <items>
-															        <sap.ui.core:ListItem text="{Tmsuser}" key="{Tmsuser}" id="__item0"/>
+															        <sap.ui.core:ListItem text="{NameFirst} {NameLast}" key="{Tmsuser}" id="__item0"/>
 														
 															        </items>
 															</Select>
@@ -317,7 +321,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 					<IconTabFilter
 				     	key="ST"
 						id="filt"
-						icon="sap-icon://accept"
+						icon="sap-icon://hint"
 						tooltip="Lista posizioni"
 						text="Giorni">
 				<smartTable:SmartTable id="ST_Pos" entitySet="LeaveRequestPosSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
@@ -366,21 +370,20 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 								</Column>-->
 								<Column id="clmn3" customData:p13nData='\{"leadingProperty":"Zdate", "columnKey":"Zdate"}'
 									width="auto" 
-								minScreenWidth="phone" 
-								demandPopin="true" 
+								
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/Zdate/@sap:label}" id="lbl3"/>
 								</Column>
 								<Column id="clmn4" customData:p13nData='\{"leadingProperty":"Ztimestart", "columnKey":"Ztimestart"}'
 									width="auto" 
-								minScreenWidth="phone" 
+								minScreenWidth="tablet" 
 								demandPopin="true" 
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/Ztimestart/@sap:label}" id="lbl4"/>
 								</Column>
 								<Column id="clmn5" customData:p13nData='\{"leadingProperty":"Ztimeend", "columnKey":"Ztimeend"}'
 									width="auto" 
-								minScreenWidth="phone" 
+								minScreenWidth="tablet" 
 								demandPopin="true" 
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/Ztimeend/@sap:label}" id="lbl5"/>
@@ -394,8 +397,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 								</Column>-->
 								<Column id="clmn7" customData:p13nData='\{"leadingProperty":"Zorep", "columnKey":"Zorep"}'
 									width="auto" 
-								minScreenWidth="tablet" 
-								demandPopin="false" 
+								
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/Zorep/@sap:label}" id="lbl7"/>
 								</Column>
@@ -409,8 +411,8 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 						<IconTabFilter
 			    	key="note"
 					id="filt2"
-						icon="sap-icon://accept"
-					tooltip="Note Team Leader o Admin"
+						icon="sap-icon://approvals"
+					tooltip="Note Approvatore"
 						text="Note Approvatore">
 							
 							<List id="commentList"
