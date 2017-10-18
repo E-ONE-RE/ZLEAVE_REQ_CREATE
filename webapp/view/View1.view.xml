@@ -55,7 +55,7 @@
 															<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center">
 																<items>	
 															<sap.ui.layout:VerticalLayout width="100%">
-															<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1"/>
+															<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1" />
 													 <sap.ui.unified:CalendarLegend id="legend1"/>
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
@@ -215,9 +215,10 @@
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_APPROVER" text="{i18n>LR_APPROVER}">
 																</Label>
-																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER" items="{/ApproverSet}">
+																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER" 
+																	 items="{/ApproverSet}">
 															    <items>
-															        <sap.ui.core:ListItem text="{Tmsuser}" key="{Tmsuser}" id="__item0"/>
+															        <sap.ui.core:ListItem text="{NameFirst} {NameLast}" key="{Tmsuser}" id="__item0"/>
 														
 															        </items>
 															</Select>

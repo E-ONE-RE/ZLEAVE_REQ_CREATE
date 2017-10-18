@@ -8,26 +8,43 @@ sap.ui.define([
 	function(BaseController, JSONModel, History, formatter, Filter, FilterOperator) {
 		"use strict";
 
-		//	jQuery.sap.require("ZLEAVE_REQ_CREATE.model.formatter");
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
+			//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
+	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
 		jQuery.sap.require("sap.m.MessageBox");
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.ConcurrentEmployment");
-		jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.CalendarTools");
-		jQuery.sap.require("sap.ca.ui.dialog.factory");
-		jQuery.sap.require("sap.ca.ui.dialog.Dialog");
+	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
+	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.ConcurrentEmployment");
+	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.CalendarTools");
+	//	jQuery.sap.require("sap.ca.ui.dialog.factory");
+	//	jQuery.sap.require("sap.ca.ui.dialog.Dialog");
 		jQuery.sap.require("sap.m.MessageToast");
-		jQuery.support.useFlexBoxPolyfill = false;
-		jQuery.sap.require("sap.ca.ui.model.format.FileSizeFormat");
-		jQuery.sap.require("sap.ca.ui.message.message");
-		jQuery.sap.require("sap.ui.thirdparty.sinon");
+		// jQuery.support.useFlexBoxPolyfill = false;
+	//	jQuery.sap.require("sap.ca.ui.model.format.FileSizeFormat");
+	//	jQuery.sap.require("sap.ca.ui.message.message");
+		// jQuery.sap.require("sap.ui.thirdparty.sinon");
 
 		return BaseController.extend("ZLEAVE_REQ_CREATE.controller.View1s", {
 
 			formatter: formatter,
 
 			onInit: function() {
+                
+                
+            /// refresh tabella richieste
+			setInterval(function() {
+				
+				var oView = this.getView();
+				var oTable = oView.byId("__table0");
+				oTable.getBinding("items").refresh();
 
+				var msg = "Updating...";
+				sap.m.MessageToast.show(msg, {
+					duration: 3000,
+					autoClose: true,
+					closeOnBrowserNavigation: true
+				});
+
+			}, 300000);
+			
 				//MP: Creo un modello JSON locale per il binding della lista select nel filtro
 				var jData = {
 					"StatusCollection": [{
@@ -76,10 +93,7 @@ sap.ui.define([
 
 			onUpdateFinished: function(oEvent) {
 			
-			
-			
-				
-			
+	
 			},
 
 			_onBindingChange: function() {
@@ -141,6 +155,23 @@ sap.ui.define([
 				});
 
 			},
+			
+			
+		// MP: per il refresh del binding della lista delle richieste
+		onClickRefresh: function() {
+			var oView = this.getView();
+			var oTable = oView.byId("__table0");
+			oTable.getBinding("items").refresh();
+
+			var msg = "Updated";
+			sap.m.MessageToast.show(msg, {
+				duration: 1500, // default
+				animationTimingFunction: "ease", // default
+				animationDuration: 1000, // default
+				closeOnBrowserNavigation: true // default
+			});
+
+		},
 
 			_showObject: function(oItem) {
 				this.getRouter().navTo("view2", {

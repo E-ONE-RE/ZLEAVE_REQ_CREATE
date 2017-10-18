@@ -1,5 +1,3 @@
-
-
 sap.ui.define([
 		"ZLEAVE_REQ_CREATE/controller/BaseController", "sap/ui/model/json/JSONModel",
 		'sap/ui/unified/CalendarLegendItem',
@@ -115,7 +113,23 @@ sap.ui.define([
 				var oCal1 = oView.byId("LRS4_DAT_CALENDAR");
 				var oLeg1 = oView.byId("legend1");
 				oLeg1.destroyItems();
-
+				
+				//imposto la data minima selezionabile dietro di un anno
+				   var nowP = new Date();
+				
+				   var  nowF = new Date();
+				    nowP.setDate(nowP.getDate()-365);
+					oCal1.setMinDate(nowP);
+					
+					//imposto la data massima selezionabile avanti di un anno
+				  
+				    nowF.setDate(nowF.getDate()+365);
+					oCal1.setMaxDate(nowF);
+					
+							
+ 
+ 
+                    
 				oView.byId("LRS4_DAT_STARTTIME").setValue("");
 				oView.byId("LRS4_DAT_STARTTIME").rerender();
 				//oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
@@ -150,45 +164,54 @@ sap.ui.define([
 							calendarType: sap.ui.core.CalendarType.Gregorian
 						});
 
+
+  
 						var oRefDate = new Date();
 
 						var oDateRange;
 
 						if (oData.results.length > 0) {
 							for (var i = 0; i < oData.results.length; i++) {
-
+								//escludo richieste rifiutate
+                            	if (oData.results[i].ZreqStatus === 'A' || oData.results[i].ZreqStatus === 'I') {
 								//						var res = oData.results[i].Zdate.substring(8);
-								var res = oData.results[i].Zdate;
-
-								if (oData.results[i].ZabsType == "0001") {
-
-									oCal1.addSpecialDate(new DateTypeRange({
-										startDate: oFormatYYyyymmdd.parse(res),
-										type: "Type01",
-										tooltip: "Permesso"
-
-									}));
+									var res = oData.results[i].Zdate;
+	                               
+	                               // disabilito giorni che contengono già una richiesta   
+	                               oCal1.addDisabledDate(new DateTypeRange({   
+	                               startDate: oFormatYYyyymmdd.parse(res)
+	                               }));
+	                               
+									if (oData.results[i].ZabsType == "0001") {
+	
+										oCal1.addSpecialDate(new DateTypeRange({
+											startDate: oFormatYYyyymmdd.parse(res),
+											type: "Type01",
+											tooltip: "Permesso Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus 
+	
+										}));
+									}
+	
+									if (oData.results[i].ZabsType == "0002") {
+	
+										oCal1.addSpecialDate(new DateTypeRange({
+											startDate: oFormatYYyyymmdd.parse(res),
+											type: "Type05",
+											tooltip: "Ferie Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
+	
+										}));
+									}
+	
+									if (oData.results[i].ZabsType == "0003") {
+	
+										oCal1.addSpecialDate(new DateTypeRange({
+											startDate: oFormatYYyyymmdd.parse(res),
+											type: "Type09",
+											tooltip: "Recupero Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
+	
+										}));
 								}
-
-								if (oData.results[i].ZabsType == "0002") {
-
-									oCal1.addSpecialDate(new DateTypeRange({
-										startDate: oFormatYYyyymmdd.parse(res),
-										type: "Type05",
-										tooltip: "Ferie"
-
-									}));
-								}
-
-								if (oData.results[i].ZabsType == "0003") {
-
-									oCal1.addSpecialDate(new DateTypeRange({
-										startDate: oFormatYYyyymmdd.parse(res),
-										type: "Type09",
-										tooltip: "Recupero"
-
-									}));
-								}
+                             }	
 
 								// aggiungere date selezionate quando si è in modifica
 								/*oCal1.addSelectedDate(new DateTypeRange({

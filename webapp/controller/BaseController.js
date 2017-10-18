@@ -812,7 +812,7 @@ sap.ui.define([
 					if (response.statusCode == "201") {
 
 						//	var msg = "Success: "+oData.Message+", "+sTypeAction;
-						var msg = "Richiesta " + sAction + " correttamente.\nID: " + oData.ZrequestId + "";
+						var msg = "Richiesta " + sAction + " con successo.\nID: " + oData.ZrequestId + "";
 						sap.m.MessageToast.show(msg, {
 							duration: 5000,
 							autoClose: true,
