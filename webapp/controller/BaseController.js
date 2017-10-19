@@ -74,23 +74,17 @@ sap.ui.define([
 			}
 		},
 		
-		onRefreshTable: function (oEvent) {
+		
+		
+		
+			onRefreshTable: function (oEvent) {
+				
+			var oView = this.getView();
+			var oTable = oView.byId("__table0");
+			oTable.getBinding("items").refresh();
 			
-			
-		//	if(oEvent && oView!=undefined){
-			////////SE su pressione tasto back faccio refresh tabella taskset
-			//var oView, oViewW;
-			//oView = this.getView();
-			//var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; 
-					//oViewW = sap.ui.getCore().byId(sPrefix + "V1");
-					var oTable = "__component0---V1S--__table0";
-					oTable.getBinding("items").refresh();
-			////////
-	//		}
-			
-			
-			
-		},
+		
+			},
 		
 		
 				onNavBackDirect        : function (oEvent) {
@@ -110,8 +104,7 @@ sap.ui.define([
 			
 		},
 		
-		
-		
+
 			onTimePickerChange: function() {
 
                	var oView ;
@@ -542,14 +535,18 @@ sap.ui.define([
 				if (aSelectedDates.length === 0) {
 
 					oView.byId("LRS4_DAT_STARTTIME").setValue("");
-					oView.byId("LRS4_DAT_STARTTIME").rerender();
 					oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_STARTTIME").rerender();
+					
 
 					oView.byId("LRS4_DAT_ENDTIME").setValue("");
-					oView.byId("LRS4_DAT_ENDTIME").rerender();
 					oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_ENDTIME").rerender();
+					
 
-					this.getView().byId("LRS4_DAT_ORETOT").setValue("");
+					oView.byId("LRS4_DAT_ORETOT").setValue("0");
+					oView.byId("LRS4_DAT_ORETOT").setEnabled(false);
+					oView.byId("LRS4_DAT_ORETOT").rerender();
 
 				}
 
@@ -847,7 +844,7 @@ sap.ui.define([
 						}
 						
 						if (oViewId === "__component0---V1") {	
-								
+	
 							that.getRouter().navTo("view1s", {});
 						}
 						
@@ -869,7 +866,7 @@ sap.ui.define([
 				function fnE(oError) {
 					console.log(oError);
 
-					alert("Error in read: " + oError.message);
+					alert("Error in read: " + oError.message + "\n" + oError.responseText);
 				}
 
 			},

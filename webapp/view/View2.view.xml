@@ -1,26 +1,14 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
-xmlns:smartTable="sap.ui.comp.smarttable" 
-xmlns:mvc="sap.ui.core.mvc" 
-xmlns="sap.m" 
-xmlns:sap.ui.layout.form="sap.ui.layout.form" 
-xmlns:sap.ui.layout="sap.ui.layout" 
-xmlns:semantic="sap.m.semantic" 
-xmlns:sap.me="sap.me" 
-xmlns:sap.ui.core="sap.ui.core" 
-xmlns:ui="sap.ca.ui"
-xmlns:sap.ui.unified="sap.ui.unified" 
-xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
-controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:semantic="sap.m.semantic" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 
 
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
 		<ObjectHeader id="objectHeader" title="Richiesta n° {ZrequestId}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
 				<ObjectAttribute/>
-				<ObjectAttribute id = "inser_text" title="Inserita il" text="{ path: 'ZdateRec', formatter: '.formatter.formatDate'} {path: 'ZtimeRec', formatter: '.formatter.formatTime'}"/>
-			    <ObjectAttribute id = "elab_text" title="Elaborata da" text="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst} { path: 'ZdateAction', formatter: '.formatter.formatDate'} { path: 'ZtimeAction', formatter: '.formatter.formatTime'}"/>
+				<ObjectAttribute id="inser_text" title="Inserita il" text="{ path: 'ZdateRec', formatter: '.formatter.formatDate'} {path: 'ZtimeRec', formatter: '.formatter.formatTime'}"/>
+			    <ObjectAttribute id="elab_text" title="Elaborata da" text="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst} { path: 'ZdateAction', formatter: '.formatter.formatDate'} { path: 'ZtimeAction', formatter: '.formatter.formatTime'}"/>
 			    
 				<statuses>
-			     <ObjectStatus title="Stato" 	icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}"/>
+			     <ObjectStatus title="Stato" icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}"/>
 			<!--	<ObjectStatus title="Ore totali" text="{ZoreTotali}"/>-->
 			</statuses>	
 				
@@ -35,8 +23,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 				<sap.ui.layout:content>
 					<VBox width="100%" direction="Column" id="__vbox0_ABSENCETYPE" alignItems="Center">
 						<items>
-							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item1"
-								id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}">
+							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item1" id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}" tooltip="Seleziona il tipo di assenza oggetto della tua richiesta.">
 								<items>
 									<sap.ui.core:ListItem text="{TipoAbs}" key="{IdAbs}" id="it"/></items>
 							</Select>
@@ -63,8 +50,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 													<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center">
 														<items>
 															<sap.ui.layout:VerticalLayout width="100%">
-																<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false"
-																	legend="legend1"/>
+																<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1" tooltip="Seleziona i giorni oggetto della tua richiesta."/>
 																<sap.ui.unified:CalendarLegend id="legend1"/>
 																<!--	<ToggleButton text="Special Days" press="handleShowSpecialDays"></ToggleButton>-->
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
@@ -80,7 +66,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 															<sap.ui.layout:VerticalLayout width="100%">
 
 															
-															<Button press="handleRemoveSelection" text="Rimuovi date selezionate" id="removeAll_btn"/>
+															<Button press="handleRemoveSelection" text="Rimuovi date selezionate" id="removeAll_btn" icon="sap-icon://delete" tooltip="Rimuovi le date selezionate sul calendario. "/>
 															
 															<!--<List
 
@@ -183,13 +169,13 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 																<Label id="LRS4_LBL_STARTTIME" text="{i18n>LR_START_TIME}"/>
 																<!--<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
 															<!--<sap.ui.layout:content>-->
-															    <TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false"/>
+															    <TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 															<!--</sap.ui.layout:content>-->
 															</sap.ui.layout:VerticalLayout>
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_ENDTIME" text="{i18n>LR_END_TIME}"/>
 																<!--<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
-																<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false"/>
+																<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 														
 															</sap.ui.layout:VerticalLayout>
 														</sap.ui.layout:content>
@@ -225,7 +211,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_APPROVER" text="{i18n>LR_APPROVER}">
 																</Label>
-																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER" items="{/ApproverSet}">
+																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER" items="{/ApproverSet}" tooltip="Selezione la persona che dovrà approvare la tua richiesta di assenza. A meno di casi particolari dovrebbe essere il tuo Team Leader.">
 															    <items>
 															        <sap.ui.core:ListItem text="{NameFirst} {NameLast}" key="{Tmsuser}" id="__item0"/>
 														
@@ -237,7 +223,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 															<sap.ui.layout:VerticalLayout width="100%">
 															<Label id="LRS4_ORETOT" text="{i18n>LR_ORETOT}">
 																</Label>
-															<Input width="100%" id="LRS4_DAT_ORETOT" editable="false"/>
+															<Input width="100%" id="LRS4_DAT_ORETOT" enabled="false" tooltip="Le ore di assenza totali della richiesta vengono calcolate in base alla selezione dei giorni e di eventuali orari."/>
 															</sap.ui.layout:VerticalLayout>
 														
 														</sap.ui.layout:content>
@@ -255,7 +241,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_NOTE" text="{i18n>LR_NOTE}">
 																</Label>
-																<TextArea id="LRS4_TXA_NOTE" width="100%" height="6rem" wrapping="None" maxLength="255">
+																<TextArea id="LRS4_TXA_NOTE" width="100%" height="6rem" wrapping="None" maxLength="255" tooltip="Inserisci eventuali note per l'approvatore.">
 																	<layoutData>
 																		<sap.ui.layout:ResponsiveFlowLayoutData weight="8" linebreak="true"/>
 																	</layoutData>
@@ -312,21 +298,10 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 			
 			<!--MP: aggiunti IconTabFilters e smarttable con riepilogo delle posizioni-->
 			
-				<IconTabBar
-				id="iconTabBar1"
-				class="sapUiResponsiveContentPadding"
-					backgroundDesign="Translucent"
-					applyContentPadding="true">	
+				<IconTabBar id="iconTabBar1" class="sapUiResponsiveContentPadding" backgroundDesign="Translucent" applyContentPadding="true">	
 					<items>
-					<IconTabFilter
-				     	key="ST"
-						id="filt"
-						icon="sap-icon://hint"
-						tooltip="Lista posizioni"
-						text="Giorni">
-				<smartTable:SmartTable id="ST_Pos" entitySet="LeaveRequestPosSet" tableType="Table" useExportToExcel="true" useVariantManagement="false"
-					    showVariantManagement="false" header="Posizioni" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true"  tableBindingPath="ToLeaveReqPos"
-						class="sapUiResponsiveContentPadding"  customData:p13nDialogSettings='{filter:{visible:false}}'>
+					<IconTabFilter key="ST" id="filt" icon="sap-icon://hint" tooltip="Lista posizioni" text="Giorni">
+				<smartTable:SmartTable id="ST_Pos" entitySet="LeaveRequestPosSet" tableType="Table" useExportToExcel="true" useVariantManagement="false" showVariantManagement="false" header="Posizioni" enableCustomFilter="false" showRowCount="true" enableAutoBinding="true" tableBindingPath="ToLeaveReqPos" class="sapUiResponsiveContentPadding" customData:p13nDialogSettings="{filter:{visible:false}}">
 						<Table noDataText="Drop column list items here and columns in the area above" id="__table1" updateFinished="onUpdateFinished">
 							<items>
 								<ColumnListItem id="__item2">
@@ -368,24 +343,13 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/ZrequestPos/@sap:label}" id="lbl1"/>
 								</Column>-->
-								<Column id="clmn3" customData:p13nData='\{"leadingProperty":"Zdate", "columnKey":"Zdate"}'
-									width="auto" 
-								
-								visible="true">
+								<Column id="clmn3" customData:p13nData="\{&quot;leadingProperty&quot;:&quot;Zdate&quot;, &quot;columnKey&quot;:&quot;Zdate&quot;}" width="auto" visible="true">
 									<Label text="{/#LeaveRequestPosSet/Zdate/@sap:label}" id="lbl3"/>
 								</Column>
-								<Column id="clmn4" customData:p13nData='\{"leadingProperty":"Ztimestart", "columnKey":"Ztimestart"}'
-									width="auto" 
-								minScreenWidth="tablet" 
-								demandPopin="true" 
-								visible="true">
+								<Column id="clmn4" customData:p13nData="\{&quot;leadingProperty&quot;:&quot;Ztimestart&quot;, &quot;columnKey&quot;:&quot;Ztimestart&quot;}" width="auto" minScreenWidth="tablet" demandPopin="true" visible="true">
 									<Label text="{/#LeaveRequestPosSet/Ztimestart/@sap:label}" id="lbl4"/>
 								</Column>
-								<Column id="clmn5" customData:p13nData='\{"leadingProperty":"Ztimeend", "columnKey":"Ztimeend"}'
-									width="auto" 
-								minScreenWidth="tablet" 
-								demandPopin="true" 
-								visible="true">
+								<Column id="clmn5" customData:p13nData="\{&quot;leadingProperty&quot;:&quot;Ztimeend&quot;, &quot;columnKey&quot;:&quot;Ztimeend&quot;}" width="auto" minScreenWidth="tablet" demandPopin="true" visible="true">
 									<Label text="{/#LeaveRequestPosSet/Ztimeend/@sap:label}" id="lbl5"/>
 								</Column>
 								<!--<Column id="clmn6" customData:p13nData='\{"leadingProperty":"ZdateRec", "columnKey":"ZdateRec"}'
@@ -395,10 +359,7 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 								visible="true">
 									<Label text="{/#LeaveRequestPosSet/ZdateRec/@sap:label}" id="lbl6"/>
 								</Column>-->
-								<Column id="clmn7" customData:p13nData='\{"leadingProperty":"Zorep", "columnKey":"Zorep"}'
-									width="auto" 
-								
-								visible="true">
+								<Column id="clmn7" customData:p13nData="\{&quot;leadingProperty&quot;:&quot;Zorep&quot;, &quot;columnKey&quot;:&quot;Zorep&quot;}" width="auto" visible="true">
 									<Label text="{/#LeaveRequestPosSet/Zorep/@sap:label}" id="lbl7"/>
 								</Column>
 							</columns>
@@ -408,26 +369,11 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 						</smartTable:layoutData>
 					</smartTable:SmartTable>
 			</IconTabFilter>
-						<IconTabFilter
-			    	key="note"
-					id="filt2"
-						icon="sap-icon://approvals"
-					tooltip="Note Approvatore"
-						text="Note Approvatore">
+						<IconTabFilter key="note" id="filt2" icon="sap-icon://approvals" tooltip="Note Approvatore" text="Note Approvatore">
 							
-							<List id="commentList"
-								showSeparators="Inner"
-							    noDataText="Nessun commento alla richiesta"
-						        backgroundDesign="Translucent">
+							<List id="commentList" showSeparators="Inner" noDataText="Nessun commento alla richiesta" backgroundDesign="Translucent">
 								<items>
-								<FeedListItem
-								    id="FLI"
-								    sender="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst}"
-								    timestamp="{ path: 'ZdateAction', formatter: '.formatter.formatDate'} { path: 'ZtimeAction', formatter: '.formatter.formatTime'}"
-								    info="Richiesta {path : 'ZabsType', formatter: '.formatter.formatAbsence'}"
-									icon="sap-icon://employee-approvals"
-									iconDensityAware="false"
-									text="{ZnoteAPP}"/>
+								<FeedListItem id="FLI" sender="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst}" timestamp="{ path: 'ZdateAction', formatter: '.formatter.formatDate'} { path: 'ZtimeAction', formatter: '.formatter.formatTime'}" info="Richiesta {path : 'ZabsType', formatter: '.formatter.formatAbsence'}" icon="sap-icon://employee-approvals" iconDensityAware="false" text="{ZnoteAPP}"/>
 									</items>
 								</List>
 						
@@ -442,11 +388,11 @@ controllerName="ZLEAVE_REQ_CREATE.controller.View2" displayBlock="true">
 		<footer>
 			<OverflowToolbar id="footerToolbar2">
 				<ToolbarSpacer/>
-				<Button id="btn1_mod" type="Accept" text="Modifica" press="onActionDialog">
+				<Button id="btn1_mod" type="Accept" text="Modifica" press="onActionDialog" icon="sap-icon://edit-outside" tooltip="Invia la tua richiesta modificata.">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 						  
-						  	<Button id="btn2_del" type="Reject" text="Elimina" press="onActionDialog">
+						  	<Button id="btn2_del" type="Reject" text="Elimina" press="onActionDialog" icon="sap-icon://delete" tooltip="Elimina la tua richiesta.">
 						  <layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 						  </Button>
 			</OverflowToolbar>
