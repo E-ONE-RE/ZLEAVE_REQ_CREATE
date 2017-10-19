@@ -32,6 +32,7 @@ sap.ui.define([
 
 			oFormatYyyymmdd: null,
 			oFormatDaysShort: null,
+			oFormatYear: null,
 
 			onInit: function() {
 				//SE			ZLEAVE_REQ_CREATE.utils.DataManager.init(this.oDataModel, this.resourceBundle);
@@ -59,6 +60,11 @@ sap.ui.define([
 				
 				this.oFormatDaysShort = sap.ui.core.format.DateFormat.getInstance({
 					pattern: "E",
+					calendarType: sap.ui.core.CalendarType.Gregorian
+				});
+				
+				this.oFormatYear = sap.ui.core.format.DateFormat.getInstance({
+					pattern: "Y",
 					calendarType: sap.ui.core.CalendarType.Gregorian
 				});
 
@@ -105,10 +111,13 @@ sap.ui.define([
 				var oView = this.getView();
 				var oModel = this.getView().getModel();
 				sap.ui.getCore().setModel(oModel);
+				
+				
 
 				//ripulisco i campi		
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSpecialDates();
+				oView.byId("LRS4_DAT_CALENDAR").removeAllDisabledDates();
 
 				var oCal1 = oView.byId("LRS4_DAT_CALENDAR");
 				var oLeg1 = oView.byId("legend1");
@@ -126,10 +135,113 @@ sap.ui.define([
 				    nowF.setDate(nowF.getDate()+365);
 					oCal1.setMaxDate(nowF);
 					
-							
+				
+				    var nowForYear = new Date();
+	                     var oYear = this.oFormatYear.format(nowForYear);
  
- 
-                    
+                         var oYearN = Number(oYear);
+                         
+                         var oYear2 = oYearN+1;
+                     
+                         // disabilito giorni festivi 
+	                     oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"0101")
+	                     }));
+	                     
+	                     oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"0101")
+	                     }));
+
+                         ///// befana
+	                     oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"0106")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"0106")
+	                   
+	                     }));
+	                     
+	                     ///// 25 aprile
+	                     oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"0425")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"0425")
+	                     }));
+	                     
+	                     
+	                     ///// primo maggio
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"0501")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"0501")
+	                     }));
+	                     
+	                     
+	                     ///// 2 giugno
+	                       oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"0602")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"0602")
+	                     }));
+	                     
+	                     
+	                     ///// ferragosto
+	                     oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"0815")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"0815")
+	                     }));
+	                     
+	                     
+	                     ///// tutti i santi
+	                     oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"1101")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"1101")
+	                     }));
+	                     
+	                     
+	                     ///// immacolata
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"1208")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"1208")
+	                     }));
+	                     
+	                     
+	                     ////// natale
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"1225")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"1225")
+	                     }));
+	                     
+	                     
+	                     ////// santo stefano
+	                       oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYearN+"1226")
+	                     }));
+	                     
+	                      oCal1.addDisabledDate(new DateTypeRange({   
+	                     startDate: this.oFormatYear.parse(oYear2+"1226")
+	                     }));
+	                     
+
 				oView.byId("LRS4_DAT_STARTTIME").setValue("");
 				oView.byId("LRS4_DAT_STARTTIME").rerender();
 				//oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
@@ -141,6 +253,10 @@ sap.ui.define([
 				oView.byId("LRS4_TXA_NOTE").setValue("");
 				oView.byId("LRS4_TXA_NOTE").rerender();
 				oView.byId("LRS4_TXA_NOTE").setEnabled(true);
+				
+				oView.byId("LRS4_DAT_ORETOT").setValue("0");
+				oView.byId("LRS4_DAT_ORETOT").setEnabled(false);
+				oView.byId("LRS4_DAT_ORETOT").rerender();
 
 				var sRead = "/LeaveRequestPosSet";
 
@@ -163,7 +279,6 @@ sap.ui.define([
 							pattern: "yyyyMMdd",
 							calendarType: sap.ui.core.CalendarType.Gregorian
 						});
-
 
   
 						var oRefDate = new Date();
@@ -268,7 +383,7 @@ sap.ui.define([
 
 			/////////////////////////////////////////////////////////////////////  
 
-			onHistoryPress: function() {
+			onHistoryPress: function(oEvent) {
 
 				//this.getRouter().getTargets().display("view1s");
 

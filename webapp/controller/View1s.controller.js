@@ -28,23 +28,8 @@ sap.ui.define([
 
 			onInit: function() {
                 
-                
-            /// refresh tabella richieste
-			setInterval(function() {
-				
-				var oView = this.getView();
-				var oTable = oView.byId("__table0");
-				oTable.getBinding("items").refresh();
-
-				var msg = "Updating...";
-				sap.m.MessageToast.show(msg, {
-					duration: 3000,
-					autoClose: true,
-					closeOnBrowserNavigation: true
-				});
-
-			}, 300000);
-			
+            this.modelServices();
+              
 				//MP: Creo un modello JSON locale per il binding della lista select nel filtro
 				var jData = {
 					"StatusCollection": [{
@@ -64,6 +49,7 @@ sap.ui.define([
 					]
 				};
 				
+
 			    var oSelect1 = sap.ui.getCore().byId("__component0---V1S--selABS");
 				var oSelect2 = this.getView().byId("selStatus");
 				var oModel = new sap.ui.model.json.JSONModel(jData);
@@ -80,20 +66,85 @@ sap.ui.define([
 				});
 				
 	     	// MP: fine binding JSON model alla lista degli stati nella select per il filtro
+	     	
+	     		var oRouter = this.getRouter();
+				oRouter.getRoute("view1s").attachMatched(this._onRouteMatched, this);
 				
 			},
 
 			_onRouteMatched: function(oEvent) {
 
+                
+                //refresh della tabella
+                var oView = this.getView();
+				var oTable = oView.byId("__table0");
+				oTable.getBinding("items").refresh();
+
+			},
+			
+			// richiamo function per auto refresh tabella
+			modelServices: function() {
+				
+		      var self = this;
+		      this.intervalHandle = setInterval(function() { 
+		      self.callRefreshTable();
+          
+			       },  30000);
 			},
 
+		   callRefreshTable: function() {
+		
+			var oView = this.getView();
+					var oTable = oView.byId("__table0");
+					oTable.getBinding("items").refresh();
+					
+						var msg = "Updating...";
+					sap.m.MessageToast.show(msg, {
+						duration: 3000,
+						autoClose: true,
+						closeOnBrowserNavigation: true
+					});
+	
+				},
+				
+					// richiamo function per auto refresh tabella
+			onPress: function(oEvent) {
+
+		      	var oItem, oCtx, zid;
+				var oView = this.getView();
+		 
+		     this.onRefreshTable();
+		     
+		     oItem = oEvent.getSource();
+			oCtx = oItem.getBindingContext();
+				
+				zid = oCtx.getProperty("ZrequestId");
+
+
+				this.getRouter().navTo("view2", {
+					ZrequestId: zid
+				});
+          
+			       
+			},
+		
+           
+			
+			//pulisco il contatore dell'auto refresh
+			onExit:function() {
+			   // You should stop the interval on exit. 
+			   // You should also stop the interval if you navigate out of your view and start it again when you navigate back. 
+			   if (this.intervalHandle) 
+			      clearInterval(this.intervalHandle) ;
+			},
+			
 			onAfterRendering: function(oEvent) {
 
 			},
 
 			onUpdateFinished: function(oEvent) {
-			
-	
+
+
 			},
 
 			_onBindingChange: function() {
@@ -141,20 +192,46 @@ sap.ui.define([
 					fromTarget: "view1"
 				});
 			},
+			
+		
+	
 
-			onPress: function(oEvent) {
+		/*	onPress: function(oEvent) {
+               
+               var oView = this.getView();
+				var oTable = oView.byId("__table0");
+               
+				oTable.getBinding("items").refresh(true);
+				oView.byId("__table0").rerender();
+				
+				 var oModel = this.getView().getModel();
 
+			     oModel.refresh();
+			     var zstat = oModel.Odata.LeaveRequestSet.ZreqStatus.getValue();
+			   	
+			  //	oModel.destroy();
+			//  oModel.setModel();
+        //oModel.updateBindings(true);
+        // oModel.refresh();
+        
+        //	var oModel = this.getView().getModel();
+        //oModel = this.getView().getModel();
+		//		sap.ui.getCore().setModel(oModel);
+    
+			
 				var oItem, oCtx, zid;
 
 				oItem = oEvent.getSource();
 				oCtx = oItem.getBindingContext();
+				
 				zid = oCtx.getProperty("ZrequestId");
+
 
 				this.getRouter().navTo("view2", {
 					ZrequestId: zid
 				});
 
-			},
+			},*/
 			
 			
 		// MP: per il refresh del binding della lista delle richieste
