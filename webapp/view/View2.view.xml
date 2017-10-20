@@ -23,9 +23,9 @@
 				<sap.ui.layout:content>
 					<VBox width="100%" direction="Column" id="__vbox0_ABSENCETYPE" alignItems="Center">
 						<items>
-							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item1" id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}" tooltip="Seleziona il tipo di assenza oggetto della tua richiesta.">
+							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item11" id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}" tooltip="Seleziona il tipo di assenza oggetto della tua richiesta.">
 								<items>
-									<sap.ui.core:ListItem text="{TipoAbs}" key="{IdAbs}" id="it"/></items>
+									<sap.ui.core:ListItem text="{TipoAbs}" key="{IdAbs}" id="__item1"/></items>
 							</Select>
 						</items>
 					</VBox>
@@ -211,7 +211,7 @@
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_APPROVER" text="{i18n>LR_APPROVER}">
 																</Label>
-																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER" items="{/ApproverSet}" tooltip="Selezione la persona che dovrà approvare la tua richiesta di assenza. A meno di casi particolari dovrebbe essere il tuo Team Leader.">
+																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item00" id="SLCT_APPROVER" items="{/ApproverSet}" tooltip="Selezione la persona che dovrà approvare la tua richiesta di assenza. A meno di casi particolari dovrebbe essere il tuo Team Leader.">
 															    <items>
 															        <sap.ui.core:ListItem text="{NameFirst} {NameLast}" key="{Tmsuser}" id="__item0"/>
 														
