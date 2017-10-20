@@ -25,7 +25,7 @@ sap.ui.define([
 			onInit: function() {
 
 				this._initCntrls();
-				
+
 				this.oFormatYyyymmdd = sap.ui.core.format.DateFormat.getInstance({
 					pattern: "yyyyMMdd",
 					calendarType: sap.ui.core.CalendarType.Gregorian
@@ -47,15 +47,112 @@ sap.ui.define([
 			},
 			
 			
+			// controllo ulteriore dello stato in caso di click su riga storico non aggiornata
+			_checkStatus: function(zReqId) {
+				
+					var oModel = this.getView().getModel();
+                    var	oView = this.getView();
+                    var oCal2 = oView.byId("LRS4_DAT_CALENDAR");
+					var oLeg2 = oView.byId("legend1");
+				
+					var sRead = "/LeaveRequestSet('" + zReqId + "')";
+
+				oModel.read(sRead, {
+
+					success: fnReadS,
+
+					error: fnReadE
+				});
+
+				function fnReadS(oData, response) {
+				//	console.log(oData);
+				//	console.log(response);
+
+					// controllo che la funzione è andata a buon fine 
+					if (response.statusCode == "200") {
+						////////////////////////////////				
+
+								 var oZstatus = oData.ZreqStatus;
+								 
+							if (oZstatus === 'A' || oZstatus === 'R')
+							{
+								oView.byId("SLCT_LEAVETYPE").setEnabled(false);
+								oView.byId("SLCT_LEAVETYPE").rerender();
+								
+								oView.byId("SLCT_APPROVER").setEnabled(false);
+								oView.byId("SLCT_APPROVER").rerender();
+								
+								oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+								oView.byId("LRS4_DAT_STARTTIME").rerender();
+								
+								oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+								oView.byId("LRS4_DAT_ENDTIME").rerender();
+								
+								oView.byId("LRS4_TXA_NOTE").setEnabled(false);
+								oView.byId("LRS4_TXA_NOTE").rerender();
+								
+								oView.byId("LRS4_DAT_ORETOT").setEnabled(false);
+								oView.byId("LRS4_DAT_ORETOT").rerender();
+								
+								oCal2.setVisible(false);
+								oCal2.rerender();
+								
+								oLeg2.setVisible(false);
+								oLeg2.rerender();
+								
+								oView.byId("removeAll_btn").setVisible(false);
+								oView.byId("removeAll_btn").setEnabled(false);	
+								oView.byId("removeAll_btn").rerender();	
+			          
+						          oView.byId("btn1_mod").setEnabled(false);
+						          oView.byId("btn1_mod").rerender();	
+						          
+						          oView.byId("btn2_del").setEnabled(false);
+						          oView.byId("btn2_del").rerender();
+						          
+						        oView.byId("elab_text").setVisible(true);
+								oView.byId("elab_text").rerender();	
+								
+			  
+			                }
+						
+						return oZstatus;			 
+						}
+						
+						
+
+					 else {
+
+						//jQuery.sap.require("sap.m.MessageBox");
+						sap.m.MessageBox.show(
+							"Error: Nessun record recuperato", {
+								icon: sap.m.MessageBox.Icon.WARNING,
+								title: "Error",
+								actions: [sap.m.MessageBox.Action.CLOSE]
+
+							});
+
+					}
+
+				}
+
+				function fnReadE(oError) {
+				//	console.log(oError);
+
+					alert("Error in read: " + oError.message);
+				}
 		
-			
+		
+	},		
 
 			_onRouteMatched: function(oEvent) {
 				var oArgs, oView;
 				oArgs = oEvent.getParameter("arguments");
 				
 				oView = this.getView();
-
+				
+                var zReqId = oArgs.ZrequestId; 
+               var oReqStatus = this._checkStatus(zReqId);
               
 				oView.bindElement({
 					path: "/LeaveRequestSet('" + oArgs.ZrequestId + "')",
@@ -100,7 +197,71 @@ sap.ui.define([
 				oLeg2.destroyItems();
 				
 				
-				//imposto la data minima selezionabile dietro di un anno
+				
+				
+				var oCtx, zid, zstatus;
+				oCtx = oView.getBindingContext();
+				zid = oCtx.getProperty("ZrequestId");
+				zstatus = oCtx.getProperty("ZreqStatus");
+				////zid = oView.getBindingContext().getProperty("ZrequestId");
+				
+				// setto i valori in base ai valori del binding corrente
+				oView.byId("SLCT_LEAVETYPE").setSelectedKey(oCtx.getProperty("ZabsType"));
+				oView.byId("SLCT_APPROVER").setSelectedKey(oCtx.getProperty("Tmsapprover"));
+				oView.byId("LRS4_DAT_ORETOT").setValue(oCtx.getProperty("ZoreTotali"));
+				
+				oView.byId("LRS4_TXA_NOTE").setValue(oCtx.getProperty("Znote"));
+        
+         //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
+             //   var oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
+            //    var oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
+        
+	
+            if (zstatus === 'A' || zstatus === 'R')
+				{
+					oView.byId("SLCT_LEAVETYPE").setEnabled(false);
+					oView.byId("SLCT_LEAVETYPE").rerender();
+					
+					oView.byId("SLCT_APPROVER").setEnabled(false);
+					oView.byId("SLCT_APPROVER").rerender();
+					
+					oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_STARTTIME").rerender();
+					
+					oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_ENDTIME").rerender();
+					
+					oView.byId("LRS4_TXA_NOTE").setEnabled(false);
+					oView.byId("LRS4_TXA_NOTE").rerender();
+					
+					oView.byId("LRS4_DAT_ORETOT").setEnabled(false);
+					oView.byId("LRS4_DAT_ORETOT").rerender();
+					
+					oCal2.setVisible(false);
+					oCal2.rerender();
+					
+					oLeg2.setVisible(false);
+					oLeg2.rerender();
+					
+					oView.byId("removeAll_btn").setVisible(false);
+					oView.byId("removeAll_btn").setEnabled(false);	
+					oView.byId("removeAll_btn").rerender();	
+          
+			          oView.byId("btn1_mod").setEnabled(false);
+			          oView.byId("btn1_mod").rerender();	
+			          
+			          oView.byId("btn2_del").setEnabled(false);
+			          oView.byId("btn2_del").rerender();
+			          
+			        oView.byId("elab_text").setVisible(true);
+					oView.byId("elab_text").rerender();	
+					
+  
+                }
+                else  
+					{
+
+                     //imposto la data minima selezionabile dietro di un anno
 				   var nowP = new Date();
 				
 				   var  nowF = new Date();
@@ -218,69 +379,6 @@ sap.ui.define([
 	                     startDate: this.oFormatYear.parse(oYear2+"1226")
 	                     }));
 				
-				
-				var oCtx, zid, zstatus;
-				oCtx = oView.getBindingContext();
-				zid = oCtx.getProperty("ZrequestId");
-				zstatus = oCtx.getProperty("ZreqStatus");
-				////zid = oView.getBindingContext().getProperty("ZrequestId");
-				
-				// setto i valori in base ai valori del binding corrente
-				oView.byId("SLCT_LEAVETYPE").setSelectedKey(oCtx.getProperty("ZabsType"));
-				oView.byId("SLCT_APPROVER").setSelectedKey(oCtx.getProperty("Tmsapprover"));
-				oView.byId("LRS4_DAT_ORETOT").setValue(oCtx.getProperty("ZoreTotali"));
-				
-				oView.byId("LRS4_TXA_NOTE").setValue(oCtx.getProperty("Znote"));
-        
-         //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
-             //   var oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
-            //    var oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
-        
-	
-            if (zstatus === 'A' || zstatus === 'R')
-				{
-					oView.byId("SLCT_LEAVETYPE").setEnabled(false);
-					oView.byId("SLCT_LEAVETYPE").rerender();
-					
-					oView.byId("SLCT_APPROVER").setEnabled(false);
-					oView.byId("SLCT_APPROVER").rerender();
-					
-					oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
-					oView.byId("LRS4_DAT_STARTTIME").rerender();
-					
-					oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
-					oView.byId("LRS4_DAT_ENDTIME").rerender();
-					
-					oView.byId("LRS4_TXA_NOTE").setEnabled(false);
-					oView.byId("LRS4_TXA_NOTE").rerender();
-					
-					oView.byId("LRS4_DAT_ORETOT").setEnabled(false);
-					oView.byId("LRS4_DAT_ORETOT").rerender();
-					
-					oCal2.setVisible(false);
-					oCal2.rerender();
-					
-					oLeg2.setVisible(false);
-					oLeg2.rerender();
-					
-					oView.byId("removeAll_btn").setVisible(false);
-					oView.byId("removeAll_btn").setEnabled(false);	
-					oView.byId("removeAll_btn").rerender();	
-          
-			          oView.byId("btn1_mod").setEnabled(false);
-			          oView.byId("btn1_mod").rerender();	
-			          
-			          oView.byId("btn2_del").setEnabled(false);
-			          oView.byId("btn2_del").rerender();
-			          
-			        oView.byId("elab_text").setVisible(true);
-					oView.byId("elab_text").rerender();	
-					
-  
-                }
-                else  
-					{
-
 					//nascondo riga di testo ELaborata: in caso di richiesta pending
 
 					oView.byId("elab_text").setVisible(false);	
