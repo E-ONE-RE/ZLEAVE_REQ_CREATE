@@ -100,6 +100,9 @@ sap.ui.define([
 								oLeg2.setVisible(false);
 								oLeg2.rerender();
 								
+								oView.byId("panelLegend").setVisible(false);
+								oView.byId("panelLegend").rerender();
+
 								oView.byId("removeAll_btn").setVisible(false);
 								oView.byId("removeAll_btn").setEnabled(false);	
 								oView.byId("removeAll_btn").rerender();	
@@ -196,6 +199,18 @@ sap.ui.define([
 				oView.byId("LRS4_DAT_CALENDAR").removeAllDisabledDates();
 				oLeg2.destroyItems();
 				
+				// nascondo riga commenti se inesistenti
+			   var oListItem = oView.byId("commentList");
+               var oGetItem = oListItem.getItems();
+               var sComment = oGetItem["0"].getText();
+               
+               if(sComment==""){
+               oListItem.setVisible(false);
+               }else{
+               	oListItem.setVisible(true);
+               }
+
+				
 				
 				
 				
@@ -242,6 +257,9 @@ sap.ui.define([
 					
 					oLeg2.setVisible(false);
 					oLeg2.rerender();
+					
+						oView.byId("panelLegend").setVisible(false);
+								oView.byId("panelLegend").rerender();
 					
 					oView.byId("removeAll_btn").setVisible(false);
 					oView.byId("removeAll_btn").setEnabled(false);	
@@ -409,6 +427,9 @@ sap.ui.define([
 					
 					oLeg2.setVisible(true);
 					oLeg2.rerender();
+					
+						oView.byId("panelLegend").setVisible(true);
+								oView.byId("panelLegend").rerender();
 					
 					oView.byId("removeAll_btn").setVisible(true);
 					oView.byId("removeAll_btn").setEnabled(true);	

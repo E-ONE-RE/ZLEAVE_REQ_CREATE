@@ -2,13 +2,14 @@
 
 
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
-		<ObjectHeader id="objectHeader" title="Richiesta n° {ZrequestId}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
+		<ObjectHeader id="objectHeader" title="Richiesta n° { path: 'ZrequestId', formatter: '.formatter.formatRequestId'}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
 				<ObjectAttribute/>
 				<ObjectAttribute id="inser_text" title="Inserita il" text="{ path: 'ZdateRec', formatter: '.formatter.formatDate'} {path: 'ZtimeRec', formatter: '.formatter.formatTime'}"/>
 			    <ObjectAttribute id="elab_text" title="Elaborata da" text="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst} { path: 'ZdateAction', formatter: '.formatter.formatDate'} { path: 'ZtimeAction', formatter: '.formatter.formatTime'}"/>
 			    
 				<statuses>
-			     <ObjectStatus title="Stato" icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}"/>
+			     <ObjectStatus title="Stato" icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}"
+			     state="{ path: 'ZreqStatus', formatter: '.formatter.formatReqStatus'}"/>
 			<!--	<ObjectStatus title="Ore totali" text="{ZoreTotali}"/>-->
 			</statuses>	
 				
@@ -23,9 +24,9 @@
 				<sap.ui.layout:content>
 					<VBox width="100%" direction="Column" id="__vbox0_ABSENCETYPE" alignItems="Center">
 						<items>
-							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item1" id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}" tooltip="Seleziona il tipo di assenza oggetto della tua richiesta.">
+							<Select selectedItem="Element sap.ui.core.ListItem#__item1" change="handleAbsTypeSelect" selectedKey="item1" selectedItemId="__item11" id="SLCT_LEAVETYPE" items="{/AbsenceTypeSet}" tooltip="Seleziona il tipo di assenza oggetto della tua richiesta.">
 								<items>
-									<sap.ui.core:ListItem text="{TipoAbs}" key="{IdAbs}" id="it"/></items>
+									<sap.ui.core:ListItem text="{TipoAbs}" key="{IdAbs}" id="__item1"/></items>
 							</Select>
 						</items>
 					</VBox>
@@ -47,20 +48,35 @@
 										<sap.ui.layout.form:fields>
 											<sap.ui.layout:Grid id="LR_CALENDAR" defaultSpan="L12 M12 S12" width="100%">
 												<sap.ui.layout:content>
-													<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center">
+													<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center" alignContent="Center" justifyContent="Center">
 														<items>
 															<sap.ui.layout:VerticalLayout width="100%">
-																<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1" tooltip="Seleziona i giorni oggetto della tua richiesta."/>
-																<sap.ui.unified:CalendarLegend id="legend1"/>
-																<!--	<ToggleButton text="Special Days" press="handleShowSpecialDays"></ToggleButton>-->
-																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
+																<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" class="sapUiResponsiveMargin" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1" tooltip="Seleziona i giorni oggetto della tua richiesta."/>
+															<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
 																			<sap.ui.layout:ResponsiveFlowLayoutData id="LRS4_LYO_LEGEND" minWidth="30" weight="15"/>
 																		</sap.me:layoutData>
 																	</sap.me:CalendarLegend>-->
-															</sap.ui.layout:VerticalLayout>
-														</items>
-													</VBox>
+																		</sap.ui.layout:VerticalLayout>
+																</items>
+															</VBox>
+													 	<VBox width="100%" direction="Column" id="__vbox0_LEGEND" alignItems="Center" alignContent="Start" justifyContent="Center">
+																<items>	
+													 	<sap.ui.layout:VerticalLayout width="100%">
+													 	<Panel id="panelLegend" width="auto"  backgroundDesign="Transparent" expandable="true">
+														<headerToolbar>
+															<Toolbar height="auto">
+																<Title text="Legenda"/>
+															</Toolbar>
+														</headerToolbar>
+														<sap.ui.unified:CalendarLegend id="legend1" columnWidth="128px"/>
+														</Panel>
+													 
+															
+																		</sap.ui.layout:VerticalLayout>
+																</items>
+															</VBox>
+															
 													<VBox width="100%" direction="Column" id="__vbox0_CALBUTTON" alignItems="Center">
 														<items>
 															<sap.ui.layout:VerticalLayout width="100%">
@@ -169,13 +185,16 @@
 																<Label id="LRS4_LBL_STARTTIME" text="{i18n>LR_START_TIME}"/>
 																<!--<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
 															<!--<sap.ui.layout:content>-->
-															    <TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
-															<!--</sap.ui.layout:content>-->
+															    <!--<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
+														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME"  valueFormat="HH:mm" minutesStep="30" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. Se non compilati vengono conteggiate 8 ore. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
+														
+														<!--</sap.ui.layout:content>-->
 															</sap.ui.layout:VerticalLayout>
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_ENDTIME" text="{i18n>LR_END_TIME}"/>
 																<!--<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
-																<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
+																<!--<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
+														--><TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME"  valueFormat="HH:mm" minutesStep="30" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento è possibile solo in caso di selezione di un singolo giorno. Se non compilati vengono conteggiate 8 ore. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 														
 															</sap.ui.layout:VerticalLayout>
 														</sap.ui.layout:content>
@@ -211,7 +230,7 @@
 															<sap.ui.layout:VerticalLayout width="100%">
 																<Label id="LRS4_LBL_APPROVER" text="{i18n>LR_APPROVER}">
 																</Label>
-																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item0" id="SLCT_APPROVER" items="{/ApproverSet}" tooltip="Selezione la persona che dovrà approvare la tua richiesta di assenza. A meno di casi particolari dovrebbe essere il tuo Team Leader.">
+																	<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item1" selectedItemId="__item00" id="SLCT_APPROVER" items="{/ApproverSet}" tooltip="Selezione la persona che dovrà approvare la tua richiesta di assenza. A meno di casi particolari dovrebbe essere il tuo Team Leader.">
 															    <items>
 															        <sap.ui.core:ListItem text="{NameFirst} {NameLast}" key="{Tmsuser}" id="__item0"/>
 														
@@ -223,7 +242,7 @@
 															<sap.ui.layout:VerticalLayout width="100%">
 															<Label id="LRS4_ORETOT" text="{i18n>LR_ORETOT}">
 																</Label>
-															<Input width="100%" id="LRS4_DAT_ORETOT" enabled="false" tooltip="Le ore di assenza totali della richiesta vengono calcolate in base alla selezione dei giorni e di eventuali orari."/>
+															<Input width="50%" id="LRS4_DAT_ORETOT" enabled="false" tooltip="Le ore di assenza totali della richiesta vengono calcolate in base alla selezione dei giorni e di eventuali orari."/>
 															</sap.ui.layout:VerticalLayout>
 														
 														</sap.ui.layout:content>

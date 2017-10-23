@@ -33,16 +33,17 @@
 						</fb:filterItems>
 				</fb:FilterBar>
 						
-						<Table items="{path: '/LeaveRequestSet', parameters : {expand:'UnameToName,UnameToNameApprover'}}" noDataText="Drop column list items here and columns in the area above" id="__table0" updateFinished="onUpdateFinished" tooltip="Clicca sulla riga per visualizzare e/o modificare il dettaglio. Puoi modificare solo le richieste in stato &quot;Inviate&quot;.">
+						<Table  items="{path: '/LeaveRequestSet', parameters : {expand:'UnameToName,UnameToNameApprover'}}" noDataText="Drop column list items here and columns in the area above" id="__table0" updateFinished="onUpdateFinished" tooltip="Clicca sulla riga per visualizzare e/o modificare il dettaglio. Puoi modificare solo le richieste in stato &quot;Inviate&quot;.">
 							<items>
 								<ColumnListItem id="__item2" type="Navigation" press="onPress">
 									<cells>
-										<ObjectIdentifier title="{ZrequestId}" id="__text0"/>
+										<ObjectIdentifier title="{ path: 'ZrequestId', formatter: '.formatter.formatRequestId'}" id="__text0"/>
 											<Text text=" { path: 'ZdateRec', formatter: '.formatter.formatDate'}" id="__text5"/>
 										<!--<Text text="{UnameToName/NameLast} {UnameToName/NameFirst}" id="__text1"/>-->
 										<Text text="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst}" id="__text2"/>
 										<Text text="{path: 'ZabsType', formatter:'.formatter.formatAbsence' }" id="__text3"/>
-										<ObjectStatus icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}" id="__text4"/>
+										<ObjectStatus icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}" 
+										state = "{ path: 'ZreqStatus', formatter: '.formatter.formatReqStatus'}" id="__text4"/>
 										<Text text=" {ZoreTotali}" id="__text6"/>
 									
 									</cells>
