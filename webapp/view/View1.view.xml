@@ -9,7 +9,8 @@
 		-->
 			
 					
-					<sap.ui.layout:Grid width="auto" defaultSpan="L12 M12 S12" id="LRS4_FLX_TOP">
+					<sap.ui.layout:Grid width="auto" defaultIndent="L4 M3" defaultSpan="L4 M6 S12" id="LRS4_FLX_TOP">
+					<!--<sap.ui.layout:Grid width="auto" defaultSpan="L12 M12 S12" id="LRS4_FLX_TOP">-->
 						<sap.ui.layout:content>
 							<VBox width="100%" direction="Column" id="__vbox0_ABSENCETYPE" alignItems="Center">
 							<items>
@@ -27,7 +28,7 @@
 						</sap.ui.layout:content>
 					</sap.ui.layout:Grid>
 					
-						<sap.ui.layout:Grid id="LRS4_FLX_CONTENT" defaultSpan="L12 M12 S12" width="auto">
+						<sap.ui.layout:Grid id="LRS4_FLX_CONTENT" defaultSpan="L12 M12 S12" width="auto" hSpacing="0">
 						<sap.ui.layout:content>
 							
 								
@@ -41,27 +42,48 @@
 								<sap.ui.layout.form:formContainers>
 									
 									<sap.ui.layout.form:FormContainer id="LRS4_FRM_CNT_CALENDAR">
+										
+						
 
 										<sap.ui.layout.form:formElements>
 											
 											<sap.ui.layout.form:FormElement id="LRS4_FELEM_CALENDAR">
 												<sap.ui.layout.form:layoutData>
-													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
+											    <sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
+													
+
+
 												</sap.ui.layout.form:layoutData>
 												<sap.ui.layout.form:fields>
-														<sap.ui.layout:Grid id="LR_CALENDAR" defaultSpan="L12 M12 S12" width="100%">
+														<sap.ui.layout:Grid id="LR_CALENDAR" defaultSpan="L12 M12 S12" width="100%" hSpacing="0">
 														<sap.ui.layout:content>
 															
-															<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center">
+															<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center" alignContent="Center" justifyContent="Center">
 																<items>	
 															<sap.ui.layout:VerticalLayout width="100%">
-															<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1" tooltip="Seleziona i giorni oggetto della tua richiesta."/>
-													 <sap.ui.unified:CalendarLegend id="legend1"/>
-																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
+															<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" class="sapUiResponsiveMargin" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1" tooltip="Seleziona i giorni oggetto della tua richiesta." width="100%"/>
+													 
+													 	<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
 																			<sap.ui.layout:ResponsiveFlowLayoutData id="LRS4_LYO_LEGEND" minWidth="30" weight="15"/>
 																		</sap.me:layoutData>
 																	</sap.me:CalendarLegend>-->
+																		</sap.ui.layout:VerticalLayout>
+																</items>
+															</VBox>
+													 	<VBox width="100%" direction="Column" id="__vbox0_LEGEND" alignItems="Center" alignContent="Start" justifyContent="Center">
+																<items>	
+													 	<sap.ui.layout:VerticalLayout width="100%">
+													 	<Panel id="panelLegend" width="auto"  backgroundDesign="Transparent" expandable="true">
+														<headerToolbar>
+															<Toolbar height="auto">
+																<Title text="Legenda"/>
+															</Toolbar>
+														</headerToolbar>
+														<sap.ui.unified:CalendarLegend id="legend1" columnWidth="128px"/>
+														</Panel>
+													 
+															
 																		</sap.ui.layout:VerticalLayout>
 																</items>
 															</VBox>
@@ -176,7 +198,7 @@
 																<!--<DateTimeInput id="LRS4_DAT_STARTTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
 															<!--<sap.ui.layout:content>-->
 															 <!--   <TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
-														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME"  valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
+														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" valueFormat="HH:mm" minutesStep="30" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. Se non compilati vengono conteggiate 8 ore. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 														
 															<!--</sap.ui.layout:content>-->
 															</sap.ui.layout:VerticalLayout>
@@ -184,7 +206,7 @@
 																<Label id="LRS4_LBL_ENDTIME" text="{i18n>LR_END_TIME}"/>
 																<!--<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
 																<!--<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
-														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME"  valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
+														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" valueFormat="HH:mm" minutesStep="30" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. Se non compilati vengono conteggiate 8 ore. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 															
 														
 															</sap.ui.layout:VerticalLayout>

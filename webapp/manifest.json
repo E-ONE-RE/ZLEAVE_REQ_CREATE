@@ -137,7 +137,7 @@
 					"viewName": "View2",
 					"viewId": "V2",
 					"viewLevel": 3,
-					"transition": "flip"
+					"transition": "slide"
 				},
 				"notFound": {
 					"viewName": "NotFound",

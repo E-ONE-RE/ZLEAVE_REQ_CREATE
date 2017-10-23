@@ -144,7 +144,7 @@ sap.ui.define([
 				window.history.go(-1);
 			} else {
 			//	this.getRouter().navTo("view1s", {}, true );
-			    this.getRouter().navTo("view1s", {});
+			    this.getRouter().navTo("view1", {});
 			}
 			
 		},

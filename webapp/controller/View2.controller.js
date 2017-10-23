@@ -100,6 +100,9 @@ sap.ui.define([
 								oLeg2.setVisible(false);
 								oLeg2.rerender();
 								
+								oView.byId("panelLegend").setVisible(false);
+								oView.byId("panelLegend").rerender();
+
 								oView.byId("removeAll_btn").setVisible(false);
 								oView.byId("removeAll_btn").setEnabled(false);	
 								oView.byId("removeAll_btn").rerender();	
@@ -254,6 +257,9 @@ sap.ui.define([
 					
 					oLeg2.setVisible(false);
 					oLeg2.rerender();
+					
+						oView.byId("panelLegend").setVisible(false);
+								oView.byId("panelLegend").rerender();
 					
 					oView.byId("removeAll_btn").setVisible(false);
 					oView.byId("removeAll_btn").setEnabled(false);	
@@ -421,6 +427,9 @@ sap.ui.define([
 					
 					oLeg2.setVisible(true);
 					oLeg2.rerender();
+					
+						oView.byId("panelLegend").setVisible(true);
+								oView.byId("panelLegend").rerender();
 					
 					oView.byId("removeAll_btn").setVisible(true);
 					oView.byId("removeAll_btn").setEnabled(true);	

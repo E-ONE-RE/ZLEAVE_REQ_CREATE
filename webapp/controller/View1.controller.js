@@ -302,8 +302,8 @@ sap.ui.define([
 										oCal1.addSpecialDate(new DateTypeRange({
 											startDate: oFormatYYyyymmdd.parse(res),
 											type: "Type01",
-											tooltip: "Permesso Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus 
-	
+											tooltip: "Permesso Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus 
+	                                           
 										}));
 									}
 	
@@ -312,7 +312,7 @@ sap.ui.define([
 										oCal1.addSpecialDate(new DateTypeRange({
 											startDate: oFormatYYyyymmdd.parse(res),
 											type: "Type05",
-											tooltip: "Ferie Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
+											tooltip: "Ferie Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
 	
 										}));
 									}
@@ -322,7 +322,7 @@ sap.ui.define([
 										oCal1.addSpecialDate(new DateTypeRange({
 											startDate: oFormatYYyyymmdd.parse(res),
 											type: "Type09",
-											tooltip: "Recupero Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
+											tooltip: "Recupero Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
 	
 										}));
 								}
@@ -336,7 +336,7 @@ sap.ui.define([
 
 							}
 
-					/*		oLeg1.addItem(new CalendarLegendItem({
+							oLeg1.addItem(new CalendarLegendItem({
 								text: "Permesso",
 								id: "leg1",
 								type: "Type01"
@@ -353,7 +353,7 @@ sap.ui.define([
 								text: "Recupero",
 								id: "leg3",
 								type: "Type09"
-							}));*/
+							}));
 
 						}
 
