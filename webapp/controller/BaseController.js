@@ -582,12 +582,21 @@ sap.ui.define([
 					this.sButtonKey = oEvent.getSource().getId();
 					 
 					 
-			//		 var oView, oViewW;
-		//	oView = this.getView();
-		//	var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; 
-		//			oViewW = sap.ui.getCore().byId(sPrefix + "V1S");
+		//estraggo id della view 
+		var sViewIdStart = oView.getId().indexOf("---");
+		sViewIdStart = sViewIdStart + 3;
+		
+	    //		var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---");) + "---"; 
+	   var sViewID = oView.getId().substring(sViewIdStart); 
+	   
+	   // l'alternativa è basarsi sul nome della view completa
+		//	var sViewName = oView.getViewName(); 
+	
 					
-				if (oViewId ===	"__component0---V1") {	
+			//	if (oViewId ===	"__component0---V1") {	
+						if (sViewID ===	"V1") {	
+					
+				
 						 // controllo button selezionato
 					   if (this.sButtonKey === oView.byId("btn1").getId()) {
 						// se bt1 eseguo controlli per azione di modifica
@@ -633,7 +642,8 @@ sap.ui.define([
 					   } 
 				}   
 				
-				if (oViewId === "__component0---V2") {
+			//	if (oViewId === "__component0---V2") {
+						if (sViewID === "V2") {
 					if (this.sButtonKey ===oView.byId("btn1_mod").getId()) {
 					   		// se bt1_mod  eseguo controlli e modifico
 					   		
@@ -734,7 +744,18 @@ sap.ui.define([
 				var sZrequestId = "";
 				var sAction = "creata"; 
 				
-				if (oViewId === "__component0---V2") {	
+						//estraggo id della view 
+				var sViewIdStart = oView.getId().indexOf("---");
+				sViewIdStart = sViewIdStart + 3;
+				
+			    //		var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---");) + "---"; 
+			   var sViewID = oView.getId().substring(sViewIdStart); 
+	   
+	   // l'alternativa è basarsi sul nome della view completa
+		//	var sViewName = oView.getViewName(); 
+				
+			//	if (oViewId === "__component0---V2") {	
+			if (sViewID === "V2") {	
 					 if (sButtonId === oView.byId("btn2_del").getId()) {
 					 	var oObject = oView.getBindingContext().getObject();
 					 	sZrequestId = oObject.ZrequestId;
@@ -832,7 +853,8 @@ sap.ui.define([
 						oView.byId("LRS4_TXA_NOTE").rerender();
 						oView.byId("LRS4_TXA_NOTE").setEnabled(true);
 						
-						if (oViewId === "__component0---V2") {	
+					//	if (oViewId === "__component0---V2") {
+					    if (sViewID === "V2") {	
 								// faccio refresh tabella riepilogativa delle richieste
 								var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---")) + "---"; 
 							    var oViewW = sap.ui.getCore().byId(sPrefix + "V1S");
@@ -843,7 +865,9 @@ sap.ui.define([
 							//	that.getRouter().navTo("view1s", {});
 						}
 						
-						if (oViewId === "__component0---V1") {	
+					//	if (oViewId === "__component0---V1") {	
+						if (sViewID === "V1") {	
+							
 	
 							that.getRouter().navTo("view1s", {});
 						}

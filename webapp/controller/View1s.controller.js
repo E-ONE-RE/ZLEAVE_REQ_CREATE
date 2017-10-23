@@ -50,7 +50,7 @@ sap.ui.define([
 				};
 				
 
-			    var oSelect1 = sap.ui.getCore().byId("__component0---V1S--selABS");
+			   // var oSelect1 = sap.ui.getCore().byId("__component0---V1S--selABS");
 				var oSelect2 = this.getView().byId("selStatus");
 				var oModel = new sap.ui.model.json.JSONModel(jData);
 				sap.ui.getCore().setModel(oModel, "StatusCollection");
