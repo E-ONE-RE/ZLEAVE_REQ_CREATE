@@ -196,6 +196,18 @@ sap.ui.define([
 				oView.byId("LRS4_DAT_CALENDAR").removeAllDisabledDates();
 				oLeg2.destroyItems();
 				
+				// nascondo riga commenti se inesistenti
+			   var oListItem = oView.byId("commentList");
+               var oGetItem = oListItem.getItems();
+               var sComment = oGetItem["0"].getText();
+               
+               if(sComment==""){
+               oListItem.setVisible(false);
+               }else{
+               	oListItem.setVisible(true);
+               }
+
+				
 				
 				
 				

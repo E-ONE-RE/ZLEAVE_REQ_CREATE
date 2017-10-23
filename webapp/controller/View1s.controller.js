@@ -111,15 +111,17 @@ sap.ui.define([
 			onPress: function(oEvent) {
 
 		      	var oItem, oCtx, zid;
-				var oView = this.getView();
+			//	var oView = this.getView();
+				
+				 if (this.intervalHandle) 
+			      clearInterval(this.intervalHandle);
 		 
-		     this.onRefreshTable();
+		    	this.onRefreshTable();
 		     
-		     oItem = oEvent.getSource();
-			oCtx = oItem.getBindingContext();
+		    	oItem = oEvent.getSource();
+				oCtx = oItem.getBindingContext();
 				
 				zid = oCtx.getProperty("ZrequestId");
-
 
 				this.getRouter().navTo("view2", {
 					ZrequestId: zid
@@ -128,6 +130,24 @@ sap.ui.define([
 			       
 			},
 		
+		
+		onNavBackDirect        : function (oEvent) {
+			
+             if (this.intervalHandle) 
+			      clearInterval(this.intervalHandle);
+	 //		this.getRouter().navTo("view1s", {});
+			
+			var oHistory, sPreviousHash;
+			oHistory = History.getInstance();
+			sPreviousHash = oHistory.getPreviousHash();
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+			//	this.getRouter().navTo("view1s", {}, true );
+			    this.getRouter().navTo("view1s", {});
+			}
+			
+		},
            
 			
 			//pulisco il contatore dell'auto refresh
@@ -135,7 +155,7 @@ sap.ui.define([
 			   // You should stop the interval on exit. 
 			   // You should also stop the interval if you navigate out of your view and start it again when you navigate back. 
 			   if (this.intervalHandle) 
-			      clearInterval(this.intervalHandle) ;
+			      clearInterval(this.intervalHandle);
 			},
 			
 			onAfterRendering: function(oEvent) {
