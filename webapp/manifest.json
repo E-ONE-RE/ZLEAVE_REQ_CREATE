@@ -137,7 +137,7 @@
 					"viewName": "View2",
 					"viewId": "V2",
 					"viewLevel": 3,
-					"transition": "flip"
+					"transition": "slide"
 				},
 				"notFound": {
 					"viewName": "NotFound",
@@ -160,7 +160,7 @@
 		}
 	},
 	"sap.platform.abap": {
-		"uri": "/sap/bc/ui5_ui5/sap/zleave_c_1_1/webapp",
+		"uri": "/sap/bc/ui5_ui5/sap/zleave_c_1_3/webapp",
 		"_version": "1.1.0"
 	}
 }
