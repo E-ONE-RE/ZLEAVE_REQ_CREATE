@@ -43,8 +43,8 @@ xmlns:fb="sap.ui.comp.filterbar" controllerName="ZLEAVE_REQ_CREATE.controller.Vi
 					</fb:FilterItem>
 						</fb:filterItems>
 				</fb:FilterBar>
-				
-                 	<Table  items="{path: '/LeaveRequestSet', parameters : {expand:'UnameToName,UnameToNameApprover'}}" noDataText="Drop column list items here and columns in the area above" id="__table0" updateFinished="onUpdateFinished" tooltip="Clicca sulla riga per visualizzare e/o modificare il dettaglio. Puoi modificare solo le richieste in stato &quot;Inviate&quot;.">
+						
+						<Table  items="{path: '/LeaveRequestSet', parameters : {expand:'UnameToName,UnameToNameApprover'}}" noDataText="Drop column list items here and columns in the area above" id="__table0" updateFinished="onUpdateFinished" tooltip="Clicca sulla riga per visualizzare e/o modificare il dettaglio. Puoi modificare solo le richieste in stato &quot;Inviate&quot;.">
 							<items>
 								<ColumnListItem id="__item2" type="Navigation" press="onPress">
 									<cells>
@@ -98,6 +98,7 @@ xmlns:fb="sap.ui.comp.filterbar" controllerName="ZLEAVE_REQ_CREATE.controller.Vi
 						</Table>
 					</sap.ui.layout:content>
 				</sap.ui.layout:Grid>
+				
 
 				<!--</Panel>-->
 			</content>

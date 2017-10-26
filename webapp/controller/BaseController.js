@@ -592,6 +592,31 @@ sap.ui.define([
 	   
 	   // l'alternativa è basarsi sul nome della view completa
 		//	var sViewName = oView.getViewName(); 
+		
+		// inserisco giorni selezionati un una stringa di testo per dettagli messagebox
+	                    var aSelectedDates = this.cale.getSelectedDates();
+						//var oDataSel = {
+						//	selectedDates: []
+					//	};
+	 
+							var oDate;
+							var oDateTxt = "";
+							var oComma = "";
+			
+				
+							if (aSelectedDates.length > 0) {
+								for (var i = 0; i < aSelectedDates.length; i++) {
+									oDate = aSelectedDates[i].getStartDate();
+									oDate = this.oFormatYyyymmdd.format(oDate);
+									oDate = formatter.formatDate(oDate);
+									//oDataSel.selectedDates.push({Date:oDate});
+										if (oDateTxt !== "") {
+										oComma = ", ";
+										}
+									
+									oDateTxt = oDateTxt + oComma + oDate;
+								  }
+								}	
 	
 					
 			//	if (oViewId ===	"__component0---V1") {	
@@ -615,8 +640,7 @@ sap.ui.define([
 	                   var timeCheckBlank = this.onTimePickerCheck();   
 	                    if (timeCheckBlank === "KO") {return;}
 	                    
-	                    
-						
+
 						MessageBox.confirm("Confermi l'invio della richiesta?", {
 							icon: MessageBox.Icon.INFORMATION,
 							title: "Invio Richiesta",
@@ -625,9 +649,10 @@ sap.ui.define([
 							id: "messageBoxId1",
 							defaultAction: MessageBox.Action.NO,
 							details: "Tipo di richiesta: " + tabsType + " \nApprovatore: " + this.slctApprover.getSelectedKey() + " \nOre totali: " + this.oreTot.getValue()
-							+ " \nCliccando SI, la richiesta verrà inoltrata, riceverai una notifica via mail sul suo esito. Puoi mofificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
+							+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà inoltrata, riceverai una notifica via mail sul suo esito. Puoi mofificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
 							styleClass: bCompact ? "sapUiSizeCompact" : "",
 							contentWidth: "100px",
+							
 							 onClose: function(oAction) {
 								        if (oAction == "YES") {
 								        	that.actionTask();
@@ -668,7 +693,7 @@ sap.ui.define([
 								id: "messageBoxId1_mod",
 								defaultAction: MessageBox.Action.NO,
 								details: "Tipo di richiesta: " + tabsType + " \nApprovatore: " + this.slctApprover.getSelectedKey() + " \nOre totali: " + this.oreTot.getValue()
-								+ " \nCliccando SI, la richiesta verrà modificata, riceverai una notifica via mail sul suo esito. Puoi mofificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
+									+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà modificata, riceverai una notifica via mail sul suo esito. Puoi mofificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
 						
 								styleClass: bCompact ? "sapUiSizeCompact" : "",
 								contentWidth: "100px",
@@ -697,7 +722,7 @@ sap.ui.define([
 								id: "messageBoxId1_del",
 								defaultAction: MessageBox.Action.NO,
 								details: "Tipo di richiesta: " + tabsType + " \nApprovatore: " + this.slctApprover.getSelectedKey() + " \nOre totali: " + this.oreTot.getValue()
-								+ " \nCliccando SI, la richiesta verrà eliminata, non potrai più visualizzarla nell'APP.",
+								+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà eliminata, non potrai più visualizzarla nell'APP.",
 								styleClass: bCompact ? "sapUiSizeCompact" : "",
 								contentWidth: "100px",
 								 onClose: function(oAction) {
