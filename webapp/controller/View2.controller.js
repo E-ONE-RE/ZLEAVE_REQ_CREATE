@@ -107,16 +107,18 @@ sap.ui.define([
 								oView.byId("removeAll_btn").setEnabled(false);	
 								oView.byId("removeAll_btn").rerender();	
 			          
-						          oView.byId("btn1_mod").setEnabled(false);
-						          oView.byId("btn1_mod").rerender();	
+						        oView.byId("btn1_mod").setEnabled(false);
+						        oView.byId("btn1_mod").rerender();	
 						          
-						          oView.byId("btn2_del").setEnabled(false);
-						          oView.byId("btn2_del").rerender();
+						        oView.byId("btn2_del").setEnabled(false);
+						        oView.byId("btn2_del").rerender();
 						          
 						        oView.byId("elab_text").setVisible(true);
 								oView.byId("elab_text").rerender();	
 								
-			  
+								oView.byId("status_unlocked").setVisible(false);	
+								oView.byId("status_unlocked").rerender();
+								
 			                }
 						
 						return oZstatus;			 
@@ -218,8 +220,15 @@ sap.ui.define([
 				oCtx = oView.getBindingContext();
 				zid = oCtx.getProperty("ZrequestId");
 				zstatus = oCtx.getProperty("ZreqStatus");
+				var zstatus_unlocked = oCtx.getProperty("Zunlocked");
 				////zid = oView.getBindingContext().getProperty("ZrequestId");
 				
+				oView.byId("status_unlocked").setVisible(false);	
+				oView.byId("status_unlocked").rerender();
+				
+				oView.byId("btn2_del").setEnabled(true);
+			    oView.byId("btn2_del").rerender();
+						
 				// setto i valori in base ai valori del binding corrente
 				oView.byId("SLCT_LEAVETYPE").setSelectedKey(oCtx.getProperty("ZabsType"));
 
@@ -267,21 +276,24 @@ sap.ui.define([
 					oLeg2.setVisible(false);
 					oLeg2.rerender();
 					
-						oView.byId("panelLegend").setVisible(false);
-								oView.byId("panelLegend").rerender();
+					oView.byId("panelLegend").setVisible(false);
+					oView.byId("panelLegend").rerender();
 					
 					oView.byId("removeAll_btn").setVisible(false);
 					oView.byId("removeAll_btn").setEnabled(false);	
 					oView.byId("removeAll_btn").rerender();	
           
-			          oView.byId("btn1_mod").setEnabled(false);
-			          oView.byId("btn1_mod").rerender();	
-			          
-			          oView.byId("btn2_del").setEnabled(false);
-			          oView.byId("btn2_del").rerender();
-			          
+			        oView.byId("btn1_mod").setEnabled(false);
+			        oView.byId("btn1_mod").rerender();	
+			        
+			        oView.byId("btn2_del").setEnabled(false);
+			        oView.byId("btn2_del").rerender();
+			        
 			        oView.byId("elab_text").setVisible(true);
 					oView.byId("elab_text").rerender();	
+					
+					oView.byId("status_unlocked").setVisible(false);	
+					oView.byId("status_unlocked").rerender();
 					
   
                 }
@@ -410,7 +422,21 @@ sap.ui.define([
 
 					oView.byId("elab_text").setVisible(false);	
 					oView.byId("elab_text").rerender();	
-				
+					
+					if ( zstatus_unlocked === "X" ) {
+						oView.byId("status_unlocked").setVisible(true);	
+						oView.byId("status_unlocked").rerender();
+						
+						oView.byId("btn2_del").setEnabled(false);	
+						oView.byId("btn2_del").rerender();
+	
+					} else {
+					
+					oView.byId("btn2_del").setEnabled(true);
+			          oView.byId("btn2_del").rerender();
+						
+					}
+					
 					
                 	oView.byId("SLCT_LEAVETYPE").setEnabled(true);
 					oView.byId("SLCT_LEAVETYPE").rerender();
@@ -447,8 +473,7 @@ sap.ui.define([
 			          oView.byId("btn1_mod").setEnabled(true);
 			          oView.byId("btn1_mod").rerender();	
 			          
-			          oView.byId("btn2_del").setEnabled(true);
-			          oView.byId("btn2_del").rerender();	
+			          	
           	
           
 					
@@ -464,8 +489,8 @@ sap.ui.define([
 				});
 
 				function fnReadS(oData, response) {
-					console.log(oData);
-					console.log(response);
+				//	console.log(oData);
+				//	console.log(response);
 
 					// controllo che la funzione è andata a buon fine 
 					if (response.statusCode == "200") {
@@ -529,7 +554,7 @@ sap.ui.define([
 				} // END FUNCTION SUCCESS
 
 				function fnReadE(oError) {
-					console.log(oError);
+				//	console.log(oError);
 
 					alert("Error in read: " + oError.message);
 				}
@@ -551,8 +576,8 @@ sap.ui.define([
 				});
 
 				function fnReadS_Pos(oData, response) {
-					console.log(oData);
-					console.log(response);
+				//	console.log(oData);
+				//	console.log(response);
 
 					// controllo che la funzione è andata a buon fine 
 					if (response.statusCode == "200") {
@@ -590,7 +615,7 @@ sap.ui.define([
 														oCal2.addSpecialDate(new DateTypeRange({
 														startDate : oFormatYYyyymmdd.parse(res),
 														type : "Type01",
-														tooltip : "Permesso Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
+														tooltip : "Permesso Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
 											
 														
 														}));
@@ -601,7 +626,7 @@ sap.ui.define([
 														oCal2.addSpecialDate(new DateTypeRange({
 														startDate : oFormatYYyyymmdd.parse(res),
 														type : "Type05",
-														tooltip : "Ferie Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
+														tooltip : "Ferie Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
 											
 														
 														}));
@@ -612,11 +637,21 @@ sap.ui.define([
 														oCal2.addSpecialDate(new DateTypeRange({
 														startDate : oFormatYYyyymmdd.parse(res),
 														type : "Type09",
-														tooltip : "Recupero Id: " + oData.results[i].ZrequestId + " Stato: " + oData.results[i].ZreqStatus
+														tooltip : "Recupero Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
 											
 														
 														}));
 											}
+											
+												if (oData.results[i].ZabsType == "0004") {
+	
+									      	oCal2.addSpecialDate(new DateTypeRange({
+											startDate: oFormatYYyyymmdd.parse(res),
+											type: "Type08",
+											tooltip: "ROL Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+	
+										}));
+								}
 			                        }	
 	                        	}
                         
@@ -659,7 +694,7 @@ sap.ui.define([
 						} // END FUNCTION SUCCESS
 		
 						function fnReadE_Pos(oError) {
-							console.log(oError);
+						//	console.log(oError);
 		
 							alert("Error in read: " + oError.message);
 						}

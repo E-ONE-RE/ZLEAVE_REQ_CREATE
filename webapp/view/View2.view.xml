@@ -8,8 +8,9 @@
 			    <ObjectAttribute id="elab_text" title="Elaborata da" text="{UnameToNameApprover/NameLast} {UnameToNameApprover/NameFirst} { path: 'ZdateAction', formatter: '.formatter.formatDate'} { path: 'ZtimeAction', formatter: '.formatter.formatTime'}"/>
 			    
 				<statuses>
-			     <ObjectStatus title="Stato" icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}"
+			     <ObjectStatus id="status_icon" title="Stato" icon="{ path: 'ZreqStatus', formatter: '.formatter.formatIconStatus'}"
 			     state="{ path: 'ZreqStatus', formatter: '.formatter.formatReqStatus'}"/>
+			      <ObjectStatus id="status_unlocked" text="Sbloccata da Admin" icon = "sap-icon://wrench" />
 			<!--	<ObjectStatus title="Ore totali" text="{ZoreTotali}"/>-->
 			</statuses>	
 				
@@ -33,6 +34,8 @@
 					
 						id="SLCT_LEAVETYPE"
 						selectedKey="item_LEAVETYPE"
+						change="handleAbsTypeSelect"
+
 						tooltip="Seleziona il tipo di assenza oggetto della tua richiesta."
 
 						items="{ 	path: '/AbsenceTypeSet' }">
@@ -201,7 +204,7 @@
 															<!--<sap.ui.layout:content>-->
 															    <!--<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 
-														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME"  valueFormat="HH:mm"  enabled="false" tooltip="{i18n>LR_HELP_START_TIME}"/>
+														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm"  enabled="false" tooltip="{i18n>LR_HELP_START_TIME}"/>
 
 														
 														<!--</sap.ui.layout:content>-->
@@ -211,7 +214,7 @@
 																<!--<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
 																<!--<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 
-														--><TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME"  valueFormat="HH:mm"  enabled="false" tooltip="{i18n>LR_HELP_END_TIME}"/>
+														--><TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm"  enabled="false" tooltip="{i18n>LR_HELP_END_TIME}"/>
 
 														
 															</sap.ui.layout:VerticalLayout>

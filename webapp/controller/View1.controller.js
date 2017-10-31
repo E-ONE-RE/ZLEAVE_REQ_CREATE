@@ -240,7 +240,7 @@ sap.ui.define([
 	                      oCal1.addDisabledDate(new DateTypeRange({   
 	                     startDate: this.oFormatYear.parse(oYear2+"1226")
 	                     }));
-	                     
+	                  ///////////////FINE FESTIVI////////////   
 
 				oView.byId("LRS4_DAT_STARTTIME").setValue("");
 				oView.byId("LRS4_DAT_STARTTIME").rerender();
@@ -253,6 +253,11 @@ sap.ui.define([
 				oView.byId("LRS4_TXA_NOTE").setValue("");
 				oView.byId("LRS4_TXA_NOTE").rerender();
 				oView.byId("LRS4_TXA_NOTE").setEnabled(true);
+				
+				
+			//	oView.byId("LRS4_TXA_NOTE_RECUP").setValue("");
+			//	oView.byId("LRS4_TXA_NOTE_RECUP").rerender("");
+			//	oView.byId("LRS4_TXA_NOTE_RECUP").setEnabled(true);
 				
 				oView.byId("LRS4_DAT_ORETOT").setValue("0");
 				oView.byId("LRS4_DAT_ORETOT").setEnabled(false);
@@ -268,8 +273,8 @@ sap.ui.define([
 				});
 
 				function fnReadS(oData, response) {
-					console.log(oData);
-					console.log(response);
+				//	console.log(oData);
+				//	console.log(response);
 
 					// controllo che la funzione è andata a buon fine 
 					if (response.statusCode == "200") {
@@ -280,7 +285,6 @@ sap.ui.define([
 							calendarType: sap.ui.core.CalendarType.Gregorian
 						});
 
-  
 						var oRefDate = new Date();
 
 						var oDateRange;
@@ -326,6 +330,17 @@ sap.ui.define([
 	
 										}));
 								}
+								
+											if (oData.results[i].ZabsType == "0004") {
+	
+										oCal1.addSpecialDate(new DateTypeRange({
+											startDate: oFormatYYyyymmdd.parse(res),
+											type: "Type08",
+											tooltip: "ROL Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+	
+										}));
+								}
+								
                              }	
 
 								// aggiungere date selezionate quando si è in modifica
@@ -373,7 +388,7 @@ sap.ui.define([
 				} // END FUNCTION SUCCESS
 
 				function fnReadE(oError) {
-					console.log(oError);
+				//	console.log(oError);
 
 					alert("Error in read: " + oError.message);
 				}
