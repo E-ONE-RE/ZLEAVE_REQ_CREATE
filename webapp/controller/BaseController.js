@@ -1,10 +1,11 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
+	'sap/ui/unified/DateTypeRange',
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"sap/m/MessageBox",
 	"ZLEAVE_REQ_CREATE/model/formatter"
-], function(Controller,  JSONModel, History, MessageBox, formatter) {
+], function(Controller, DateTypeRange, JSONModel, History, MessageBox, formatter) {
 	"use strict";
      
      jQuery.sap.require("sap.m.MessageBox");
@@ -493,15 +494,15 @@ sap.ui.define([
 						//if(oDate === sap.ui.unified.CalendarDayType.NonWorking) {
 								//jQuery.sap.require("sap.m.MessageBox");
 								sap.m.MessageBox.show(
-									"Attenzione: Non è possibile selezionare giorni non lavorativi, " + oDate, {
+									"Attenzione: Non è possibile selezionare giorni non lavorativi, rimuovere la selezione, " + oDate, {
 										icon: sap.m.MessageBox.Icon.WARNING,
 										title: "Error",
 										actions: [sap.m.MessageBox.Action.CLOSE]
 
 									});
 								
-								//	oCalendar.removeSelectedDate(oDater);
-								oCalendar.removeAllSelectedDates();
+
+								//oCalendar.removeAllSelectedDates();
 								return;
 							}
 						
@@ -526,6 +527,7 @@ sap.ui.define([
 									});
 								//	alert("Errore sovrapposizione giorni");
 								//	oCalendar.removeSelectedDate(oDater);
+								
 								oCalendar.removeAllSelectedDates();
 								return;
 							}

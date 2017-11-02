@@ -78,7 +78,12 @@ sap.ui.define([
                 //refresh della tabella
                 var oView = this.getView();
 				var oTable = oView.byId("__table0");
+				var oTable2 = oView.byId("__tableUserInfo");
 				oTable.getBinding("items").refresh();
+				oTable2.getBinding("items").refresh();
+				
+				
+				
 
 			},
 			
@@ -163,6 +168,12 @@ sap.ui.define([
 			},
 
 			onUpdateFinished: function(oEvent) {
+				
+				var oView = this.getView();
+				
+				var oTable2 = oView.byId("__tableUserInfo");
+				
+				oTable2.getBinding("items").refresh();
 
 
 			},
