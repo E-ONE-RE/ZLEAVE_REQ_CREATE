@@ -37,6 +37,7 @@
 					
 						id="SLCT_LEAVETYPE"
 						selectedKey="item_LEAVETYPE"
+						change="handleAbsTypeSelect"
 						tooltip="Seleziona il tipo di assenza oggetto della tua richiesta."
 
 						items="{ 	path: '/AbsenceTypeSet' }">
@@ -82,7 +83,7 @@
 															<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center" alignContent="Center" justifyContent="Center">
 																<items>	
 															<sap.ui.layout:VerticalLayout width="100%">
-															<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" class="sapUiResponsiveMargin" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1" tooltip="{i18n>LR_SELECT_DAYS}" width="50%"/>
+															<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" class="sapUiResponsiveMargin" select="handleCalendarSelect" intervalSelection="false" singleSelection="false" legend="legend1" tooltip="{i18n>LR_SELECT_DAYS}" width="100%"/>
 													 
 													 	<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
@@ -220,7 +221,7 @@
 															<!--<sap.ui.layout:content>-->
 															 <!--   <TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di inizio assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 
-														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" valueFormat="HH:mm"  enabled="false" tooltip="{i18n>LR_HELP_START_TIME}"/>
+														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm"  enabled="false" tooltip="{i18n>LR_HELP_START_TIME}"/>
 
 														
 															<!--</sap.ui.layout:content>-->
@@ -230,7 +231,7 @@
 																<!--<DateTimeInput id="LRS4_DAT_ENDTIME" change="onTimeChange" type="Time" valueFormat="HH:mm"/>-->
 																<!--<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="false" tooltip="Inserisci orario di fine assenza. Utilizza le fasce orarie 9:00-13:00 e 14:30-18:30. Non sono permessi intervalli inferiori ai 30 minuti. L'inserimento possibile solo in caso di selezione di un singolo giorno. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. Effettuare richieste separate in caso sia necessario indicare orari specifici."/>
 
-														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" valueFormat="HH:mm"  enabled="false" tooltip="{i18n>LR_HELP_END_TIME}"/>
+														-->	<TimePicker placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm"  enabled="false" tooltip="{i18n>LR_HELP_END_TIME}"/>
 
 															
 														
@@ -334,6 +335,32 @@
 													</sap.ui.layout:Grid>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>
+											
+											
+								<!--			<sap.ui.layout.form:FormElement id="LRS4_FELEM_NOTE_RECUP">
+												<sap.ui.layout.form:layoutData>
+													<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
+												</sap.ui.layout.form:layoutData>
+												<sap.ui.layout.form:fields>
+													<sap.ui.layout:Grid id="LRS4_NOTE_RECUP" width="100%" defaultSpan="L12 M12 S12">
+														<sap.ui.layout:content>
+															<sap.ui.layout:VerticalLayout width="100%">
+																<Label id="LRS4_LBL_NOTE_RECUP" text="{i18n>LR_NOTE_RECUP}">
+																</Label>
+																<TextArea id="LRS4_TXA_NOTE_RECUP" width="100%" height="6rem" wrapping="None" maxLength="255" tooltip="{i18n>LR_USER_NOTE_RECUP}">
+																	<layoutData>
+																		<sap.ui.layout:ResponsiveFlowLayoutData weight="8" linebreak="true"/>
+																	</layoutData>
+																</TextArea>
+															<sap.ui.layout:content>
+															</sap.ui.layout:content>
+															</sap.ui.layout:VerticalLayout>
+															
+															
+														</sap.ui.layout:content>
+													</sap.ui.layout:Grid>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>-->
 											
 										<!--	<sap.ui.layout.form:FormElement visible="false" id="LRS4_FELEM_FILEATTACHMENTS">
 												<sap.ui.layout.form:layoutData>

@@ -161,7 +161,7 @@
 		}
 	},
 	"sap.platform.abap": {
-		"uri": "/sap/bc/ui5_ui5/sap/zleave_c_1_17/webapp",
+		"uri": "/sap/bc/ui5_ui5/sap/zleave_c_2_2/webapp",
 		"_version": "1.1.0"
 	}
 }
