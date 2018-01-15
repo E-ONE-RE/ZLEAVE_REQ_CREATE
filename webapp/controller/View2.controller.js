@@ -1,11 +1,11 @@
 sap.ui.define([
-		"ZLEAVE_REQ_CREATE/controller/BaseController", "sap/ui/model/json/JSONModel",
+		"eone_zleave_req_create/controller/BaseController", "sap/ui/model/json/JSONModel",
 		'sap/ui/unified/CalendarLegendItem',
 		'sap/ui/unified/DateTypeRange',
 		'sap/m/Button',
 		'sap/m/Dialog',
 		'sap/m/Label',
-		"ZLEAVE_REQ_CREATE/model/formatter"
+		"eone_zleave_req_create/model/formatter"
 	],
 	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange, Button, Dialog, Label, formatter) {
 		"use strict";
@@ -13,7 +13,7 @@ sap.ui.define([
 		jQuery.sap.require("sap.m.MessageBox");
 		jQuery.sap.require("sap.m.MessageToast");
 
-		return BaseController.extend("ZLEAVE_REQ_CREATE.controller.View2", {
+		return BaseController.extend("eone_zleave_req_create.controller.View2", {
 			
 			formatter: formatter,
 				

@@ -1,6 +1,6 @@
 sap.ui.define([
-		"ZLEAVE_REQ_CREATE/controller/BaseController", "sap/ui/model/json/JSONModel",
-		"sap/ui/core/routing/History", "ZLEAVE_REQ_CREATE/model/formatter",
+		"eone_zleave_req_create/controller/BaseController", "sap/ui/model/json/JSONModel",
+		"sap/ui/core/routing/History", "eone_zleave_req_create/model/formatter",
 		"sap/ui/model/Filter",
 		"sap/ui/model/FilterOperator"
 
@@ -8,12 +8,12 @@ sap.ui.define([
 	function(BaseController, JSONModel, History, formatter, Filter, FilterOperator) {
 		"use strict";
 
-			//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
-	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
+			//	jQuery.sap.require("eone_zleave_req_create.utils.Formatters");
+	//	jQuery.sap.require("eone_zleave_req_create.utils.UIHelper");
 		jQuery.sap.require("sap.m.MessageBox");
-	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
-	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.ConcurrentEmployment");
-	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.CalendarTools");
+	//	jQuery.sap.require("eone_zleave_req_create.utils.DataManager");
+	//	jQuery.sap.require("eone_zleave_req_create.utils.ConcurrentEmployment");
+	//	jQuery.sap.require("eone_zleave_req_create.utils.CalendarTools");
 	//	jQuery.sap.require("sap.ca.ui.dialog.factory");
 	//	jQuery.sap.require("sap.ca.ui.dialog.Dialog");
 		jQuery.sap.require("sap.m.MessageToast");
@@ -22,7 +22,7 @@ sap.ui.define([
 	//	jQuery.sap.require("sap.ca.ui.message.message");
 		// jQuery.sap.require("sap.ui.thirdparty.sinon");
 
-		return BaseController.extend("ZLEAVE_REQ_CREATE.controller.View1s", {
+		return BaseController.extend("eone_zleave_req_create.controller.View1s", {
 
 			formatter: formatter,
 
