@@ -1,7 +1,7 @@
 {
 	"_version": "1.5.0",
 	"sap.app": {
-		"id": "ZLEAVE_REQ_CREATE",
+		"id": "eone_zleave_req_create",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
@@ -47,7 +47,7 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "ZLEAVE_REQ_CREATE.view.App",
+			"viewName": "eone_zleave_req_create.view.App",
 			"type": "XML"
 		},
 		"dependencies": {
@@ -76,7 +76,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "ZLEAVE_REQ_CREATE.i18n.i18n"
+					"bundleName": "eone_zleave_req_create.i18n.i18n"
 				}
 			},
 			"": {
@@ -95,7 +95,7 @@
 				"routerClass": "sap.m.routing.Router",
 				"targetClass": "sap.m.routing.Targets",
 				"viewType": "XML",
-				"viewPath": "ZLEAVE_REQ_CREATE.view",
+				"viewPath": "eone_zleave_req_create.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"targetParent": "Page",
@@ -161,7 +161,7 @@
 		}
 	},
 	"sap.platform.abap": {
-		"uri": "/sap/bc/ui5_ui5/sap/zleave_c_2_2/webapp",
+		"uri": "/sap/bc/ui5_ui5/sap/zleave_c_v3/webapp",
 		"_version": "1.1.0"
 	}
 }

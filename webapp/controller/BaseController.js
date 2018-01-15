@@ -4,13 +4,13 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"sap/m/MessageBox",
-	"ZLEAVE_REQ_CREATE/model/formatter"
+	"eone_zleave_req_create/model/formatter"
 ], function(Controller, DateTypeRange, JSONModel, History, MessageBox, formatter) {
 	"use strict";
      
      jQuery.sap.require("sap.m.MessageBox");
      
-	return Controller.extend("ZLEAVE_REQ_CREATE.controller.BaseController", {
+	return Controller.extend("eone_zleave_req_create.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router.
 		 * @public
@@ -724,7 +724,7 @@ sap.ui.define([
 							 onClose: function(oAction) {
 								        if (oAction == "YES") {
 								        	that.actionTask();
-								            //sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
+								            //sap.ui.controller("eone_zleave_req_create.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
 								        }
 										        else 
 										        {
@@ -768,7 +768,7 @@ sap.ui.define([
 								 onClose: function(oAction) {
 									        if (oAction == "YES") {
 									        	that.actionTask();
-									            //sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
+									            //sap.ui.controller("eone_zleave_req_create.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
 									        }
 											        else 
 											        {
@@ -796,7 +796,7 @@ sap.ui.define([
 								 onClose: function(oAction) {
 									        if (oAction == "YES") {
 									        	that.actionTask();
-									            //sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
+									            //sap.ui.controller("eone_zleave_req_create.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
 									        }
 											        else 
 											        {
@@ -955,7 +955,7 @@ sap.ui.define([
 							    var oViewW = sap.ui.getCore().byId(sPrefix + "V1S");
 								var oTable = oViewW.byId("__table0");
 								oTable.getBinding("items").refresh();
-								sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View2").onNavBackDirect();
+								sap.ui.controller("eone_zleave_req_create.controller.View2").onNavBackDirect();
 							//    that.onRefreshTable();
 							//	that.getRouter().navTo("view1s", {});
 						}

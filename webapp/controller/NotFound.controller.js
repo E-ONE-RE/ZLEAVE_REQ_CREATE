@@ -1,9 +1,9 @@
 sap.ui.define([
-	"ZLEAVE_REQ_CREATE/controller/BaseController"
+	"eone_zleave_req_create/controller/BaseController"
 ], function(BaseController) {
 	"use strict";
 
-	return BaseController.extend("ZLEAVE_REQ_CREATE.controller.NotFound", {
+	return BaseController.extend("eone_zleave_req_create.controller.NotFound", {
 
 		/**
 		 * Navigates to the worklist when the link is pressed
