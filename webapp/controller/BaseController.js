@@ -7,7 +7,7 @@ sap.ui.define([
 	"eone_zleave_req_create/model/formatter"
 ], function(Controller, DateTypeRange, JSONModel, History, MessageBox, formatter) {
 	"use strict";
-     
+     var sRendered; 
      jQuery.sap.require("sap.m.MessageBox");
      
 	return Controller.extend("eone_zleave_req_create.controller.BaseController", {
@@ -83,7 +83,9 @@ sap.ui.define([
 	        var sShortName = sViewName.substring(sViewName.lastIndexOf(".") + 1, sViewName.length);
 			if (!this._oPopoverHelp) {
 				
+
 				this._oPopoverHelp = sap.ui.xmlfragment("eone_zleave_req_create.view.PopoverHelp", this, "eone_zleave_req_create.controller.BaseController");
+
 				this.getView().addDependent(this._oPopoverHelp);
 		
 				
@@ -143,6 +145,7 @@ sap.ui.define([
 		handleCloseButton: function(oEvent) {
 			this._oPopoverHelp.close();
 		},
+
 		
 		
 			onRefreshTable: function (oEvent) {

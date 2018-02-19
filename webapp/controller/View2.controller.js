@@ -152,6 +152,7 @@ sap.ui.define([
 
 			_onRouteMatched: function(oEvent) {
 				var oArgs, oView;
+		
 				oArgs = oEvent.getParameter("arguments");
 				
 				oView = this.getView();
@@ -162,7 +163,7 @@ sap.ui.define([
 				oView.bindElement({
 					path: "/LeaveRequestSet('" + oArgs.ZrequestId + "')",
 					//	parameters : {expand: 'ToLeaveReqPos'}, 
-
+                    
 					events: {
 						change: this._onBindingChange.bind(this),
 						dataRequested: function(oEvent) {
@@ -183,7 +184,9 @@ sap.ui.define([
 
 			_onBindingChange: function(oEvent) {
 				// No data for the binding
+				var sEffectiveApprover;
 				if (!this.getView().getBindingContext()) {
+					sEffectiveApprover = this.getView().getBindingContext().getProperty("ZuserAction");
 					this.getRouter().getTargets().display("notFound");
 				}
 

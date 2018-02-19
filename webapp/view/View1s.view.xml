@@ -4,9 +4,11 @@
 	<Page id="V1S" title="{i18n>titles}" class="sapUiResponsiveContentPadding" showNavButton="true" navButtonPress="onNavBackDirect">
 		
 <headerContent>
+
 	     <Button icon="sap-icon://synchronize" press="onClickRefresh" type="Emphasized" tooltip="{i18n>LR_V1S_REFRESH_BTN}"/>
 	     <Button id="help0" text="Help" press="handlePopHelp" type="Emphasized" icon="sap-icon://message-information"
 				tooltip="Clicca per informazioni sull'uso del Timesheet"></Button>
+
  </headerContent>
 		
 			<PullToRefresh id="pullToRefresh" visible="{device>/support/touch}" refresh="onPullToRefresh"/>
