@@ -1,4 +1,3 @@
-
 <mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="eone_zleave_req_create.controller.View1" displayBlock="true">
 	<!--<App>-->
 		<!--<pages>-->
@@ -93,7 +92,26 @@
 														</items>
 													</VBox>
 													<VBox width="100%" direction="Column" id="__vbox0_LEGEND" alignItems="Center" alignContent="Start" justifyContent="Center">
-														<items>
+													
+														
+  <items> 
+               <sap.ui.layout:VerticalLayout width="100%">
+               <Panel id="panelLegend" width="auto"  backgroundDesign="Transparent" expandable="true">
+              <headerToolbar>
+               <Toolbar height="auto">
+                <Title text="Legenda"/>
+               </Toolbar>
+              </headerToolbar>
+              <sap.ui.unified:CalendarLegend id="legend1" columnWidth="128px"/>
+              </Panel>
+              
+               
+                  </sap.ui.layout:VerticalLayout>
+                </items>
+               </VBox>
+               
+               <VBox width="100%" direction="Column" id="__vbox0_CALBUTTON" alignItems="Center">
+                <items> 
 															<sap.ui.layout:VerticalLayout width="100%">
 
 															
