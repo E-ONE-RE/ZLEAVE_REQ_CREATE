@@ -6,7 +6,7 @@ sap.ui.define([
 	"ZLEAVE_REQ_CREATE/model/formatter"
 ], function(Controller,  JSONModel, History, MessageBox, formatter) {
 	"use strict";
-     
+     var sRendered; 
      jQuery.sap.require("sap.m.MessageBox");
      
 	return Controller.extend("ZLEAVE_REQ_CREATE.controller.BaseController", {
@@ -72,6 +72,75 @@ sap.ui.define([
 			} else {
 				this.getRouter().navTo("view1", {});
 			}
+		},
+		
+		
+		handlePopHelp: function(oEvent){
+	        var oVbox;
+	        var oView = this.getView();
+	        var sViewName = oView.getProperty("viewName");
+	        var sShortName = sViewName.substring(sViewName.lastIndexOf(".") + 1, sViewName.length);
+			if (!this._oPopoverHelp) {
+				
+				this._oPopoverHelp = sap.ui.xmlfragment("ZLEAVE_REQ_CREATE.view.PopoverHelp", this, "ZLEAVE_REQ_CREATE.controller.BaseController");
+				this.getView().addDependent(this._oPopoverHelp);
+		
+				
+			}
+			
+			oVbox = this._oPopoverHelp.getContent()[0];
+			//oVbox = sap.ui.getCore().byId("Vbox");
+			oVbox.destroyItems();
+            
+		
+			var oHTML, oHTML_Footer;
+
+			if (sShortName == "View1") {
+				oHTML = new sap.ui.core.HTML({
+					content: '<strong>Linee guida per l\'utilizzo dell\'applicazione</strong>' +
+						'<ul>' +
+						' Da questa schermata è possibile selezionare i giorni e il tipo di richiesta che si intende inoltrare tramite l\'apposito' +
+						' menu a tendina. Inoltre, è possibile scegliere la durata dell\'assenza e l\'utente (solitamente il TL) a cui si vuole inoltrare la richiesta. ' +
+						' Se necessario, possono essere inserite delle note per l\'approvatore tramite l\'apposito box di testo presente nel form.' +
+					    ' Cliccando sul bottone "Invia", la richiesta verrà inoltrata all\'approvatore e notificata all\'ufficio amministrativo di competenza.' +
+					    ' Cliccando sul bottone "Storico", verrà invece visualizzata una lista riportante lo storico delle richieste effettuate.' +
+						'</ul>',
+					sanitizeContent: true
+				});
+			}else if(sShortName == "View1s"){
+				oHTML = new sap.ui.core.HTML({
+					content: '<strong>Storico delle richieste</strong>' +
+						'<ul>' +
+						' La pagina mostra lo storico delle richieste effettuate, con una indicazione circa il loro stato.' +
+						' E\' possibile filtrare la lista di richieste attraverso la barra dei filtri. Le richieste possono essere filtrate' +
+						' per tipo ("Permesso", "Ferie", "Recupero", "ROL"), per stato ("Inviata", "Approvata", "Rifiutata") o combinando i due filtri singoli.' +
+						' Inoltre, tramite l\'apposito tab, è possibile visualizzare un riepilogo <b>INDICATIVO</b> delle ore inserite dall\'utente per l\'anno in corso.' +
+						' Cliccando su un elemento della lista, è possibile visualizzare il dettaglio di questa.' +
+						'</ul>',
+					sanitizeContent: true
+				});
+			}else{
+					oHTML = new sap.ui.core.HTML({
+					content: '<strong>Pagina di riepilogo richiesta</strong>' +
+						'<ul>' +
+						' La pagina mostra un riepilogo della richiesta selezionata. E\' presente una lista dei giorni oggetto della richiesta, nonchè una indicazione circa l\'approvatore designato e le evantuali note' +
+						' inserite dall\'approvatore. Nel caso in cui la richiesta non sia stata ancora processata, è possibile modificarla o eliminarla' +
+						' attraverso gli appositi bottoni ("Modifica" o "Elimina").' +
+						'</ul>',
+					sanitizeContent: true
+				});
+			}
+
+		
+			oVbox.addItem(oHTML);
+
+			this._oPopoverHelp.openBy(oEvent.getSource());
+		
+		},
+		
+			// chiude help
+		handleCloseButton: function(oEvent) {
+			this._oPopoverHelp.close();
 		},
 		
 		
