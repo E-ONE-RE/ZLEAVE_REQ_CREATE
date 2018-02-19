@@ -2,6 +2,11 @@
 
 
 	<Page id="V2" title="{i18n>DetailTitle}" showNavButton="true" navButtonPress="onNavBack" class="sapUiResponsiveContentPadding">
+		<headerContent>
+			<Button id="help0" text="Help" press="handlePopHelp" type="Emphasized" icon="sap-icon://message-information"
+				tooltip="Clicca per informazioni sull'uso del Timesheet"></Button>
+		</headerContent>
+	
 		<ObjectHeader id="objectHeader" title="Richiesta n° { path: 'ZrequestId', formatter: '.formatter.formatRequestId'}" numberUnit="Giorno/i" icon="sap-icon://general-leave-request">
 				<ObjectAttribute/>
 				<ObjectAttribute id="inser_text" title="Inserita il" text="{ path: 'ZdateRec', formatter: '.formatter.formatDate'} {path: 'ZtimeRec', formatter: '.formatter.formatTime'}"/>

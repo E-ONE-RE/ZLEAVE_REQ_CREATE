@@ -2,7 +2,10 @@
 	<!--<App>-->
 		<!--<pages>-->
 			<Page id="V1" title="{i18n>title}" class="sapUiResponsiveContentPadding">
-				
+				<headerContent>
+							<Button id="help0" text="Help" press="handlePopHelp" type="Emphasized" icon="sap-icon://message-information"
+								tooltip="Clicca per informazioni sull'uso del Timesheet"></Button>
+				</headerContent>
 
 					<content>
 						<!--<Button id="displayNotFoundBtn" text="{i18n>DisplayNotFound}" press="onDisplayNotFound" class="sapUiTinyMarginEnd"/>
