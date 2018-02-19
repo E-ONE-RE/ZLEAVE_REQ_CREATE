@@ -1,4 +1,4 @@
-<mvc:View controllerName="eone_zleave_req_create.controller.NotFound" 
+<mvc:View controllerName="ZLEAVE_REQ_CREATE.controller.NotFound" 
 xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
 <MessagePage
 		title="{i18n>NotFound}"

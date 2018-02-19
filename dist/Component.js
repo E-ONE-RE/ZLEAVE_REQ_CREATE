@@ -2,11 +2,11 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/Device",
-	"eone_zleave_req_create/model/models"
+	"ZLEAVE_REQ_CREATE/model/models"
 ], function(UIComponent, JSONModel, Device, models) {
 	"use strict";
 
-	return UIComponent.extend("eone_zleave_req_create.Component", {
+	return UIComponent.extend("ZLEAVE_REQ_CREATE.Component", {
 
 		metadata: {
 			manifest: "json"

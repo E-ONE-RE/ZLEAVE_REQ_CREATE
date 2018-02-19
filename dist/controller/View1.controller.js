@@ -1,5 +1,5 @@
 sap.ui.define([
-		"eone_zleave_req_create/controller/BaseController", "sap/ui/model/json/JSONModel",
+		"ZLEAVE_REQ_CREATE/controller/BaseController", "sap/ui/model/json/JSONModel",
 		'sap/ui/unified/CalendarLegendItem',
 		'sap/ui/unified/DateTypeRange',
 		'sap/m/Button',
@@ -7,17 +7,17 @@ sap.ui.define([
 		'sap/m/Label',
 	//	'sap/m/MessageToast',
 	//	'sap/m/MessageBox',
-		"eone_zleave_req_create/model/formatter"
+		"ZLEAVE_REQ_CREATE/model/formatter"
 	],
 	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange, Button, Dialog, Label, formatter) {
 		"use strict";
 
-		//	jQuery.sap.require("eone_zleave_req_create.utils.Formatters");
-	//	jQuery.sap.require("eone_zleave_req_create.utils.UIHelper");
+		//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.Formatters");
+	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.UIHelper");
 		jQuery.sap.require("sap.m.MessageBox");
-	//	jQuery.sap.require("eone_zleave_req_create.utils.DataManager");
-	//	jQuery.sap.require("eone_zleave_req_create.utils.ConcurrentEmployment");
-	//	jQuery.sap.require("eone_zleave_req_create.utils.CalendarTools");
+	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.DataManager");
+	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.ConcurrentEmployment");
+	//	jQuery.sap.require("ZLEAVE_REQ_CREATE.utils.CalendarTools");
 	//	jQuery.sap.require("sap.ca.ui.dialog.factory");
 	//	jQuery.sap.require("sap.ca.ui.dialog.Dialog");
 		jQuery.sap.require("sap.m.MessageToast");
@@ -26,7 +26,7 @@ sap.ui.define([
 	//	jQuery.sap.require("sap.ca.ui.message.message");
 		// jQuery.sap.require("sap.ui.thirdparty.sinon");
 
-		return BaseController.extend("eone_zleave_req_create.controller.View1", {
+		return BaseController.extend("ZLEAVE_REQ_CREATE.controller.View1", {
 			
 			formatter: formatter,
 
@@ -35,23 +35,23 @@ sap.ui.define([
 			oFormatYear: null,
 
 			onInit: function() {
-				//SE			eone_zleave_req_create.utils.DataManager.init(this.oDataModel, this.resourceBundle);
-				//	eone_zleave_req_create.utils.Formatters.init(this.resourceBundle);
-				//	eone_zleave_req_create.utils.CalendarTools.init(this.resourceBundle);
+				//SE			ZLEAVE_REQ_CREATE.utils.DataManager.init(this.oDataModel, this.resourceBundle);
+				//	ZLEAVE_REQ_CREATE.utils.Formatters.init(this.resourceBundle);
+				//	ZLEAVE_REQ_CREATE.utils.CalendarTools.init(this.resourceBundle);
 				//	this.oRouter.attachRouteMatched(this._handleRouteMatched, this);
 				//	sap.ca.scfld.md.controller.BaseFullscreenController.prototype.onInit.call(this);
 				//this.oApplication = this.oApplicationFacade.oApplicationImplementation;
 				//this.resourceBundle = this.oApplicationFacade.getResourceBundle();
 				//this.oDataModel = this.oApplicationFacade.getODataModel();
-				//eone_zleave_req_create.utils.DataManager.init(this.oDataModel, this.resourceBundle);
-				//		eone_zleave_req_create.utils.Formatters.init(this.resourceBundle);
-				//eone_zleave_req_create.utils.CalendarTools.init(this.resourceBundle);
-				//this.oDataModel = eone_zleave_req_create.utils.DataManager.getBaseODataModel();
+				//ZLEAVE_REQ_CREATE.utils.DataManager.init(this.oDataModel, this.resourceBundle);
+				//		ZLEAVE_REQ_CREATE.utils.Formatters.init(this.resourceBundle);
+				//ZLEAVE_REQ_CREATE.utils.CalendarTools.init(this.resourceBundle);
+				//this.oDataModel = ZLEAVE_REQ_CREATE.utils.DataManager.getBaseODataModel();
 
 				//this.oRouter.attachRouteMatched(this._handleRouteMatched, this);
 				//this._buildHeaderFooter();
 				this._initCntrls();
-				// sap.ui.getCore().getEventBus().subscribe("eone_zleave_req_create.LeaveCollection", "refresh", this._onLeaveCollRefresh, this);
+				// sap.ui.getCore().getEventBus().subscribe("ZLEAVE_REQ_CREATE.LeaveCollection", "refresh", this._onLeaveCollRefresh, this);
 
 				this.oFormatYyyymmdd = sap.ui.core.format.DateFormat.getInstance({
 					pattern: "yyyyMMdd",
@@ -240,7 +240,7 @@ sap.ui.define([
 	                      oCal1.addDisabledDate(new DateTypeRange({   
 	                     startDate: this.oFormatYear.parse(oYear2+"1226")
 	                     }));
-	                  ///////////////FINE FESTIVI////////////   
+	                     
 
 				oView.byId("LRS4_DAT_STARTTIME").setValue("");
 				oView.byId("LRS4_DAT_STARTTIME").rerender();
@@ -253,11 +253,6 @@ sap.ui.define([
 				oView.byId("LRS4_TXA_NOTE").setValue("");
 				oView.byId("LRS4_TXA_NOTE").rerender();
 				oView.byId("LRS4_TXA_NOTE").setEnabled(true);
-				
-				
-			//	oView.byId("LRS4_TXA_NOTE_RECUP").setValue("");
-			//	oView.byId("LRS4_TXA_NOTE_RECUP").rerender("");
-			//	oView.byId("LRS4_TXA_NOTE_RECUP").setEnabled(true);
 				
 				oView.byId("LRS4_DAT_ORETOT").setValue("0");
 				oView.byId("LRS4_DAT_ORETOT").setEnabled(false);
@@ -273,8 +268,8 @@ sap.ui.define([
 				});
 
 				function fnReadS(oData, response) {
-				//	console.log(oData);
-				//	console.log(response);
+					console.log(oData);
+					console.log(response);
 
 					// controllo che la funzione è andata a buon fine 
 					if (response.statusCode == "200") {
@@ -285,6 +280,7 @@ sap.ui.define([
 							calendarType: sap.ui.core.CalendarType.Gregorian
 						});
 
+  
 						var oRefDate = new Date();
 
 						var oDateRange;
@@ -330,17 +326,6 @@ sap.ui.define([
 	
 										}));
 								}
-								
-											if (oData.results[i].ZabsType == "0004") {
-	
-										oCal1.addSpecialDate(new DateTypeRange({
-											startDate: oFormatYYyyymmdd.parse(res),
-											type: "Type08",
-											tooltip: "ROL Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
-	
-										}));
-								}
-								
                              }	
 
 								// aggiungere date selezionate quando si è in modifica
@@ -388,7 +373,7 @@ sap.ui.define([
 				} // END FUNCTION SUCCESS
 
 				function fnReadE(oError) {
-				//	console.log(oError);
+					console.log(oError);
 
 					alert("Error in read: " + oError.message);
 				}

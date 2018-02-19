@@ -132,9 +132,6 @@ sap.ui.define([
  	    	break;
  	   case "0003":
  	        return "Recupero";
- 	        break;
- 	   case "0004":
- 	        return "ROL";     
  	    	
  	}
  	

@@ -1,10 +1,10 @@
 sap.ui.define([
-	"eone_zleave_req_create/controller/BaseController",
+	"ZLEAVE_REQ_CREATE/controller/BaseController",
 	"sap/ui/model/json/JSONModel"
 ], function(BaseController, JSONModel) {
 	"use strict";
 
-	return BaseController.extend("eone_zleave_req_create.controller.App", {
+	return BaseController.extend("ZLEAVE_REQ_CREATE.controller.App", {
 
 		onInit: function () {
 
