@@ -1,15 +1,16 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
+	'sap/ui/unified/DateTypeRange',
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"sap/m/MessageBox",
-	"ZLEAVE_REQ_CREATE/model/formatter"
-], function(Controller,  JSONModel, History, MessageBox, formatter) {
+	"eone_zleave_req_create/model/formatter"
+], function(Controller, DateTypeRange, JSONModel, History, MessageBox, formatter) {
 	"use strict";
-     
+     var sRendered; 
      jQuery.sap.require("sap.m.MessageBox");
      
-	return Controller.extend("ZLEAVE_REQ_CREATE.controller.BaseController", {
+	return Controller.extend("eone_zleave_req_create.controller.BaseController", {
 		/**
 		 * Convenience method for accessing the router.
 		 * @public
@@ -75,6 +76,76 @@ sap.ui.define([
 		},
 		
 		
+		handlePopHelp: function(oEvent){
+	        var oVbox;
+	        var oView = this.getView();
+	        var sViewName = oView.getProperty("viewName");
+	        var sShortName = sViewName.substring(sViewName.lastIndexOf(".") + 1, sViewName.length);
+			if (!this._oPopoverHelp) {
+				
+
+				this._oPopoverHelp = sap.ui.xmlfragment("eone_zleave_req_create.view.PopoverHelp", this, "eone_zleave_req_create.controller.BaseController");
+
+				this.getView().addDependent(this._oPopoverHelp);
+		
+				
+			}
+			
+			oVbox = this._oPopoverHelp.getContent()[0];
+			//oVbox = sap.ui.getCore().byId("Vbox");
+			oVbox.destroyItems();
+            
+		
+			var oHTML, oHTML_Footer;
+
+			if (sShortName == "View1") {
+				oHTML = new sap.ui.core.HTML({
+					content: '<strong>Linee guida per l\'utilizzo dell\'applicazione</strong>' +
+						'<ul>' +
+						' Da questa schermata è possibile selezionare i giorni e il tipo di richiesta che si intende inoltrare tramite l\'apposito' +
+						' menu a tendina. Inoltre, è possibile scegliere la durata dell\'assenza e l\'utente (solitamente il TL) a cui si vuole inoltrare la richiesta. ' +
+						' Se necessario, possono essere inserite delle note per l\'approvatore tramite l\'apposito box di testo presente nel form.' +
+					    ' Cliccando sul bottone "Invia", la richiesta verrà inoltrata all\'approvatore e notificata all\'ufficio amministrativo di competenza.' +
+					    ' Cliccando sul bottone "Storico", verrà invece visualizzata una lista riportante lo storico delle richieste effettuate.' +
+						'</ul>',
+					sanitizeContent: true
+				});
+			}else if(sShortName == "View1s"){
+				oHTML = new sap.ui.core.HTML({
+					content: '<strong>Storico delle richieste</strong>' +
+						'<ul>' +
+						' La pagina mostra lo storico delle richieste effettuate, con una indicazione circa il loro stato.' +
+						' E\' possibile filtrare la lista di richieste attraverso la barra dei filtri. Le richieste possono essere filtrate' +
+						' per tipo ("Permesso", "Ferie", "Recupero", "ROL"), per stato ("Inviata", "Approvata", "Rifiutata") o combinando i due filtri singoli.' +
+						' Inoltre, tramite l\'apposito tab, è possibile visualizzare un riepilogo <b>INDICATIVO</b> delle ore inserite dall\'utente per l\'anno in corso.' +
+						' Cliccando su un elemento della lista, è possibile visualizzare il dettaglio di questa.' +
+						'</ul>',
+					sanitizeContent: true
+				});
+			}else{
+					oHTML = new sap.ui.core.HTML({
+					content: '<strong>Pagina di riepilogo richiesta</strong>' +
+						'<ul>' +
+						' La pagina mostra un riepilogo della richiesta selezionata. E\' presente una lista dei giorni oggetto della richiesta, nonchè una indicazione circa l\'approvatore designato e le evantuali note' +
+						' inserite dall\'approvatore. Nel caso in cui la richiesta non sia stata ancora processata, è possibile modificarla o eliminarla' +
+						' attraverso gli appositi bottoni ("Modifica" o "Elimina").' +
+						'</ul>',
+					sanitizeContent: true
+				});
+			}
+
+		
+			oVbox.addItem(oHTML);
+
+			this._oPopoverHelp.openBy(oEvent.getSource());
+		
+		},
+		
+			// chiude help
+		handleCloseButton: function(oEvent) {
+			this._oPopoverHelp.close();
+		},
+
 		
 		
 			onRefreshTable: function (oEvent) {
@@ -342,8 +413,12 @@ sap.ui.define([
 			
 			checkCalendarSelection: function() {
 			var aSelectedDates = this.cale.getSelectedDates();
-			
-			//controllo che almeno uin giorno sia selezionato
+			var oDate;
+			var oView;
+				oView = this.getView();
+				
+				
+			//controllo che almeno un giorno sia selezionato
 				if (aSelectedDates.length == 0) {
 
 					//jQuery.sap.require("sap.m.MessageBox");
@@ -358,6 +433,57 @@ sap.ui.define([
 					return "KO";
 				}
 				
+			    //CHECK GIORNI DI PREAVVISO///////////////////////////////
+				var urgentReqLimit = new Date();
+				urgentReqLimit.setDate(urgentReqLimit.getDate()+3);
+				
+				this.note.setValueState(sap.ui.core.ValueState.None);
+				
+					if (aSelectedDates.length > 0) {
+
+					for (var i = 0; i < aSelectedDates.length; i++) {
+
+						oDate = aSelectedDates[i].getStartDate();
+						
+						if (oDate <= urgentReqLimit & this.note.getValue() === "") {
+							
+								sap.m.MessageBox.show(
+									"Attenzione: Per richieste con meno di 3 giorni di preavviso la direzione richiede la compilazione obbligatoria del campo note.", {
+										icon: sap.m.MessageBox.Icon.WARNING,
+										title: "Error",
+										actions: [sap.m.MessageBox.Action.CLOSE]
+
+									});
+								
+									this.note.setValueState(sap.ui.core.ValueState.Error);
+								
+							return "KO";
+							
+						}		
+
+					}
+
+				}
+				
+				// CHECK RECUPERO
+				var absType = this.slctLvType.getSelectedKey();
+				
+					
+							if (absType === "0003" & this.note.getValue() === "") {
+							
+								sap.m.MessageBox.show(
+									"Attenzione: Specificare nelle note giorno/i di lavoro ai quali si riferisce il recupero. Es.: assenza del 21/09/2017 come recupero del 16/09/2017 8 ore", {
+										icon: sap.m.MessageBox.Icon.WARNING,
+										title: "Error",
+										actions: [sap.m.MessageBox.Action.CLOSE]
+
+									});
+								
+									this.note.setValueState(sap.ui.core.ValueState.Error);
+								
+							return "KO";
+							
+						}		
 			
 			},
 			
@@ -365,6 +491,20 @@ sap.ui.define([
 			handleAbsTypeSelect: function(oEvent) {
 				var oAbsType = oEvent.oSource;
 				var aAbsTypeKey = oAbsType.getSelectedKey();
+				
+					if (aAbsTypeKey === "0003") {
+							
+								sap.m.MessageBox.show(
+									"Attenzione: Specificare nelle note giorno/i di lavoro ai quali si riferisce il recupero. Es.: assenza del 21/09/2017 come recupero del 16/09/2017 8 ore", {
+										icon: sap.m.MessageBox.Icon.INFORMATION,
+										title: "Information",
+										actions: [sap.m.MessageBox.Action.CLOSE]
+
+									});
+								
+							return;
+							
+						}		
 
 			},
 			
@@ -387,13 +527,12 @@ sap.ui.define([
 				
 					
 				var now = new Date();
+				
                     //Subtract one day from it
                     now.setDate(now.getDate()-1);
                     // get current date
                     //var date = Date.parse(oEvent.oSource.getLiveValue());
                     
-                    
-		
 
 				if (aSelectedDates.length > 0) {
 
@@ -417,25 +556,23 @@ sap.ui.define([
 								oCalendar.removeAllSelectedDates();
 								return;
 							}
+							
 						//CHECK GIORNI NON LAVORATIVI///////////////////////////////
-						
-						
 						var oDayOfWeek = this.oFormatDaysShort.format(oDate);
-						
 
 						if(oDayOfWeek === "sab" || oDayOfWeek === "sat" || oDayOfWeek === "dom" || oDayOfWeek=== "sun") {
 						//if(oDate === sap.ui.unified.CalendarDayType.NonWorking) {
 								//jQuery.sap.require("sap.m.MessageBox");
 								sap.m.MessageBox.show(
-									"Attenzione: Non è possibile selezionare giorni non lavorativi, " + oDate, {
+									"Attenzione: Non è possibile selezionare giorni non lavorativi, rimuovere la selezione, " + oDate, {
 										icon: sap.m.MessageBox.Icon.WARNING,
 										title: "Error",
 										actions: [sap.m.MessageBox.Action.CLOSE]
 
 									});
 								
-								//	oCalendar.removeSelectedDate(oDater);
-								oCalendar.removeAllSelectedDates();
+
+								//oCalendar.removeAllSelectedDates();
 								return;
 							}
 						
@@ -460,6 +597,7 @@ sap.ui.define([
 									});
 								//	alert("Errore sovrapposizione giorni");
 								//	oCalendar.removeSelectedDate(oDater);
+								
 								oCalendar.removeAllSelectedDates();
 								return;
 							}
@@ -642,21 +780,21 @@ sap.ui.define([
 	                    
 
 						MessageBox.confirm("Confermi l'invio della richiesta?", {
-							icon: MessageBox.Icon.INFORMATION,
+							icon: MessageBox.Icon.QUESTION,
 							title: "Invio Richiesta",
 							actions: [MessageBox.Action.YES, MessageBox.Action.NO],
 							initialFocus : MessageBox.Action.NO,
 							id: "messageBoxId1",
 							defaultAction: MessageBox.Action.NO,
 							details: "Tipo di richiesta: " + tabsType + " \nApprovatore: " + this.slctApprover.getSelectedKey() + " \nOre totali: " + this.oreTot.getValue()
-							+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà inoltrata, riceverai una notifica via mail sul suo esito. Puoi mofificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
+							+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà inoltrata, riceverai una notifica via mail sul suo esito. Puoi modificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
 							styleClass: bCompact ? "sapUiSizeCompact" : "",
 							contentWidth: "100px",
 							
 							 onClose: function(oAction) {
 								        if (oAction == "YES") {
 								        	that.actionTask();
-								            //sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
+								            //sap.ui.controller("eone_zleave_req_create.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
 								        }
 										        else 
 										        {
@@ -686,21 +824,21 @@ sap.ui.define([
 	                    if (timeCheckBlank === "KO") {return;}
 					   		
 					   		MessageBox.confirm("Confermi la modifica della richiesta?", {
-								icon: MessageBox.Icon.INFORMATION,
+								icon: MessageBox.Icon.QUESTION,
 								title: "Modifica Richiesta",
 								actions: [MessageBox.Action.YES, MessageBox.Action.NO],
 								initialFocus : MessageBox.Action.NO,
 								id: "messageBoxId1_mod",
 								defaultAction: MessageBox.Action.NO,
 								details: "Tipo di richiesta: " + tabsType + " \nApprovatore: " + this.slctApprover.getSelectedKey() + " \nOre totali: " + this.oreTot.getValue()
-									+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà modificata, riceverai una notifica via mail sul suo esito. Puoi mofificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
+									+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà modificata, riceverai una notifica via mail sul suo esito. Puoi modificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
 						
 								styleClass: bCompact ? "sapUiSizeCompact" : "",
 								contentWidth: "100px",
 								 onClose: function(oAction) {
 									        if (oAction == "YES") {
 									        	that.actionTask();
-									            //sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
+									            //sap.ui.controller("eone_zleave_req_create.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
 									        }
 											        else 
 											        {
@@ -715,7 +853,7 @@ sap.ui.define([
 							// se bt2_del non eseguo controlli ed elimino, in action verrà passato il parametro sDeleted = "X";
 						
 								MessageBox.confirm("Confermi l'eliminazione della richiesta?", {
-								icon: MessageBox.Icon.INFORMATION,
+								icon: MessageBox.Icon.QUESTION,
 								title: "Elimina Richiesta",
 								actions: [MessageBox.Action.YES, MessageBox.Action.NO],
 								initialFocus : MessageBox.Action.NO,
@@ -728,7 +866,7 @@ sap.ui.define([
 								 onClose: function(oAction) {
 									        if (oAction == "YES") {
 									        	that.actionTask();
-									            //sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
+									            //sap.ui.controller("eone_zleave_req_create.controller.View1").actionTask(); //altro modo per richiamare function se non ci fosse un event
 									        }
 											        else 
 											        {
@@ -848,8 +986,8 @@ sap.ui.define([
 				//}
 				//}	
 				function fnS(oData, response) {
-					console.log(oData);
-					console.log(response);
+				//	console.log(oData);
+				//	console.log(response);
 
 					// controllo che la funzione è andata a buon fine recuperando il risultato della function sap
 					//	if (oData.Type == "S") {
@@ -887,7 +1025,7 @@ sap.ui.define([
 							    var oViewW = sap.ui.getCore().byId(sPrefix + "V1S");
 								var oTable = oViewW.byId("__table0");
 								oTable.getBinding("items").refresh();
-								sap.ui.controller("ZLEAVE_REQ_CREATE.controller.View2").onNavBackDirect();
+								sap.ui.controller("eone_zleave_req_create.controller.View2").onNavBackDirect();
 							//    that.onRefreshTable();
 							//	that.getRouter().navTo("view1s", {});
 						}
@@ -915,7 +1053,7 @@ sap.ui.define([
 				} // END FUNCTION SUCCESS
 
 				function fnE(oError) {
-					console.log(oError);
+				//	console.log(oError);
 
 					alert("Error in read: " + oError.message + "\n" + oError.responseText);
 				}
@@ -952,6 +1090,7 @@ sap.ui.define([
 			//	this.remainingVacation = this.byId("LRS4_TXT_REMAINING_DAYS");
 			//	this.bookedVacation = this.byId("LRS4_TXT_BOOKED_DAYS");
 				this.note = this.byId("LRS4_TXA_NOTE");
+			//	this.note_rec = this.byId("LRS4_TXA_NOTE_RECUP");
 				this.cale = this.byId("LRS4_DAT_CALENDAR");
 				this.slctLvType = this.byId("SLCT_LEAVETYPE");
 				this.slctApprover = this.byId("SLCT_APPROVER");
