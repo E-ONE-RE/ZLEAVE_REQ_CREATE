@@ -102,11 +102,27 @@ sap.ui.define([
 				oHTML = new sap.ui.core.HTML({
 					content: '<strong>Linee guida per l\'utilizzo dell\'applicazione</strong>' +
 						'<ul>' +
-						' Da questa schermata è possibile selezionare i giorni e il tipo di richiesta che si intende inoltrare tramite l\'apposito' +
-						' menu a tendina. Inoltre, è possibile scegliere la durata dell\'assenza e l\'utente (solitamente il TL) a cui si vuole inoltrare la richiesta. ' +
-						' Se necessario, possono essere inserite delle note per l\'approvatore tramite l\'apposito box di testo presente nel form.' +
-					    ' Cliccando sul bottone "Invia", la richiesta verrà inoltrata all\'approvatore e notificata all\'ufficio amministrativo di competenza.' +
-					    ' Cliccando sul bottone "Storico", verrà invece visualizzata una lista riportante lo storico delle richieste effettuate.' +
+						
+							'</li>' +
+								' <li><strong> Inserire una richiesta: </strong> Selezionare il tipo di richiesta tramite l\'apposito ' +
+								' menu a tendina. Scegliere il/i giorni dal calendario. E\' possibile selezionare un intervallo orario ' +
+								' se la richiesta è di un solo giorno. In questo caso utilizzare le fasce orarie 9:00-13:00 e 14:30-18:30. ' + 
+								' Non sono consentiti intervalli inferiori ai 30 minuti. Se l\'intervallo orario non viene indicato saranno ' +
+								' conteggiate 8 ore. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. ' +
+								' Effettuare richieste separate per ciscun giorno nel caso sia necessario indicare orari specifici. ' +
+								' Indicare l\'approvatore (solitamente il TL) a cui inoltrare la richiesta. ' +
+								' Inserire eventuali note per l\'approvatore tramite l\'apposito box di testo presente nel form. ' +
+								' Cliccando sul bottone "Invia", la richiesta verrà inoltrata all\'approvatore e notificata all\'ufficio ' +
+								' amministrativo di competenza. ' +
+								
+			                '</li>' +
+			                
+			                '</li>' +
+								'<li><strong> Visualizzare lo storico delle richieste: </strong>  Cliccando sul bottone "Storico", ' + 
+								' verrà visualizzata una lista riportante lo storico delle richieste effettuate. ' +
+			                '</li>' +
+								
+					    
 						'</ul>',
 					sanitizeContent: true
 				});
@@ -117,8 +133,9 @@ sap.ui.define([
 						' La pagina mostra lo storico delle richieste effettuate, con una indicazione circa il loro stato.' +
 						' E\' possibile filtrare la lista di richieste attraverso la barra dei filtri. Le richieste possono essere filtrate' +
 						' per tipo ("Permesso", "Ferie", "Recupero", "ROL"), per stato ("Inviata", "Approvata", "Rifiutata") o combinando i due filtri singoli.' +
-						' Inoltre, tramite l\'apposito tab, è possibile visualizzare un riepilogo <b>INDICATIVO</b> delle ore inserite dall\'utente per l\'anno in corso.' +
 						' Cliccando su un elemento della lista, è possibile visualizzare il dettaglio di questa.' +
+						' Tramite il tab info utente, è possibile visualizzare un riepilogo "indicativo" delle ore inserite dall\'utente per l\'anno in corso.' +
+						' ' +
 						'</ul>',
 					sanitizeContent: true
 				});
@@ -535,6 +552,9 @@ sap.ui.define([
                     
 
 				if (aSelectedDates.length > 0) {
+					
+					var pastReqLimit = new Date();
+				    pastReqLimit.setDate(pastReqLimit.getDate()-31);
 
 					for (var i = 0; i < aSelectedDates.length; i++) {
 
@@ -542,10 +562,12 @@ sap.ui.define([
 						
 						///CHECK DATE PASSATE///////////////////////////////////
 						// if current date lower than past dates, show error
-						if (oDate < now) {
+					//	if (oDate < now) {
+					if (oDate < pastReqLimit) {
+					
 								//jQuery.sap.require("sap.m.MessageBox");
 								sap.m.MessageBox.show(
-									"Attenzione: Non è possibile selezionare date nel passato, " + oDate, {
+									"Attenzione: Non è possibile selezionare date nel passato di oltre 31 giorni, " + oDate, {
 										icon: sap.m.MessageBox.Icon.WARNING,
 										title: "Error",
 										actions: [sap.m.MessageBox.Action.CLOSE]
