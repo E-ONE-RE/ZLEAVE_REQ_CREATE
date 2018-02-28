@@ -429,18 +429,9 @@ sap.ui.define([
 					if ( zstatus_unlocked === "X" ) {
 						oView.byId("status_unlocked").setVisible(true);	
 						oView.byId("status_unlocked").rerender();
+					}	
 						
-						oView.byId("btn2_del").setEnabled(false);	
-						oView.byId("btn2_del").rerender();
 	
-					} else {
-					
-					oView.byId("btn2_del").setEnabled(true);
-			          oView.byId("btn2_del").rerender();
-						
-					}
-					
-					
                 	oView.byId("SLCT_LEAVETYPE").setEnabled(true);
 					oView.byId("SLCT_LEAVETYPE").rerender();
 					
@@ -474,7 +465,10 @@ sap.ui.define([
 					oView.byId("removeAll_btn").rerender();	
             
 			          oView.byId("btn1_mod").setEnabled(true);
-			          oView.byId("btn1_mod").rerender();	
+			          oView.byId("btn1_mod").rerender();
+			          
+			          oView.byId("btn2_del").setEnabled(true);	
+					  oView.byId("btn2_del").rerender();
 			          
 			          	
           	
