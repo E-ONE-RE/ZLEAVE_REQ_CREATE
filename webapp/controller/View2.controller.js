@@ -82,11 +82,22 @@ sap.ui.define([
 								oView.byId("SLCT_APPROVER").setEnabled(false);
 								oView.byId("SLCT_APPROVER").rerender();
 								
+								oView.byId("LRS4_FRM_CNT_CALENDAR").setVisible(false);
+					
+								oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(false);
+								
 								oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+								oView.byId("LRS4_DAT_STARTTIME").setVisible(false);
 								oView.byId("LRS4_DAT_STARTTIME").rerender();
 								
 								oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+								oView.byId("LRS4_DAT_ENDTIME").setVisible(false);
 								oView.byId("LRS4_DAT_ENDTIME").rerender();
+								
+								
+								
+							    oView.byId("LRS4_LBL_STARTTIME").setVisible(false);
+								oView.byId("LRS4_LBL_ENDTIME").setVisible(false);
 								
 								oView.byId("LRS4_TXA_NOTE").setEnabled(false);
 								oView.byId("LRS4_TXA_NOTE").rerender();
@@ -234,7 +245,7 @@ sap.ui.define([
 						
 				// setto i valori in base ai valori del binding corrente
 				oView.byId("SLCT_LEAVETYPE").setSelectedKey(oCtx.getProperty("ZabsType"));
-
+			
 
 				if ( oCtx.getProperty("ZuserAction") !== "" & ( oCtx.getProperty("ZuserAction") !== oCtx.getProperty("Tmsapprover") ) )
 				{
@@ -261,11 +272,24 @@ sap.ui.define([
 					oView.byId("SLCT_APPROVER").setEnabled(false);
 					oView.byId("SLCT_APPROVER").rerender();
 					
+					
+					oView.byId("LRS4_FRM_CNT_CALENDAR").setVisible(false);
+					
+					oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(false);
+					
 					oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_STARTTIME").setVisible(false);
 					oView.byId("LRS4_DAT_STARTTIME").rerender();
 					
 					oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+					oView.byId("LRS4_DAT_ENDTIME").setVisible(false);
 					oView.byId("LRS4_DAT_ENDTIME").rerender();
+					
+					
+					
+				    oView.byId("LRS4_LBL_STARTTIME").setVisible(false);
+					oView.byId("LRS4_LBL_ENDTIME").setVisible(false);
+					
 					
 					oView.byId("LRS4_TXA_NOTE").setEnabled(false);
 					oView.byId("LRS4_TXA_NOTE").rerender();
@@ -438,11 +462,21 @@ sap.ui.define([
 					oView.byId("SLCT_APPROVER").setEnabled(true);
 					oView.byId("SLCT_APPROVER").rerender();
 					
+					oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(true);
+					
+					oView.byId("LRS4_FRM_CNT_CALENDAR").setVisible(true);
+					
 					oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
+					oView.byId("LRS4_DAT_STARTTIME").setVisible(true);
 					oView.byId("LRS4_DAT_STARTTIME").rerender();
 					
+
 					oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
+					oView.byId("LRS4_DAT_ENDTIME").setVisible(true);
 					oView.byId("LRS4_DAT_ENDTIME").rerender();
+
+				    oView.byId("LRS4_LBL_STARTTIME").setVisible(true);
+					oView.byId("LRS4_LBL_ENDTIME").setVisible(true);
 					
 					oView.byId("LRS4_TXA_NOTE").setEnabled(true);
 					oView.byId("LRS4_TXA_NOTE").rerender();
