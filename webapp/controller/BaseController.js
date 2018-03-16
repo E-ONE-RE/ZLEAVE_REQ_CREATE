@@ -106,7 +106,7 @@ sap.ui.define([
 							'</li>' +
 								' <li><strong> Inserire una richiesta: </strong> Selezionare il tipo di richiesta tramite l\'apposito ' +
 								' menu a tendina. Scegliere il/i giorni dal calendario. E\' possibile selezionare un intervallo orario ' +
-								' se la richiesta è di un solo giorno. In questo caso utilizzare le fasce orarie 9:00-13:00 e 14:30-18:30. ' + 
+								' se la richiesta è di un solo giorno. In questo caso utilizzare le fasce orarie 9:00-13:00 e 14:00-18:30. ' + 
 								' Non sono consentiti intervalli inferiori ai 30 minuti. Se l\'intervallo orario non viene indicato saranno ' +
 								' conteggiate 8 ore. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. ' +
 								' Effettuare richieste separate per ciscun giorno nel caso sia necessario indicare orari specifici. ' +
@@ -244,9 +244,11 @@ sap.ui.define([
                 //////////////////////////////////////////
                 if (aZtimestart !== "") {
 						//controllo correttezza inserimento intervallo ore
-						if ((aTstart < 9 || aTstart > 18) || (aTstart === 13 || (aTstart === 14 & aTstartMin < 30)) ) {
+					//	if ((aTstart < 9 || aTstart > 18) || (aTstart === 13 || (aTstart === 14 & aTstartMin < 30)) ) {
+					//	(SE) richiesta modifica da WAFA consentire richiesta da ore 14	
+							if ((aTstart < 9 || aTstart > 18) || (aTstart === 13 ) ) {
 							sap.m.MessageBox.show(
-								"Inserimento ora inizio non corretto. Ora inizio >= 9:00, < 13:00, >= 14:30, < 18:30 ", {
+								"Inserimento ora inizio non corretto. Ora inizio >= 9:00, < 13:00, >= 14:00, < 18:30 ", {
 									icon: sap.m.MessageBox.Icon.ERROR,
 									title: "Error",
 									actions: [sap.m.MessageBox.Action.CLOSE]
@@ -282,7 +284,10 @@ sap.ui.define([
 			///////////////////////////////////////	
 			if (aZtimeend !== "") {
 						//controllo correttezza inserimento ora fine
+			//	if ( (aTend > 18 || aTend <= 9) || ((aTend === 13 & aTendMin > 0) || (aTend === 14 & aTendMin < 30)) ) {
+					
 				if ( (aTend > 18 || aTend <= 9) || ((aTend === 13 & aTendMin > 0) || (aTend === 14 & aTendMin < 30)) ) {
+				
 					sap.m.MessageBox.show(
 						"Inserimento intervallo ore non corretto. Ora fine > 9:00, <= 13:00, >= 14:30, <= 18:30", {
 							icon: sap.m.MessageBox.Icon.ERROR,
