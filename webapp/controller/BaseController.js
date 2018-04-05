@@ -559,7 +559,7 @@ sap.ui.define([
 				if (aSelectedDates.length > 0) {
 					
 					var pastReqLimit = new Date();
-				    pastReqLimit.setDate(pastReqLimit.getDate()-31);
+				    pastReqLimit.setDate(pastReqLimit.getDate()-60);
 
 					for (var i = 0; i < aSelectedDates.length; i++) {
 
@@ -572,7 +572,7 @@ sap.ui.define([
 					
 								//jQuery.sap.require("sap.m.MessageBox");
 								sap.m.MessageBox.show(
-									"Attenzione: Non è possibile selezionare date nel passato di oltre 31 giorni, " + oDate, {
+									"Attenzione: Non è possibile selezionare date nel passato di oltre 60 giorni, " + oDate, {
 										icon: sap.m.MessageBox.Icon.WARNING,
 										title: "Error",
 										actions: [sap.m.MessageBox.Action.CLOSE]
