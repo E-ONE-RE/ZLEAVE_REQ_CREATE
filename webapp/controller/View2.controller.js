@@ -95,7 +95,8 @@ sap.ui.define([
 								oView.byId("LRS4_DAT_ENDTIME").rerender();
 								
 								
-								
+								oView.byId("LRS4_DAT_PFERIE").setEnabled(false); 
+				
 							    oView.byId("LRS4_LBL_STARTTIME").setVisible(false);
 								oView.byId("LRS4_LBL_ENDTIME").setVisible(false);
 								
@@ -258,7 +259,12 @@ sap.ui.define([
 	
 				oView.byId("LRS4_TXA_NOTE").setValue(oCtx.getProperty("Znote"));
 				
-        
+				
+					if ( oCtx.getProperty("ZpianoFerie") == "X" )
+				{
+				oView.byId("LRS4_DAT_PFERIE").setState(true);
+				}
+
          //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
              //   var oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
             //    var oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
@@ -286,7 +292,8 @@ sap.ui.define([
 					oView.byId("LRS4_DAT_ENDTIME").rerender();
 					
 					
-					
+						oView.byId("LRS4_DAT_PFERIE").setEnabled(false); 
+				
 				    oView.byId("LRS4_LBL_STARTTIME").setVisible(false);
 					oView.byId("LRS4_LBL_ENDTIME").setVisible(false);
 					
@@ -465,6 +472,13 @@ sap.ui.define([
 					oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(true);
 					
 					oView.byId("LRS4_FRM_CNT_CALENDAR").setVisible(true);
+					
+						oView.byId("LRS4_DAT_PFERIE").setEnabled(true); 
+				
+					oView.byId("LRS4_DAT_ORETOT").setEnabled(true);
+				
+					oView.byId("LRS4_DAT_ORETOT").setVisible(true);
+						oView.byId("LRS4_DAT_ORETOT").rerender();
 					
 					oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
 					oView.byId("LRS4_DAT_STARTTIME").setVisible(true);

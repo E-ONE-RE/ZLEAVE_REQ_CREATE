@@ -71,11 +71,72 @@ sap.ui.define([
 				//		this.oModel = new JSONModel({selectedDates:[]});
 				//		this.getView().setModel(this.oModel);
 
+///////
+
+this._data = {
+				GiorniTab : [
+				            
+				      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
+				           
+				            ]	
+			};
+			
+			this.jModel = new sap.ui.model.json.JSONModel();
+			this.jModel.setData(this._data);
+
+
+///////
 				var oRouter = this.getRouter();
 				oRouter.getRoute("view1").attachMatched(this._onRouteMatched, this);
 
+
 			},
 
+//////new table
+			onBeforeRendering: function() {
+					this.byId('GiorniTabIns').setModel(this.jModel);	
+				},
+            
+            addRow : function(oArg, oDatasap){
+		this._data.GiorniTab.push({datasap: oDatasap, data : oArg, inizio : '', fine: '', oretotday: ''});
+		this.jModel.refresh();//which will add the new record
+	},
+	
+	fetchRecords : function(oArg){
+		
+	
+		console.log(this._data.GiorniTab);
+		
+	},
+	
+	/*deleteRow : function(oArg){
+		var deleteRecord = oArg.getSource().getBindingContext().getObject();
+		for(var i=0;i<this._data.GiorniTab.length;i++){
+			if(this._data.GiorniTab[i] == deleteRecord )
+					{
+					
+						this._data.GiorniTab.splice(i,1); //removing 1 record from i th index.
+						this.jModel.refresh();
+						break;//quit the loop
+					}
+		}
+	},*/
+	
+		_clearModelGiorniTab: function() {
+		this._data = {
+				GiorniTab : [
+				            
+				      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
+				           
+				            ]	
+			};
+			this.jModel.setData(this._data);
+				this.jModel.refresh();
+		},
+  
+  //// fine new table  
+  
+  
 			_onRouteMatched: function(oEvent) {
 
 				var oView = this.getView();
@@ -241,13 +302,19 @@ sap.ui.define([
 	                     startDate: this.oFormatYear.parse(oYear2+"1226")
 	                     }));
 	                  ///////////////FINE FESTIVI////////////   
+	                  
+	                  
+	                  ///////////// test tabella
+	        
+            
+	                  ////////////////
 
-				oView.byId("LRS4_DAT_STARTTIME").setValue("");
-				oView.byId("LRS4_DAT_STARTTIME").rerender();
+				//new tab	oView.byId("LRS4_DAT_STARTTIME").setValue("");
+			//new tab		oView.byId("LRS4_DAT_STARTTIME").rerender();
 				//oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
 
-				oView.byId("LRS4_DAT_ENDTIME").setValue("");
-				oView.byId("LRS4_DAT_ENDTIME").rerender();
+				//new tab	oView.byId("LRS4_DAT_ENDTIME").setValue("");
+				//new tab	oView.byId("LRS4_DAT_ENDTIME").rerender();
 				//oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
 
 				oView.byId("LRS4_TXA_NOTE").setValue("");

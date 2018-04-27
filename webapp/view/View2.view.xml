@@ -195,6 +195,34 @@
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>-->
 
+	<sap.ui.layout.form:FormElement id="LRS4_FELEM_PFERIE" visible="true">
+									<sap.ui.layout.form:layoutData>
+										<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
+									</sap.ui.layout.form:layoutData>
+									<sap.ui.layout.form:fields>
+										<sap.ui.layout:Grid width="100%" defaultSpan="L6 M6 S6">
+											<sap.ui.layout:content>
+												<sap.ui.layout:VerticalLayout width="100%">
+													<Label id="LRS4_LBL_PFERIE" text="{i18n>LR_PFERIE}"/>
+												
+	<Hbox>
+						<Switch xmlns="sap.m" id="LRS4_DAT_PFERIE" state="false" customTextOn="Si" customTextOff="No">
+								<layoutData>
+									<FlexItemData growFactor="1"/>
+								</layoutData>
+							</Switch>	
+							
+								<Button  icon="sap-icon://sys-help-2" press="handleResponsivePopoverMultydayPress" />
+			</Hbox>						  
+			
+															<!--</sap.ui.layout:content>-->
+															</sap.ui.layout:VerticalLayout>
+															
+														</sap.ui.layout:content>
+													</sap.ui.layout:Grid>
+												</sap.ui.layout.form:fields>
+											</sap.ui.layout.form:FormElement>
+											
 											
 											<sap.ui.layout.form:FormElement id="LRS4_FELEM_TIMEINPUT" visible="true">
 												<sap.ui.layout.form:layoutData>
