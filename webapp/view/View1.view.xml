@@ -1,4 +1,9 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form" xmlns:sap.ui.layout="sap.ui.layout" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="eone_zleave_req_create.controller.View1" displayBlock="true">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
+xmlns:mvc="sap.ui.core.mvc" 
+xmlns="sap.m" 
+xmlns:sap.ui.layout.form="sap.ui.layout.form" 
+xmlns:sap.ui.layout="sap.ui.layout" 
+xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="eone_zleave_req_create.controller.View1" displayBlock="true">
 	<!--<App>-->
 	<!--<pages>-->
 	<Page id="V1" title="{i18n>title}" class="sapUiResponsiveContentPadding">
@@ -253,6 +258,7 @@
 										<sap.ui.layout:Grid id="LR_APPROVER" width="100%" defaultSpan="L6 M6 S6">
 											<sap.ui.layout:content>
 												<sap.ui.layout:VerticalLayout width="100%">
+
 													<Label id="LRS4_LBL_APPROVER" text="{i18n>LR_APPROVER}"/>
 													<!--<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item0" selectedItemId="__item00" id="SLCT_APPROVER" tooltip="Selezione la persona che dovrà approvare la tua richiesta di assenza. A meno di casi particolari dovrebbe essere il tuo Team Leader." items="{/ApproverSet}">
 																        <items>
@@ -357,7 +363,8 @@
 										<sap.ui.layout:Grid id="LRS4_GIORNITAB" width="100%" defaultSpan="L12 M12 S12">
 											<sap.ui.layout:content>
 												<sap.ui.layout:VerticalLayout width="100%">
-													<Table width="auto" id="GiorniTabIns" items="{/GiorniTab}" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent">
+													<Table width="auto" id="GiorniTabIns" items="{/GiorniTab}" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent"
+													itemPress="_checkFullDay">
 														<headerToolbar>
 															<Toolbar>
 																<Title text="Giorni selezionati" level="H2"/>
@@ -379,13 +386,13 @@
 															<Column width="auto" visible="true">
 																<Text text="Ore tot"/>
 															</Column>
-															
+														<!--	
 															<Column width="auto" visible="true">
 																<Text text="Giorno intero"/>
-															</Column>
+															</Column>-->
 														</columns>
 														<items>
-															<ColumnListItem>
+															<ColumnListItem type="Active">
 																<cells>
 																	<!--	<Button icon="sap-icon://delete" press="deleteRow" type="Reject"/>-->
 																	<Input width="auto" value="{data}"/>
@@ -398,14 +405,24 @@
 																	
 																	
 																	<TimePicker value="{fine}" width="auto" change="onTimePickerChange" placeholder="HH:mm" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="true" tooltip="{i18n>LR_HELP_END_TIME}"/>
-																	<Input width="3rem" value="{oretotday}" id="LRS4_DAT_OREDAY" enabled="true" tooltip="{i18n>LR_OREDAY}" maxLength="3" />
+																	<Input width="3rem" liveChange = "handleTotday" value="{oretotday}" id="LRS4_DAT_OREDAY" enabled="true" tooltip="{i18n>LR_OREDAY}" maxLength="3" />
 																	
-																<!--	<CheckBox id="__box0"/>-->
-															    <Switch xmlns="sap.m" id="LRS4_DAT_GIORNOINT" state="false" customTextOn="Si" customTextOff="No" change="handleFullDay">
+																									
+																		<!--		<ComboBox  id="LRS4_DAT_FULLDAY"  selectedKey = "SI" 
+																				 items="{ path: '/DataFullDay', templateShareable:false }"
+																				 selectionChange = "handleComboBoxFullDay">
+																							
+																					    <items>
+																					  <sap.ui.core:Item key="{Name}" text="{Value}"/> 
+																					    </items>
+																					  </ComboBox> -->
+																
+																
+														<!--	    <Switch xmlns="sap.m" id="LRS4_DAT_GIORNOINT" state="true" customTextOn="Si" customTextOff="No" change="handleFullDay">
 																	<layoutData>
 																		<FlexItemData growFactor="1"/>
 																	</layoutData>
-																</Switch>
+																</Switch>-->
 																	<!--<Input value="{inizio}"/>
 													
 													<Input value="{fine}"/>-->

@@ -73,16 +73,38 @@ sap.ui.define([
 
 ///////
 
+/* var mDataFullDay = {
+    
+    "combotype":"ComboText",
+    "DataFullDay" : [{
+     "Name" :"SI",
+     "Value":"SI"
+    },
+    {
+     "Name" :"NO",
+     "Value":"NO"
+    }]
+  
+   };
+*/
+  
+
 this._data = {
 				GiorniTab : [
 				            
 				      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
 				           
-				            ]	
+				            ]
 			};
+			
+
 			
 			this.jModel = new sap.ui.model.json.JSONModel();
 			this.jModel.setData(this._data);
+			
+					
+	//		this.yModel = new sap.ui.model.json.JSONModel();
+	//		this.yModel.setData(mDataFullDay);
 
 
 ///////
@@ -94,16 +116,18 @@ this._data = {
 
 //////new table
 			onBeforeRendering: function() {
-					this.byId('GiorniTabIns').setModel(this.jModel);	
+					this.byId('GiorniTabIns').setModel(this.jModel);
+			//	   this.byId('LRS4_DAT_FULLDAY').setModel(this.yModel);
 				},
             
             addRow : function(oArg, oDatasap){
-		this._data.GiorniTab.push({datasap: oDatasap, data : oArg, inizio : '', fine: '', oretotday: ''});
+		this._data.GiorniTab.push({datasap: oDatasap, data : oArg, inizio : '', fine: '', oretotday: '8'});
 		this.jModel.refresh();//which will add the new record
+	
 	},
 	
 	fetchRecords : function(oArg){
-		
+	
 	
 		console.log(this._data.GiorniTab);
 		

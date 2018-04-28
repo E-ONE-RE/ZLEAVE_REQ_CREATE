@@ -303,8 +303,8 @@ sap.ui.define([
 								
 								//		oInput.setValueState(sap.ui.core.ValueState.Error);
 								return;		
-							}
-						
+							} 
+							
 						//controllo correttezza inserimento intervallo minuti inizio
 						if (aTstartMinLast !== "0") {
 		
@@ -454,6 +454,8 @@ sap.ui.define([
 				//	Number(aOreTot).toFixed(1);
 
 				}
+				
+		//		this._checkFullDay();
                 // vecchia gestione, calcolo ore tot lo eseguo ora su array tabella
 				//this.getView().byId("LRS4_DAT_ORETOT").setValue(aOreTot);
 			},
@@ -594,59 +596,216 @@ sap.ui.define([
 				
 				
 				},
+			handleTotday: function(oEvent) {
+ //var oObject = oEvent.getSource().getBindingContext().getObject();
+		     	
+		     	var aCells = oEvent.getSource().getParent().getAggregation("cells");
+				//var oInput;
+				//var oSaveButton = aCells[3].getAggregation("content")[1];
+			//	oSaveButton.setEnabled(true);
+				var aZtimestart_cell = aCells[1];
+				var aZtimeend_cell = aCells[2];
+				var aFullday = aCells[3];
 				
+				var	aZtimestart = aZtimestart_cell.getValue(""); 
+							
+				var			aZtimeend = aZtimeend_cell.getValue(""); 
+					
+				var chk = aFullday.getValue();
+			
+						if (chk < "8" & (aZtimestart == "" || aZtimeend == "")) {
+				aZtimestart_cell.setValueState(sap.ui.core.ValueState.Error);
+				aZtimeend_cell.setValueState(sap.ui.core.ValueState.Error);
+				//		aZtimestart.setEnabled(true);
+							
+				//			aZtimeend.setEnabled(true);
+				//			this.jModel.refresh();
+								this._checkFullDay();
+				} else {
+					
+						aZtimestart_cell.setValueState(sap.ui.core.ValueState.None);
+				aZtimeend_cell.setValueState(sap.ui.core.ValueState.None);
+				//			aZtimestart.setValue("");
+							
+				//			aZtimestart.setEnabled(false);
+					//			aZtimestart.rerender();
+								
+				//			aZtimeend.setValue("");
+					
+			//			aZtimeend.setEnabled(false);
+				//		aZtimeend.rerender();
+			//			this.jModel.refresh();
+				//			aFullday.setState(true);
+				//				aFullday.rerender();
 				
-					handleFullDay: function(oEvent) {
+				this._checkFullDay();
+		
+				}
 
- var oView ;
-		    oView = this.getView();
+			},	
+				handleComboBoxFullDay: function(oEvent) {
+ //var oObject = oEvent.getSource().getBindingContext().getObject();
 		     	
-		     	// gestione new con tabella
+		     	var aCells = oEvent.getSource().getParent().getAggregation("cells");
+				//var oInput;
+				//var oSaveButton = aCells[3].getAggregation("content")[1];
+			//	oSaveButton.setEnabled(true);
+				var aZtimestart = aCells[1];
+				var aZtimeend = aCells[2];
+				var aFullday = aCells[4];
+				
+					
+				var chk = aFullday.getSelectedKey();
+				if (chk == "NO") {
+				
+						aZtimestart.setEnabled(true);
+							
+							aZtimeend.setEnabled(true);
+							
+						//		this._checkFullDay();
+				} else {
+				//			aZtimestart.setValue("");
+							
+							aZtimestart.setEnabled(false);
+					//			aZtimestart.rerender();
+								
+				//			aZtimeend.setValue("");
+					
+						aZtimeend.setEnabled(false);
+				//		aZtimeend.rerender();
+						
+				//			aFullday.setState(true);
+				//				aFullday.rerender();
+				
+		//		this._checkFullDay();
+		
+				}
+
+			},
+			handleFullDay: function(oEvent) {
+ var oObject = oEvent.getSource().getBindingContext().getObject();
 		     	
-		    var oObject = oEvent.getSource().getBindingContext().getObject();
-		    var oExpTable = oView.byId("GiorniTabIns");
-			var aItems = oExpTable.getAggregation("items");
-			var oInput = oEvent.getSource();
-			var oItem;
+		     	var aCells = oEvent.getSource().getParent().getAggregation("cells");
+				//var oInput;
+				//var oSaveButton = aCells[3].getAggregation("content")[1];
+			//	oSaveButton.setEnabled(true);
+				var aZtimestart = aCells[1];
+				var aZtimeend = aCells[2];
+				var aFullday = aCells[4];
+				
+					
+				var chk = aFullday.getState();
+				if (!chk) {
+					aZtimestart.setEnabled(true);
+							aZtimeend.setEnabled(true);
+				} else {
+							aZtimestart.setValue("");
+							
+							aZtimestart.setEnabled(false);
+					//			aZtimestart.rerender();
+								
+							aZtimeend.setValue("");
+					
+						aZtimeend.setEnabled(false);
+				//		aZtimeend.rerender();
+						
+				//			aFullday.setState(true);
+				//				aFullday.rerender();
+				
+			//	this._checkFullDay();
+		
+				}
+
+			},
+			handleGiorniTabSelection: function() {
+					
+						var oView ;
+		     	oView = this.getView();
+		     	
+		     	var oExpTable = oView.byId("GiorniTabIns");
+				var aItems = oExpTable.getAggregation("items");
+				var oItem;
 			
 				var aZtimestart_cell;
 				var aZtimeend_cell;
 				var aZtimestart;
 				var aZtimeend;
 				var error = 'N';
-			    
+					var aFullday;
+			    var aFullday_cell;
+			    	
 			    	for (var i = 0; i < aItems.length; i++) {
 							oItem = aItems[i];
 					
 		     				aZtimestart_cell = oItem.getAggregation("cells")[1];
-		     				aZtimestart = aZtimestart_cell.getValue(); 
+		     	//			aZtimestart = aZtimestart_cell.setValue(""); 
 							aZtimeend_cell = oItem.getAggregation("cells")[2];
-							aZtimeend = aZtimeend_cell.getValue(); 
+				//			aZtimeend = aZtimeend_cell.setValue(""); 
 							
-				// var chk = sap.ui.getCore().byId("multidaySel").getSelected();
-				var chk = oInput.getState();
-				if (!chk) {
-					// se switch è NO cancello chiave tms in modo da creare nuova riga
-					this.sTimesheetKey = undefined;
-					sap.ui.getCore().byId("ore").setValue("");
-					//	sap.ui.getCore().byId("descrizione").setValue("");
-
-					sap.ui.getCore().byId("sedi").setEnabled(true);
-
-					//sap.ui.getCore().byId("commessa").setValue(this.sCommessaName);
-					sap.ui.getCore().byId("commessa").setValueState("None");
-
-					////// le sedi sono diverse dipendentemente dal cliente
-					this.callSediSet(this.sCommessaId);
-
-					//	sap.ui.getCore().byId("multidaySel").setEnabled(false);
-				} else {
-					this.callSediReset(this.sSede);
-
-				}
-
-			},
+							aZtimestart.setValueState(sap.ui.core.ValueState.Error);
+				aZtimeend.setValueState(sap.ui.core.ValueState.Error);
+					//		aFullday_cell = oItem.getAggregation("cells")[4];
+					//		aFullday= aFullday_cell.setState(true);
+				//			aFullday_cell = oItem.getAggregation("cells")[4];
+				//			aFullday= aFullday_cell.setSelectedKey("NO"); 
+	
+										
+					    	} 
+					    			
+					    	} ,
 			
+				_checkFullDay: function() {
+					
+						var oView ;
+		     	oView = this.getView();
+		     	
+		     	var oExpTable = oView.byId("GiorniTabIns");
+				var aItems = oExpTable.getAggregation("items");
+				var oItem;
+			
+				var aZtimestart_cell;
+				var aZtimeend_cell;
+				var aZtimestart;
+				var aZtimeend;
+				var error = 'N';
+					var aFullday;
+			    var aFullday_cell;
+			   
+			  // var aFullday = aCells[3];
+				
+					
+				
+			
+					
+			    	for (var i = 0; i < aItems.length; i++) {
+							oItem = aItems[i];
+							
+					aFullday_cell = oItem.getAggregation("cells")[3];
+					var chk = aFullday_cell.getValue();
+					
+						aZtimestart_cell = oItem.getAggregation("cells")[1];
+		     				aZtimestart = aZtimestart_cell.getValue(""); 
+							aZtimeend_cell = oItem.getAggregation("cells")[2];
+							aZtimeend = aZtimeend_cell.getValue(""); 
+				
+						if (chk < "8" & (aZtimestart == "" || aZtimeend == "")) {
+		     		
+							
+							aZtimestart_cell.setValueState(sap.ui.core.ValueState.Error);
+				aZtimeend_cell.setValueState(sap.ui.core.ValueState.Error);
+					//		aFullday_cell = oItem.getAggregation("cells")[4];
+					//		aFullday= aFullday_cell.setState(true);
+				//			aFullday_cell = oItem.getAggregation("cells")[4];
+				//			aFullday= aFullday_cell.setSelectedKey("NO"); 
+						}  else {
+					
+						aZtimestart_cell.setValueState(sap.ui.core.ValueState.None);
+				aZtimeend_cell.setValueState(sap.ui.core.ValueState.None);
+						}			
+					    	} 
+					    			
+					    	} ,
+					    	
 			checkCalendarSelection: function() {
 			var aSelectedDates = this.cale.getSelectedDates();
 			var oDate;
@@ -780,7 +939,8 @@ sap.ui.define([
 					for (var i = 0; i < aSelectedDates.length; i++) {
 
 						oDate = aSelectedDates[i].getStartDate();
-						
+						// devo confronatre date e aggiungere solo i gironi non ancora presenti
+						//nella tabella, altrimenti li sovrascrivo
 						var oDateSapformat = this.oFormatYyyymmdd.format(oDate);
 						var oDateITformat = formatter.formatDate(oDateSapformat);
 			         	this.addRow(oDateITformat, oDateSapformat);
