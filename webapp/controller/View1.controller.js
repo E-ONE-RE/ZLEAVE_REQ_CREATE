@@ -391,10 +391,13 @@ sap.ui.define([
 								//						var res = oData.results[i].Zdate.substring(8);
 									var res = oData.results[i].Zdate;
 	                               
+	                               if (oData.results[i].Zorep >= "8") {
 	                               // disabilito giorni che contengono già una richiesta   
-	                             /*  oCal1.addDisabledDate(new DateTypeRange({   
+	                               oCal1.addDisabledDate(new DateTypeRange({   
 	                               startDate: oFormatYYyyymmdd.parse(res)
-	                               }));*/
+	                               }));
+	                               
+	                               }
 	                               
 									if (oData.results[i].ZabsType == "0001") {
 	
