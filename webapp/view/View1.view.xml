@@ -1,14 +1,12 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" 
-xmlns:mvc="sap.ui.core.mvc" 
-xmlns="sap.m" 
-xmlns:sap.ui.layout.form="sap.ui.layout.form" 
-xmlns:sap.ui.layout="sap.ui.layout" 
-xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns:sap.ui.unified="sap.ui.unified" controllerName="eone_zleave_req_create.controller.View1" displayBlock="true">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:sap.ui.layout.form="sap.ui.layout.form"
+	xmlns:sap.ui.layout="sap.ui.layout" xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui"
+	xmlns:sap.ui.unified="sap.ui.unified" controllerName="eone_zleave_req_create.controller.View1" displayBlock="true">
 	<!--<App>-->
 	<!--<pages>-->
 	<Page id="V1" title="{i18n>title}" class="sapUiResponsiveContentPadding">
 		<headerContent>
-			<Button id="help0" text="Help" press="handlePopHelp" type="Emphasized" icon="sap-icon://message-information" tooltip="Clicca per informazioni sull'uso del Timesheet"/>
+			<Button id="help0" text="Help" press="handlePopHelp" type="Emphasized" icon="sap-icon://message-information"
+				tooltip="Clicca per informazioni sull'uso del Timesheet"/>
 		</headerContent>
 		<content>
 			<!--<Button id="displayNotFoundBtn" text="{i18n>DisplayNotFound}" press="onDisplayNotFound" class="sapUiTinyMarginEnd"/>
@@ -34,7 +32,8 @@ xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns
 								<sap.ui.core:ListItem key="{IdAbs}" text="{TipoAbs}"/>				
 							
 						    </Select>-->
-							<Select id="SLCT_LEAVETYPE" selectedKey="item_LEAVETYPE" change="handleAbsTypeSelect" tooltip="Seleziona il tipo di assenza oggetto della tua richiesta." items="{ path: '/AbsenceTypeSet' }">
+							<Select id="SLCT_LEAVETYPE" selectedKey="item_LEAVETYPE" change="handleAbsTypeSelect"
+								tooltip="Seleziona il tipo di assenza oggetto della tua richiesta." items="{ path: '/AbsenceTypeSet' }">
 								<sap.ui.core:ListItem key="{IdAbs}" text="{TipoAbs}" id="item_LEAVETYPE"/>
 							</Select>
 						</items>
@@ -60,7 +59,8 @@ xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns
 													<VBox width="100%" direction="Column" id="__vbox0_CALENDAR" alignItems="Center" alignContent="Center" justifyContent="Center">
 														<items>
 															<sap.ui.layout:VerticalLayout width="100%">
-																<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" class="sapUiResponsiveMargin" select="handleCalendarSelect" cancel="handleCalendarCancel" intervalSelection="false" singleSelection="false" legend="legend1" tooltip="{i18n>LR_SELECT_DAYS}" width="100%"/>
+																<sap.ui.unified:Calendar id="LRS4_DAT_CALENDAR" class="sapUiResponsiveMargin" select="handleCalendarSelect" cancel="handleCalendarCancel"
+																	intervalSelection="false" singleSelection="false" legend="legend1" tooltip="{i18n>LR_SELECT_DAYS}" width="100%"/>
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 
 																		<sap.me:layoutData>
@@ -87,7 +87,8 @@ xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns
 													<VBox width="100%" direction="Column" id="__vbox0_CALBUTTON" alignItems="Center">
 														<items>
 															<sap.ui.layout:VerticalLayout width="100%">
-																<Button press="handleRemoveSelection" text="Rimuovi date selezionate" icon="sap-icon://delete" tooltip="{i18n>LR_REMOVE_DAYS}" id="btn_removeDate"/>
+																<Button press="handleRemoveSelection" text="Rimuovi date selezionate" icon="sap-icon://delete" tooltip="{i18n>LR_REMOVE_DAYS}"
+																	id="btn_removeDate"/>
 																<!--	<sap.me:CalendarLegend id="LRS4_LEGEND" class="s4LEGEND" legendWidth="18em">
 																		<sap.me:layoutData>
 																			<sap.ui.layout:ResponsiveFlowLayoutData id="LRS4_LYO_LEGEND" minWidth="30" weight="15"/>
@@ -258,7 +259,6 @@ xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns
 										<sap.ui.layout:Grid id="LR_APPROVER" width="100%" defaultSpan="L6 M6 S6">
 											<sap.ui.layout:content>
 												<sap.ui.layout:VerticalLayout width="100%">
-
 													<Label id="LRS4_LBL_APPROVER" text="{i18n>LR_APPROVER}"/>
 													<!--<Select selectedItem="Element sap.ui.core.ListItem#__item0" selectedKey="item0" selectedItemId="__item00" id="SLCT_APPROVER" tooltip="Selezione la persona che dovrà approvare la tua richiesta di assenza. A meno di casi particolari dovrebbe essere il tuo Team Leader." items="{/ApproverSet}">
 																        <items>
@@ -301,7 +301,72 @@ xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns
 															<sap.ui.layout:ResponsiveFlowLayoutData weight="8" linebreak="true"/>
 														</layoutData>
 													</TextArea>
-													<sap.ui.layout:content/>
+													<Table width="auto" id="GiorniTabIns" items="{/GiorniTab}" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent"
+														itemPress="_checkFullDays">
+														<headerToolbar>
+															<Toolbar height="auto">
+																<Title text="Giorni selezionati"/>
+																<!--	<Button icon="sap-icon://display" text="Row" press="fetchRecords"/>-->
+															</Toolbar>
+														</headerToolbar>
+														<columns>
+															<Column width="auto" visible="true">
+																<Text text="Data"/>
+															</Column>
+															<Column width="auto" minScreenWidth="tablet" demandPopin="true" visible="true">
+																<Text text="Ora inizio"/>
+															</Column>
+															<Column width="auto" minScreenWidth="tablet" demandPopin="true" visible="true">
+																<Text text="Ora fine"/>
+															</Column>
+															<Column width="auto" visible="true">
+																<Text text="Ore tot"/>
+															</Column>
+															<!--	
+															<Column width="auto" visible="true">
+																<Text text="Giorno intero"/>
+															</Column>-->
+														</columns>
+														<items>
+															<ColumnListItem type="Active">
+																<cells>
+																	<!--	<Button icon="sap-icon://delete" press="deleteRow" type="Reject"/>-->
+																	<Input width="auto" value="{data}" editable="false"/>
+																	<!-- commento temporanemante da riabilitare -->
+																	<!--	<TimePicker width="auto" placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm"
+																		localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="true" tooltip="{i18n>LR_HELP_START_TIME}"/>
+																	-->
+																	<TimePicker value="{inizio}" width="auto" change="onTimePickerChange" placeholder="HH:mm" placeholderSymbol="-" mask="h9:59:59"
+																		displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="true"
+																		tooltip="{i18n>LR_HELP_START_TIME}"/>
+																	<TimePicker value="{fine}" width="auto" change="onTimePickerChange" placeholder="HH:mm" placeholderSymbol="-" mask="h9:59:59"
+																		displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="true"
+																		tooltip="{i18n>LR_HELP_END_TIME}"/>
+																	<Input width="3rem" liveChange="handleTotday" value="{oretotday}" id="LRS4_DAT_OREDAY" enabled="true" tooltip="{i18n>LR_OREDAY}"
+																		maxLength="3"/>
+																	<!--		<ComboBox  id="LRS4_DAT_FULLDAY"  selectedKey = "SI" 
+																				 items="{ path: '/DataFullDay', templateShareable:false }"
+																				 selectionChange = "handleComboBoxFullDay">
+																							
+																					    <items>
+																					  <sap.ui.core:Item key="{Name}" text="{Value}"/> 
+																					    </items>
+																					  </ComboBox> -->
+																	<!--	    <Switch xmlns="sap.m" id="LRS4_DAT_GIORNOINT" state="true" customTextOn="Si" customTextOff="No" change="handleFullDay">
+																	<layoutData>
+																		<FlexItemData growFactor="1"/>
+																	</layoutData>
+																</Switch>-->
+																	<!--<Input value="{inizio}"/>
+													
+													<Input value="{fine}"/>-->
+																</cells>
+															</ColumnListItem>
+														</items>
+														<layoutData>
+															<sap.ui.layout:ResponsiveFlowLayoutData weight="8" linebreak="true"/>
+														</layoutData>
+													</Table>
 												</sap.ui.layout:VerticalLayout>
 											</sap.ui.layout:content>
 										</sap.ui.layout:Grid>
@@ -355,7 +420,7 @@ xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns
 													<sap.ui.layout:Grid width="100%" id="LRS4_FR_ADDN_FIELDS_GRID" defaultSpan="L12 M12 S12"/>
 												</sap.ui.layout.form:fields>
 											</sap.ui.layout.form:FormElement>-->
-								<sap.ui.layout.form:FormElement id="LRS4_FELEM_GIORNITAB">
+								<!--	<sap.ui.layout.form:FormElement id="LRS4_FELEM_GIORNITAB">
 									<sap.ui.layout.form:layoutData>
 										<sap.ui.layout:ResponsiveFlowLayoutData linebreak="true"/>
 									</sap.ui.layout.form:layoutData>
@@ -363,81 +428,13 @@ xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns
 										<sap.ui.layout:Grid id="LRS4_GIORNITAB" width="100%" defaultSpan="L12 M12 S12">
 											<sap.ui.layout:content>
 												<sap.ui.layout:VerticalLayout width="100%">
-													<Table width="auto" id="GiorniTabIns" items="{/GiorniTab}" growing="true" growingScrollToLoad="true" backgroundDesign="Translucent"
-													itemPress="_checkFullDay">
-														<headerToolbar>
-															<Toolbar>
-																<Title text="Giorni selezionati" level="H2"/>
-
-																<Button icon="sap-icon://display" text="Row" press="fetchRecords"/>
-																		
-															</Toolbar>
-														</headerToolbar>
-														<columns>
-															<Column width="auto" visible="true">
-																<Text text="Data"/>
-															</Column>
-															<Column width="auto" minScreenWidth="tablet" demandPopin="true" visible="true">
-																<Text text="Ora inizio"/>
-															</Column>
-															<Column width="auto" minScreenWidth="tablet" demandPopin="true" visible="true">
-																<Text text="Ora fine"/>
-															</Column>
-															<Column width="auto" visible="true">
-																<Text text="Ore tot"/>
-															</Column>
-														<!--	
-															<Column width="auto" visible="true">
-																<Text text="Giorno intero"/>
-															</Column>-->
-														</columns>
-														<items>
-															<ColumnListItem type="Active">
-																<cells>
-																	<!--	<Button icon="sap-icon://delete" press="deleteRow" type="Reject"/>-->
-																	<Input width="auto" value="{data}"/>
-																	
-																	<!-- commento temporanemante da riabilitare -->
-																	<!--	<TimePicker width="auto" placeholder="HH:mm" change="onTimePickerChange" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm"
-																		localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="true" tooltip="{i18n>LR_HELP_START_TIME}"/>
-																	-->
-																			<TimePicker value="{inizio}" width="auto" change="onTimePickerChange" placeholder="HH:mm"  placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_STARTTIME" minutesStep="30" valueFormat="HH:mm" enabled="true" tooltip="{i18n>LR_HELP_START_TIME}"/>
-																	
-																	
-																	<TimePicker value="{fine}" width="auto" change="onTimePickerChange" placeholder="HH:mm" placeholderSymbol="-" mask="h9:59:59" displayFormat="HH:mm" localeId="it-IT" id="LRS4_DAT_ENDTIME" minutesStep="30" valueFormat="HH:mm" enabled="true" tooltip="{i18n>LR_HELP_END_TIME}"/>
-																	<Input width="3rem" liveChange = "handleTotday" value="{oretotday}" id="LRS4_DAT_OREDAY" enabled="true" tooltip="{i18n>LR_OREDAY}" maxLength="3" />
-																	
-																									
-																		<!--		<ComboBox  id="LRS4_DAT_FULLDAY"  selectedKey = "SI" 
-																				 items="{ path: '/DataFullDay', templateShareable:false }"
-																				 selectionChange = "handleComboBoxFullDay">
-																							
-																					    <items>
-																					  <sap.ui.core:Item key="{Name}" text="{Value}"/> 
-																					    </items>
-																					  </ComboBox> -->
-																
-																
-														<!--	    <Switch xmlns="sap.m" id="LRS4_DAT_GIORNOINT" state="true" customTextOn="Si" customTextOff="No" change="handleFullDay">
-																	<layoutData>
-																		<FlexItemData growFactor="1"/>
-																	</layoutData>
-																</Switch>-->
-																	<!--<Input value="{inizio}"/>
 													
-													<Input value="{fine}"/>-->
-																</cells>
-															</ColumnListItem>
-														</items>
-														<layoutData>
-															<sap.ui.layout:ResponsiveFlowLayoutData weight="8" linebreak="true"/>
-														</layoutData>
-													</Table>
+													
 												</sap.ui.layout:VerticalLayout>
 											</sap.ui.layout:content>
 										</sap.ui.layout:Grid>
 									</sap.ui.layout.form:fields>
-								</sap.ui.layout.form:FormElement>
+								</sap.ui.layout.form:FormElement>-->
 							</sap.ui.layout.form:formElements>
 						</sap.ui.layout.form:FormContainer>
 						<sap.ui.layout.form:layout>
@@ -454,12 +451,8 @@ xmlns:sap.me="sap.me" xmlns:sap.ui.core="sap.ui.core" xmlns:ui="sap.ca.ui" xmlns
 		</content>
 		<footer>
 			<OverflowToolbar id="footerToolbar">
-				
-					<Button id="btn_test" text="Storico" press="onTimePickerCheck" type="Emphasized" activeIcon="sap-icon://approvals" icon="sap-icon://work-history" tooltip="Accedi alla lista delle tue richieste per visualizzarle e/o modificarle.">
-					<layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
-				</Button>
-				
-				<Button id="btn_History" text="Storico" press="onHistoryPress" type="Emphasized" activeIcon="sap-icon://approvals" icon="sap-icon://work-history" tooltip="Accedi alla lista delle tue richieste per visualizzarle e/o modificarle.">
+				<Button id="btn_History" text="Storico" press="onHistoryPress" type="Emphasized" activeIcon="sap-icon://approvals"
+					icon="sap-icon://work-history" tooltip="Accedi alla lista delle tue richieste per visualizzarle e/o modificarle.">
 					<layoutData><OverflowToolbarLayoutData moveToOverflow="false"/></layoutData>
 				</Button>
 				<ToolbarSpacer/>

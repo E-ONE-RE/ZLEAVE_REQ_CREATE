@@ -89,16 +89,15 @@ sap.ui.define([
 */
   
 
-this._data = {
-				GiorniTab : [
-				            
-				      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
-				           
-				            ]
-			};
-			
+			this._data = {
+							GiorniTab : [
+							            
+							      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
+							           
+							            ]
+						};
+						
 
-			
 			this.jModel = new sap.ui.model.json.JSONModel();
 			this.jModel.setData(this._data);
 			
@@ -123,9 +122,10 @@ this._data = {
             addRow : function(oArg, oDatasap){
 		this._data.GiorniTab.push({datasap: oDatasap, data : oArg, inizio : '', fine: '', oretotday: '8'});
 		this.jModel.refresh();//which will add the new record
-	
+	    this._checkFullDays();//aggiorno ore totali
 	},
 	
+	// solo a scopo di debug
 	fetchRecords : function(oArg){
 	
 	
@@ -146,6 +146,9 @@ this._data = {
 		}
 	},*/
 	
+	
+
+	
 		_clearModelGiorniTab: function() {
 		this._data = {
 				GiorniTab : [
@@ -155,7 +158,7 @@ this._data = {
 				            ]	
 			};
 			this.jModel.setData(this._data);
-				this.jModel.refresh();
+			this.jModel.refresh();
 		},
   
   //// fine new table  
@@ -197,7 +200,8 @@ this._data = {
 				var oModel = this.getView().getModel();
 				sap.ui.getCore().setModel(oModel);
 				
-				
+			    //resetto array tabella dei giorni
+				this._clearModelGiorniTab();
 
 				//ripulisco i campi		
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
@@ -388,9 +392,9 @@ this._data = {
 									var res = oData.results[i].Zdate;
 	                               
 	                               // disabilito giorni che contengono già una richiesta   
-	                               oCal1.addDisabledDate(new DateTypeRange({   
+	                             /*  oCal1.addDisabledDate(new DateTypeRange({   
 	                               startDate: oFormatYYyyymmdd.parse(res)
-	                               }));
+	                               }));*/
 	                               
 									if (oData.results[i].ZabsType == "0001") {
 	
