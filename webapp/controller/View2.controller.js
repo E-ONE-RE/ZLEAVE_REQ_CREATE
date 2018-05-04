@@ -755,11 +755,16 @@ sap.ui.define([
 										// deseleziona il giorno e lo riseleziona
 			                        	if (oData.results[i].ZrequestId !== zid){
 			                        		
-			                        		  // disabilito giorni che contengono già una richiesta tranne per la richiesta corrente  
-			                            /*   oCal2.addDisabledDate(new DateTypeRange({   
-			                               startDate: oFormatYYyyymmdd.parse(res)
-			                               }));
-			                           */
+			                             // disabilito giorni che contengono già una richiesta tranne per la richiesta corrente  
+			                         
+						                        if (oData.results[i].Zorep >= "8") {
+				                               // disabilito giorni che contengono già una richiesta   
+				                               oCal2.addDisabledDate(new DateTypeRange({   
+						                       startDate: oFormatYYyyymmdd.parse(res)
+				                               }));
+				                               
+				                               }
+			                        		  
 											if ( oData.results[i].ZabsType == "0001") {		
 													
 														oCal2.addSpecialDate(new DateTypeRange({
