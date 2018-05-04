@@ -41,11 +41,80 @@ sap.ui.define([
 					calendarType: sap.ui.core.CalendarType.Gregorian
 				});
 				
+				
+				this._data = {
+							GiorniTab : [
+							            
+							      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
+							           
+							            ]
+						};
+						
+
+			this.jModel = new sap.ui.model.json.JSONModel();
+			this.jModel.setData(this._data);
+			
+			
 				var oRouter = this.getRouter();
 				oRouter.getRoute("view2").attachMatched(this._onRouteMatched, this);
 
 			},
 			
+			//////new table
+			onBeforeRendering: function() {
+					this.byId('GiorniTabIns').setModel(this.jModel);
+			//	   this.byId('LRS4_DAT_FULLDAY').setModel(this.yModel);
+				},
+				
+	
+            
+            addRow : function(oArg, oDatasap){
+		this._data.GiorniTab.push({datasap: oDatasap, data : oArg, inizio : '', fine: '', oretotday: '8'});
+		this.jModel.refresh();//which will add the new record
+	    this._checkFullDays();//aggiorno ore totali
+	},
+	
+	    addRowOnBindingChange : function(oArg, oDatasap, oInizio, oFine, oOretotday){
+		this._data.GiorniTab.push({datasap: oDatasap, data : oArg, inizio : oInizio, fine: oFine, oretotday: oOretotday});
+		this.jModel.refresh();//which will add the new record
+		this._checkFullDays();
+	   
+	},
+	
+	// solo a scopo di debug
+	fetchRecords : function(oArg){
+	
+	
+		console.log(this._data.GiorniTab);
+		
+	},
+	
+	/*deleteRow : function(oArg){
+		var deleteRecord = oArg.getSource().getBindingContext().getObject();
+		for(var i=0;i<this._data.GiorniTab.length;i++){
+			if(this._data.GiorniTab[i] == deleteRecord )
+					{
+					
+						this._data.GiorniTab.splice(i,1); //removing 1 record from i th index.
+						this.jModel.refresh();
+						break;//quit the loop
+					}
+		}
+	},*/
+	
+		_clearModelGiorniTab: function() {
+		this._data = {
+				GiorniTab : [
+				            
+				      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
+				           
+				            ]	
+			};
+			this.jModel.setData(this._data);
+			this.jModel.refresh();
+		},
+  
+  //// fine new table  
 			
 			// controllo ulteriore dello stato in caso di click su riga storico non aggiornata
 			_checkStatus: function(zReqId) {
@@ -84,20 +153,21 @@ sap.ui.define([
 								
 								oView.byId("LRS4_FRM_CNT_CALENDAR").setVisible(false);
 					
-								oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(false);
+							//	oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(false);
 								
-								oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
-								oView.byId("LRS4_DAT_STARTTIME").setVisible(false);
-								oView.byId("LRS4_DAT_STARTTIME").rerender();
+							//	oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+							//	oView.byId("LRS4_DAT_STARTTIME").setVisible(false);
+							//	oView.byId("LRS4_DAT_STARTTIME").rerender();
 								
-								oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
-								oView.byId("LRS4_DAT_ENDTIME").setVisible(false);
-								oView.byId("LRS4_DAT_ENDTIME").rerender();
+							//	oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+							//	oView.byId("LRS4_DAT_ENDTIME").setVisible(false);
+							//	oView.byId("LRS4_DAT_ENDTIME").rerender();
 								
 								
-								
-							    oView.byId("LRS4_LBL_STARTTIME").setVisible(false);
-								oView.byId("LRS4_LBL_ENDTIME").setVisible(false);
+								oView.byId("LRS4_DAT_PFERIE").setEnabled(false); 
+				
+							//    oView.byId("LRS4_LBL_STARTTIME").setVisible(false);
+							//	oView.byId("LRS4_LBL_ENDTIME").setVisible(false);
 								
 								oView.byId("LRS4_TXA_NOTE").setEnabled(false);
 								oView.byId("LRS4_TXA_NOTE").rerender();
@@ -194,7 +264,13 @@ sap.ui.define([
 			},
 
 			_onBindingChange: function(oEvent) {
-				// No data for the binding
+				
+				//salvo le varibili globali per usarle nelle fn di success
+				var that = this;
+				
+				//resetto array tabella dei giorni
+				this._clearModelGiorniTab();
+				
 				var sEffectiveApprover;
 				if (!this.getView().getBindingContext()) {
 					sEffectiveApprover = this.getView().getBindingContext().getProperty("ZuserAction");
@@ -203,7 +279,7 @@ sap.ui.define([
 
                 var oView = this.getView();
                 var oModel = this.getView().getModel();
-                      sap.ui.getCore().setModel(oModel);
+                sap.ui.getCore().setModel(oModel);
                       
                 var oCal2 = oView.byId("LRS4_DAT_CALENDAR");
 				var oLeg2 = oView.byId("legend1");
@@ -226,10 +302,7 @@ sap.ui.define([
                	oListItem.setVisible(true);
                }
 
-				
-				
-				
-				
+	
 				var oCtx, zid, zstatus;
 				oCtx = oView.getBindingContext();
 				zid = oCtx.getProperty("ZrequestId");
@@ -258,7 +331,12 @@ sap.ui.define([
 	
 				oView.byId("LRS4_TXA_NOTE").setValue(oCtx.getProperty("Znote"));
 				
-        
+				
+				if ( oCtx.getProperty("ZpianoFerie") == "X" )
+				{
+				oView.byId("LRS4_DAT_PFERIE").setState(true);
+				}
+
          //MP: per abilitare i bottoni nella View2 solo nel caso in cui la richiesta sia pending
              //   var oButtonMod = sap.ui.getCore().byId("__component0---V2--btn1");
             //    var oButtonDel = sap.ui.getCore().byId("__component0---V2--btn2");
@@ -275,20 +353,23 @@ sap.ui.define([
 					
 					oView.byId("LRS4_FRM_CNT_CALENDAR").setVisible(false);
 					
-					oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(false);
+					oView.byId("GiorniTabIns").setVisible(false);
 					
-					oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
-					oView.byId("LRS4_DAT_STARTTIME").setVisible(false);
-					oView.byId("LRS4_DAT_STARTTIME").rerender();
+				//	oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(false);
 					
-					oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
-					oView.byId("LRS4_DAT_ENDTIME").setVisible(false);
-					oView.byId("LRS4_DAT_ENDTIME").rerender();
+				//	oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+				//	oView.byId("LRS4_DAT_STARTTIME").setVisible(false);
+				//	oView.byId("LRS4_DAT_STARTTIME").rerender();
+					
+				//	oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+				//	oView.byId("LRS4_DAT_ENDTIME").setVisible(false);
+				//	oView.byId("LRS4_DAT_ENDTIME").rerender();
 					
 					
-					
-				    oView.byId("LRS4_LBL_STARTTIME").setVisible(false);
-					oView.byId("LRS4_LBL_ENDTIME").setVisible(false);
+					oView.byId("LRS4_DAT_PFERIE").setEnabled(false); 
+				
+				//    oView.byId("LRS4_LBL_STARTTIME").setVisible(false);
+				//	oView.byId("LRS4_LBL_ENDTIME").setVisible(false);
 					
 					
 					oView.byId("LRS4_TXA_NOTE").setEnabled(false);
@@ -462,21 +543,30 @@ sap.ui.define([
 					oView.byId("SLCT_APPROVER").setEnabled(true);
 					oView.byId("SLCT_APPROVER").rerender();
 					
-					oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(true);
+				//	oView.byId("LRS4_FELEM_TIMEINPUT").setVisible(true);
+				
+				    oView.byId("GiorniTabIns").setVisible(true);
 					
 					oView.byId("LRS4_FRM_CNT_CALENDAR").setVisible(true);
 					
-					oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
-					oView.byId("LRS4_DAT_STARTTIME").setVisible(true);
-					oView.byId("LRS4_DAT_STARTTIME").rerender();
+					oView.byId("LRS4_DAT_PFERIE").setEnabled(true); 
+				
+					oView.byId("LRS4_DAT_ORETOT").setEnabled(true);
+				
+					oView.byId("LRS4_DAT_ORETOT").setVisible(true);
+					oView.byId("LRS4_DAT_ORETOT").rerender();
+					
+				//	oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
+				//	oView.byId("LRS4_DAT_STARTTIME").setVisible(true);
+				//	oView.byId("LRS4_DAT_STARTTIME").rerender();
 					
 
-					oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
-					oView.byId("LRS4_DAT_ENDTIME").setVisible(true);
-					oView.byId("LRS4_DAT_ENDTIME").rerender();
+				//	oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
+				//	oView.byId("LRS4_DAT_ENDTIME").setVisible(true);
+				//	oView.byId("LRS4_DAT_ENDTIME").rerender();
 
-				    oView.byId("LRS4_LBL_STARTTIME").setVisible(true);
-					oView.byId("LRS4_LBL_ENDTIME").setVisible(true);
+				 //   oView.byId("LRS4_LBL_STARTTIME").setVisible(true);
+				//	oView.byId("LRS4_LBL_ENDTIME").setVisible(true);
 					
 					oView.byId("LRS4_TXA_NOTE").setEnabled(true);
 					oView.byId("LRS4_TXA_NOTE").rerender();
@@ -528,8 +618,8 @@ sap.ui.define([
 						////////////////////////////////				
                            
                         // setto valori orario
-                        oView.byId("LRS4_DAT_STARTTIME").setValue(oData.results[0].Ztimestart);
-				        oView.byId("LRS4_DAT_ENDTIME").setValue(oData.results[0].Ztimeend);
+                    //    oView.byId("LRS4_DAT_STARTTIME").setValue(oData.results[0].Ztimestart);
+				    //    oView.byId("LRS4_DAT_ENDTIME").setValue(oData.results[0].Ztimeend);
                            
 						var oFormatYYyyymmdd = sap.ui.core.format.DateFormat.getInstance({
 							pattern: "yyyyMMdd",
@@ -543,14 +633,17 @@ sap.ui.define([
 						
 						if (oData.results.length > 1) {
 
-							oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
-				            oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
+					//		oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
+				    //        oView.byId("LRS4_DAT_ENDTIME").setEnabled(false);
 						}    
 
 						if (oData.results.length > 0) {
 							for (var i = 0; i < oData.results.length; i++) {
 
 								 var oZdate = oData.results[i].Zdate;
+								 var oInizio = oData.results[i].Ztimestart;
+								 var oFine = oData.results[i].Ztimeend;
+								 var oOretotday = oData.results[i].Zorep;
 								 
 								// setto il mese visualizzato in base al primo giorno della richiesta 
 								if (i === 0) {
@@ -561,13 +654,39 @@ sap.ui.define([
 								oCal2.addSelectedDate(new DateTypeRange({
 									startDate: oFormatYYyyymmdd.parse(oZdate)
 									
-							
-
 								}));
+						
+								
+						var oDateSapformat = oZdate;
+						var oDateITformat = formatter.formatDate(oDateSapformat);
+			         	that.addRowOnBindingChange(oDateITformat, oDateSapformat, oInizio, oFine, oOretotday);
+			         //	this._data.GiorniTab.push({datasap: oDateSapformat, data : oDateITformat, inizio : '', fine: '', oretotday: '8'});
+	
 								
 							}
 							
 						}
+						
+						
+			/*	var aSelectedDates = oCal2.getSelectedDates();
+				var oDate;
+				
+				
+
+				if (aSelectedDates.length > 0) {
+					
+
+					for (var i = 0; i < aSelectedDates.length; i++) {
+
+						oDate = aSelectedDates[i].getStartDate();
+					
+						var oDateSapformat = oFormatYYyyymmdd.format(oDate);
+						var oDateITformat = formatter.formatDate(oDateSapformat);
+			         	that.addRowOnBindingChange(oDateITformat, oDateSapformat);
+			         //	this._data.GiorniTab.push({datasap: oDateSapformat, data : oDateITformat, inizio : '', fine: '', oretotday: '8'});
+	
+					}
+				}*/
 
 					} else {
 
@@ -592,7 +711,7 @@ sap.ui.define([
 				
 				
 				
-				
+	
 				//////////////////////////
 				
 				//leggo le posizioni per ricavare i giorni delle richieste già attive
@@ -637,10 +756,10 @@ sap.ui.define([
 			                        	if (oData.results[i].ZrequestId !== zid){
 			                        		
 			                        		  // disabilito giorni che contengono già una richiesta tranne per la richiesta corrente  
-			                               oCal2.addDisabledDate(new DateTypeRange({   
+			                            /*   oCal2.addDisabledDate(new DateTypeRange({   
 			                               startDate: oFormatYYyyymmdd.parse(res)
 			                               }));
-			                           
+			                           */
 											if ( oData.results[i].ZabsType == "0001") {		
 													
 														oCal2.addSpecialDate(new DateTypeRange({
