@@ -191,6 +191,36 @@
 			
 			
 			</IconTabFilter>
+			
+			
+				
+					<IconTabFilter key="planningCal" id="PlanningCal" icon="sap-icon://appointment" tooltip="Calendario" text="Calendario assenze">
+					
+								<PlanningCalendar
+								viewKey = "Week"
+								id="PC1"
+								showIntervalHeaders="true"
+								appointmentsVisualization="Filled"
+								appointmentSelect="handleAppointmentSelect"
+						
+								showEmptyIntervalHeaders="false"
+								showRowHeaders="true"
+								groupAppointmentsMode = "Expanded"
+					
+							    >
+									<!--		viewChange = "handleViewChange"-->	
+								<toolbarContent>
+									<Title text="Team:" titleStyle="H5"/>
+									
+									<Select id="SLCT_TEAMS" forceSelection="false" change="_onCalendarHandle" items="{ path: '/TeamsSet' }">
+									<core:Item key="{NomeArea}" text="{DescrArea}"/>
+									</Select>
+								</toolbarContent>
+
+							</PlanningCalendar>
+					
+					</IconTabFilter>
+					
 					</items>
 				</IconTabBar>
 
