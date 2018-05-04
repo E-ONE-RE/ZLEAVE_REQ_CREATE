@@ -135,11 +135,13 @@ sap.ui.define([
 				oHTML = new sap.ui.core.HTML({
 					content: '<strong>Storico delle richieste</strong>' +
 						'<ul>' +
-						' La pagina mostra lo storico delle richieste effettuate, con una indicazione circa il loro stato.' +
+						' <li>La pagina mostra lo storico delle richieste effettuate, con una indicazione circa il loro stato.' +
 						' E\' possibile filtrare la lista di richieste attraverso la barra dei filtri. Le richieste possono essere filtrate' +
 						' per tipo ("Permesso", "Ferie", "Recupero", "ROL"), per stato ("Inviata", "Approvata", "Rifiutata") o combinando i due filtri singoli.' +
-						' Cliccando su un elemento della lista, è possibile visualizzare il dettaglio di questa.' +
-						' Tramite il tab info utente, è possibile visualizzare un riepilogo "indicativo" delle ore inserite dall\'utente per l\'anno in corso.' +
+						' Cliccando su un elemento della lista, è possibile visualizzare il dettaglio di questa.</li>' +
+						' <li>Tramite il tab Info Utente, è possibile visualizzare un riepilogo "indicativo" delle ore inserite dall\'utente per l\'anno in corso.</li>' +
+						' <li>Tramite il tab Calendario Assenze, è possibile visualizzare il calendario assenze in formato orizzontale.</li>' +
+						
 						' ' +
 						'</ul>',
 					sanitizeContent: true
@@ -148,9 +150,9 @@ sap.ui.define([
 					oHTML = new sap.ui.core.HTML({
 					content: '<strong>Pagina di riepilogo richiesta</strong>' +
 						'<ul>' +
-						' La pagina mostra un riepilogo della richiesta selezionata. E\' presente una lista dei giorni oggetto della richiesta, nonchè una indicazione circa l\'approvatore designato e le evantuali note' +
-						' inserite dall\'approvatore. Nel caso in cui la richiesta non sia stata ancora processata, è possibile modificarla o eliminarla' +
-						' attraverso gli appositi bottoni ("Modifica" o "Elimina").' +
+						' <li>La pagina mostra un riepilogo della richiesta selezionata. E\' presente l\' indicazione dell\'approvatore designato e le altre informazioni relative alla singola richiesta. </li>' + 
+						' <li>Nel caso in cui la richiesta non sia stata ancora processata, è possibile modificarla o eliminarla. Dopo aver apportato le opportune modifiche selezionare il tasto "Modifica" per salvare.</li>' +
+						' <li>In fondo alla pagina è presente la lista dei giorni attualmente salvati e un secondo tab relativo ad eventuali note inserite dall\'approvatore. '+
 						'</ul>',
 					sanitizeContent: true
 				});
