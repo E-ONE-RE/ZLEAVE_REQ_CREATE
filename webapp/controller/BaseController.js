@@ -151,7 +151,11 @@ sap.ui.define([
 					content: '<strong>Pagina di riepilogo richiesta</strong>' +
 						'<ul>' +
 						' <li>La pagina mostra un riepilogo della richiesta selezionata. E\' presente l\' indicazione dell\'approvatore designato e le altre informazioni relative alla singola richiesta. </li>' + 
-						' <li>Nel caso in cui la richiesta non sia stata ancora processata, è possibile modificarla o eliminarla. Dopo aver apportato le opportune modifiche selezionare il tasto "Modifica" per salvare.</li>' +
+						' <li><strong>Modifica/Elimina: </strong> Nel caso in cui la richiesta non sia stata ancora processata oppure sia riferita a giorni con data di assenza nel futuro, è possibile modificarla o eliminarla. ' + 
+						' Se una richiesta già approvata viene modificata, ritornerà in stato pending e dovrà essere riapprovata dal proprio TL o Amministrazione. ' +
+						' Dopo aver apportato le opportune modifiche selezionare il tasto "Modifica" per salvare. Oppure il tasto "Elimina" per eliminare.</li>' +
+						'<li><strong>Sblocco: </strong> Nel caso in cui la richiesta sia stata già approvata o rifiutata, oppure sia riferita a giorni con data di assenza nel passato, la richiesta potrà essere modificata/eliminata ' +
+						' solo previo sblocco (da richiedere all\'amministrazione) o rifiuto (da richiedere all\'amministrazione o al proprio TL). </li>' +
 						' <li>In fondo alla pagina è presente la lista dei giorni attualmente salvati e un secondo tab relativo ad eventuali note inserite dall\'approvatore. '+
 						'</ul>',
 					sanitizeContent: true
