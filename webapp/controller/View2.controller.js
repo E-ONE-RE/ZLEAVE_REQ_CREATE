@@ -643,7 +643,7 @@ sap.ui.define([
 														oCal2.addSpecialDate(new DateTypeRange({
 															startDate: oFormatYYyyymmdd.parse(res),
 															type: "Type01",
-															tooltip: "Permesso Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+															tooltip: "Permesso Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) +  " Ore: " + formatter.formatRequestId(oData.results[i].Zorep) + " Stato: " + oData.results[i].ZreqStatus
 
 														}));
 													}
@@ -653,7 +653,7 @@ sap.ui.define([
 														oCal2.addSpecialDate(new DateTypeRange({
 															startDate: oFormatYYyyymmdd.parse(res),
 															type: "Type05",
-															tooltip: "Ferie Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+															tooltip: "Ferie Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) +  " Ore: " + formatter.formatRequestId(oData.results[i].Zorep)  + " Stato: " + oData.results[i].ZreqStatus
 
 														}));
 													}
@@ -663,7 +663,7 @@ sap.ui.define([
 														oCal2.addSpecialDate(new DateTypeRange({
 															startDate: oFormatYYyyymmdd.parse(res),
 															type: "Type09",
-															tooltip: "Recupero Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+															tooltip: "Recupero Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) +  " Ore: " + formatter.formatRequestId(oData.results[i].Zorep)  + " Stato: " + oData.results[i].ZreqStatus
 
 														}));
 													}
@@ -673,7 +673,7 @@ sap.ui.define([
 														oCal2.addSpecialDate(new DateTypeRange({
 															startDate: oFormatYYyyymmdd.parse(res),
 															type: "Type08",
-															tooltip: "ROL Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+															tooltip: "ROL Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) +  " Ore: " + formatter.formatRequestId(oData.results[i].Zorep)  + " Stato: " + oData.results[i].ZreqStatus
 
 														}));
 													}
