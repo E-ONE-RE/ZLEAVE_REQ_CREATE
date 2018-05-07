@@ -2,7 +2,8 @@ sap.ui.define([
 		"eone_zleave_req_create/controller/BaseController", "sap/ui/model/json/JSONModel",
 		"sap/ui/core/routing/History", "eone_zleave_req_create/model/formatter",
 		"sap/ui/model/Filter",
-		"sap/ui/model/FilterOperator"
+		"sap/ui/model/FilterOperator",
+		"sap/m/MessageBox"
 
 	],
 	function(BaseController, JSONModel, History, formatter, Filter, FilterOperator, MessageBox) {
@@ -488,7 +489,7 @@ sap.ui.define([
 											abs_text = "Giornata intera";
 											abs_tooltip = " per giornata intera"
 										}else{
-										 abs_text = "Dalle " + oData.results[i].Ztimestart + " alle " + oData.results[i].Ztimeend;
+										 abs_text = oData.results[i].Ztimestart + "-" + oData.results[i].Ztimeend;
 										 abs_tooltip = " dalle ore "  + oData.results[i].Ztimestart + " alle ore " + oData.results[i].Ztimeend;
 										}
 	
