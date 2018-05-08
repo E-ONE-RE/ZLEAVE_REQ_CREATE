@@ -1411,6 +1411,7 @@ sap.ui.define([
 	                    	
 	                    }
 	                    
+	        
 
 						MessageBox.confirm("Confermi l'invio della richiesta?", {
 							icon: MessageBox.Icon.QUESTION,
@@ -1419,8 +1420,10 @@ sap.ui.define([
 							initialFocus : MessageBox.Action.NO,
 							id: "messageBoxId1",
 							defaultAction: MessageBox.Action.NO,
-							details: "Tipo di richiesta: " + tabsType + " \nApprovatore: " + this.slctApprover.getSelectedKey() + " \nOre totali: " + this.oreTot.getValue()
-							+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà inoltrata, riceverai una notifica via mail sul suo esito. Puoi modificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
+							details: 'Tipo di richiesta: ' + tabsType + ' \nApprovatore: ' + this.slctApprover.getSelectedKey() + ' \nOre totali: ' + this.oreTot.getValue()
+							+ ' \nGiorno/i assenza: ' + oDateTxt + ' \nCliccando SI, la richiesta verrà inoltrata e riceverai una notifica via mail sul suo esito.' +
+							' Puoi modificare o eliminare le richieste accedendo allo storico nel caso in cui queste non siano state ancora approvate oppure' +
+							' che si riferiscano a giorni di assenza con date nel futuro.',
 							styleClass: bCompact ? "sapUiSizeCompact" : "",
 							contentWidth: "100px",
 							
