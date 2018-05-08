@@ -488,7 +488,7 @@ sap.ui.define([
 	
 				}
 				
-		//		this._checkFullDay();
+				this._checkFullDays  ();
                 // vecchia gestione, calcolo ore tot lo eseguo ora su array tabella
 				//this.getView().byId("LRS4_DAT_ORETOT").setValue(aOreTot);
 			},
@@ -1212,7 +1212,8 @@ sap.ui.define([
 					                	}
 					}		
 							
-
+                    	this._checkFullDays();
+                    	
 				} else {
 					// resetto oreTotali e array giorni se nessun giorno del calendario è selezionato
 					this.getView().byId("LRS4_DAT_ORETOT").setValue("0");
@@ -1341,17 +1342,17 @@ sap.ui.define([
 					this.sButtonKey = oEvent.getSource().getId();
 					 
 					 
-		//estraggo id della view 
-		var sViewIdStart = oView.getId().indexOf("---");
-		sViewIdStart = sViewIdStart + 3;
-		
-	    //		var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---");) + "---"; 
-	   var sViewID = oView.getId().substring(sViewIdStart); 
-	   
-	   // l'alternativa è basarsi sul nome della view completa
-		//	var sViewName = oView.getViewName(); 
-		
-		// inserisco giorni selezionati un una stringa di testo per dettagli messagebox
+						//estraggo id della view 
+						var sViewIdStart = oView.getId().indexOf("---");
+						sViewIdStart = sViewIdStart + 3;
+						
+					    //		var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---");) + "---"; 
+					   var sViewID = oView.getId().substring(sViewIdStart); 
+					   
+					   // l'alternativa è basarsi sul nome della view completa
+						//	var sViewName = oView.getViewName(); 
+						
+						// inserisco giorni selezionati un una stringa di testo per dettagli messagebox
 	                    var aSelectedDates = this.cale.getSelectedDates();
 						//var oDataSel = {
 						//	selectedDates: []
