@@ -71,11 +71,99 @@ sap.ui.define([
 				//		this.oModel = new JSONModel({selectedDates:[]});
 				//		this.getView().setModel(this.oModel);
 
+///////
+
+/* var mDataFullDay = {
+    
+    "combotype":"ComboText",
+    "DataFullDay" : [{
+     "Name" :"SI",
+     "Value":"SI"
+    },
+    {
+     "Name" :"NO",
+     "Value":"NO"
+    }]
+  
+   };
+*/
+  
+
+			this._data = {
+							GiorniTab : [
+							            
+							      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
+							           
+							            ]
+						};
+						
+
+			this.jModel = new sap.ui.model.json.JSONModel();
+			this.jModel.setData(this._data);
+			
+					
+	//		this.yModel = new sap.ui.model.json.JSONModel();
+	//		this.yModel.setData(mDataFullDay);
+
+
+///////
 				var oRouter = this.getRouter();
 				oRouter.getRoute("view1").attachMatched(this._onRouteMatched, this);
 
+
 			},
 
+//////new table
+			onBeforeRendering: function() {
+					this.byId('GiorniTabIns').setModel(this.jModel);
+			//	   this.byId('LRS4_DAT_FULLDAY').setModel(this.yModel);
+				},
+            
+            addRow : function(oArg, oDatasap){
+		this._data.GiorniTab.push({datasap: oDatasap, data : oArg, inizio : '', fine: '', oretotday: '8'});
+		this.jModel.refresh();//which will add the new record
+	    this._checkFullDays();//aggiorno ore totali
+	},
+	
+	// solo a scopo di debug
+	fetchRecords : function(oArg){
+	
+	
+		console.log(this._data.GiorniTab);
+		
+	},
+	
+	/*deleteRow : function(oArg){
+		var deleteRecord = oArg.getSource().getBindingContext().getObject();
+		for(var i=0;i<this._data.GiorniTab.length;i++){
+			if(this._data.GiorniTab[i] == deleteRecord )
+					{
+					
+						this._data.GiorniTab.splice(i,1); //removing 1 record from i th index.
+						this.jModel.refresh();
+						break;//quit the loop
+					}
+		}
+	},*/
+	
+	
+
+	
+		_clearModelGiorniTab: function() {
+		this._data = {
+				GiorniTab : [
+				            
+				      /*      { data : '' , inizio : '' , fine : '', oretot : ''}*/
+				           
+				            ]	
+			};
+			this.jModel.setData(this._data);
+			this.jModel.refresh();
+		},
+  
+  //// fine new table  
+  
+  
 			_onRouteMatched: function(oEvent) {
 
 				var oView = this.getView();
@@ -112,7 +200,8 @@ sap.ui.define([
 				var oModel = this.getView().getModel();
 				sap.ui.getCore().setModel(oModel);
 				
-				
+			    //resetto array tabella dei giorni
+				this._clearModelGiorniTab();
 
 				//ripulisco i campi		
 				oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
@@ -241,13 +330,19 @@ sap.ui.define([
 	                     startDate: this.oFormatYear.parse(oYear2+"1226")
 	                     }));
 	                  ///////////////FINE FESTIVI////////////   
+	                  
+	                  
+	                  ///////////// test tabella
+	        
+            
+	                  ////////////////
 
-				oView.byId("LRS4_DAT_STARTTIME").setValue("");
-				oView.byId("LRS4_DAT_STARTTIME").rerender();
+				//new tab	oView.byId("LRS4_DAT_STARTTIME").setValue("");
+			//new tab		oView.byId("LRS4_DAT_STARTTIME").rerender();
 				//oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
 
-				oView.byId("LRS4_DAT_ENDTIME").setValue("");
-				oView.byId("LRS4_DAT_ENDTIME").rerender();
+				//new tab	oView.byId("LRS4_DAT_ENDTIME").setValue("");
+				//new tab	oView.byId("LRS4_DAT_ENDTIME").rerender();
 				//oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
 
 				oView.byId("LRS4_TXA_NOTE").setValue("");
@@ -296,17 +391,20 @@ sap.ui.define([
 								//						var res = oData.results[i].Zdate.substring(8);
 									var res = oData.results[i].Zdate;
 	                               
+	                               if (oData.results[i].Zorep >= "8") {
 	                               // disabilito giorni che contengono già una richiesta   
 	                               oCal1.addDisabledDate(new DateTypeRange({   
 	                               startDate: oFormatYYyyymmdd.parse(res)
 	                               }));
+	                               
+	                               }
 	                               
 									if (oData.results[i].ZabsType == "0001") {
 	
 										oCal1.addSpecialDate(new DateTypeRange({
 											startDate: oFormatYYyyymmdd.parse(res),
 											type: "Type01",
-											tooltip: "Permesso Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus 
+											tooltip: "Permesso Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Ore: " + formatter.formatRequestId(oData.results[i].Zorep) + " Stato: " + oData.results[i].ZreqStatus 
 	                                           
 										}));
 									}
@@ -316,7 +414,7 @@ sap.ui.define([
 										oCal1.addSpecialDate(new DateTypeRange({
 											startDate: oFormatYYyyymmdd.parse(res),
 											type: "Type05",
-											tooltip: "Ferie Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+											tooltip: "Ferie Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Ore: " + formatter.formatRequestId(oData.results[i].Zorep) + " Stato: " + oData.results[i].ZreqStatus
 	
 										}));
 									}
@@ -326,7 +424,7 @@ sap.ui.define([
 										oCal1.addSpecialDate(new DateTypeRange({
 											startDate: oFormatYYyyymmdd.parse(res),
 											type: "Type09",
-											tooltip: "Recupero Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+											tooltip: "Recupero Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) +  " Ore: " + formatter.formatRequestId(oData.results[i].Zorep) + " Stato: " + oData.results[i].ZreqStatus
 	
 										}));
 								}
@@ -336,7 +434,7 @@ sap.ui.define([
 										oCal1.addSpecialDate(new DateTypeRange({
 											startDate: oFormatYYyyymmdd.parse(res),
 											type: "Type08",
-											tooltip: "ROL Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Stato: " + oData.results[i].ZreqStatus
+											tooltip: "ROL Id: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " Ore: " + formatter.formatRequestId(oData.results[i].Zorep)  + " Stato: " + oData.results[i].ZreqStatus
 	
 										}));
 								}

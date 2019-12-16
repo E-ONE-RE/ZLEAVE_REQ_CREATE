@@ -100,41 +100,48 @@ sap.ui.define([
 
 			if (sShortName == "View1") {
 				oHTML = new sap.ui.core.HTML({
-					content: '<strong>Linee guida per l\'utilizzo dell\'applicazione</strong>' +
+					content: 
+					' <strong> Inserire una richiesta </strong> ' +
 						'<ul>' +
 						
-							'</li>' +
-								' <li><strong> Inserire una richiesta: </strong> Selezionare il tipo di richiesta tramite l\'apposito ' +
-								' menu a tendina. Scegliere il/i giorni dal calendario. E\' possibile selezionare un intervallo orario ' +
-								' se la richiesta è di un solo giorno. In questo caso utilizzare le fasce orarie 9:00-13:00 e 14:30-18:30. ' + 
-								' Non sono consentiti intervalli inferiori ai 30 minuti. Se l\'intervallo orario non viene indicato saranno ' +
-								' conteggiate 8 ore. In caso di selezione multipla di giorni vengono considerate 8 ore di assenza per giorno. ' +
-								' Effettuare richieste separate per ciscun giorno nel caso sia necessario indicare orari specifici. ' +
-								' Indicare l\'approvatore (solitamente il TL) a cui inoltrare la richiesta. ' +
-								' Inserire eventuali note per l\'approvatore tramite l\'apposito box di testo presente nel form. ' +
-								' Cliccando sul bottone "Invia", la richiesta verrà inoltrata all\'approvatore e notificata all\'ufficio ' +
-								' amministrativo di competenza. ' +
+							
+								' <li>Selezionare il tipo di richiesta tramite l\'apposito menu a tendina. </li>' +
+								' <li>Indicare se la richiesta si riferisce ad un piano ferie già approvato dalla direzione. Se viene selezionato  "SI"  la richiesta viene inoltrata direttamente ' +
+								' all&apos; amministrazione senza passare dall&apos; approvatore. </li>' +
+								' <li> Indicare l\'approvatore (solitamente il TL) a cui inoltrare la richiesta. </li> ' +
+								' <li> Inserire eventuali note per l\'approvatore tramite l\'apposito box di testo presente nel form. </li> ' +
 								
-			                '</li>' +
+								' <li> Scegliere il/i giorni dal calendario. Nella tabella generata per ogni giorno selezionato  ' +
+								' è possibile selezionare un intervallo orario (es. 9:00-13:00), oppure in caso di giornata intera indicare solo il totale ore. ' +
+								
+								' Non sono consentiti intervalli orari inferiori ai 30 minuti. Se l\'intervallo orario non viene indicato viene suggerito un valore ' +
+								' di 8 ore che può eventualmente essere modificato in caso di part time o orari diversi. </li>' +
+								
+								
+								
+								' <li> Cliccando sul bottone "Invia", la richiesta verrà inoltrata all\'approvatore e notificata all\'ufficio ' +
+								' amministrativo di competenza. </li>' +
+								
+			               	'</ul>' +
 			                
-			                '</li>' +
-								'<li><strong> Visualizzare lo storico delle richieste: </strong>  Cliccando sul bottone "Storico", ' + 
-								' verrà visualizzata una lista riportante lo storico delle richieste effettuate. ' +
-			                '</li>' +
-								
-					    
-						'</ul>',
+			                '<strong> Visualizzare lo storico e modificare le richieste. </strong> '+
+			                '<ul>' + 
+			                ' <li> Cliccare sul bottone "Storico", ' + 
+							' verrà visualizzata una lista riportante lo storico delle richieste effettuate dalla quale si potrà visualizzare il dettaglio ed eventualemente modificare/eliminare la singola richiesta. </li>' +
+							'</ul>',
 					sanitizeContent: true
 				});
 			}else if(sShortName == "View1s"){
 				oHTML = new sap.ui.core.HTML({
 					content: '<strong>Storico delle richieste</strong>' +
 						'<ul>' +
-						' La pagina mostra lo storico delle richieste effettuate, con una indicazione circa il loro stato.' +
+						' <li>La pagina mostra lo storico delle richieste effettuate, con una indicazione circa il loro stato.' +
 						' E\' possibile filtrare la lista di richieste attraverso la barra dei filtri. Le richieste possono essere filtrate' +
 						' per tipo ("Permesso", "Ferie", "Recupero", "ROL"), per stato ("Inviata", "Approvata", "Rifiutata") o combinando i due filtri singoli.' +
-						' Cliccando su un elemento della lista, è possibile visualizzare il dettaglio di questa.' +
-						' Tramite il tab info utente, è possibile visualizzare un riepilogo "indicativo" delle ore inserite dall\'utente per l\'anno in corso.' +
+						' Cliccando su un elemento della lista, è possibile visualizzare il dettaglio di questa.</li>' +
+						' <li>Tramite il tab Info Utente, è possibile visualizzare un riepilogo "indicativo" delle ore inserite dall\'utente per l\'anno in corso.</li>' +
+						' <li>Tramite il tab Calendario Assenze, è possibile visualizzare il calendario assenze in formato orizzontale.</li>' +
+						
 						' ' +
 						'</ul>',
 					sanitizeContent: true
@@ -143,9 +150,13 @@ sap.ui.define([
 					oHTML = new sap.ui.core.HTML({
 					content: '<strong>Pagina di riepilogo richiesta</strong>' +
 						'<ul>' +
-						' La pagina mostra un riepilogo della richiesta selezionata. E\' presente una lista dei giorni oggetto della richiesta, nonchè una indicazione circa l\'approvatore designato e le evantuali note' +
-						' inserite dall\'approvatore. Nel caso in cui la richiesta non sia stata ancora processata, è possibile modificarla o eliminarla' +
-						' attraverso gli appositi bottoni ("Modifica" o "Elimina").' +
+						' <li>La pagina mostra un riepilogo della richiesta selezionata. E\' presente l\' indicazione dell\'approvatore designato e le altre informazioni relative alla singola richiesta. </li>' + 
+						' <li><strong>Modifica/Elimina: </strong> Nel caso in cui la richiesta non sia stata ancora processata oppure sia riferita a giorni con data di assenza nel futuro, è possibile modificarla o eliminarla. ' + 
+						' Se una richiesta già approvata viene modificata, ritornerà in stato pending e dovrà essere riapprovata dal proprio TL o Amministrazione. ' +
+						' Dopo aver apportato le opportune modifiche selezionare il tasto "Modifica" per salvare. Oppure il tasto "Elimina" per eliminare.</li>' +
+						'<li><strong>Sblocco: </strong> Nel caso in cui la richiesta sia stata già approvata o rifiutata, oppure sia riferita a giorni con data di assenza nel passato, la richiesta potrà essere modificata/eliminata ' +
+						' solo previo sblocco (da richiedere all\'amministrazione) o rifiuto (da richiedere all\'amministrazione o al proprio TL). </li>' +
+						' <li>In fondo alla pagina è presente la lista dei giorni attualmente salvati e un secondo tab relativo ad eventuali note inserite dall\'approvatore. '+
 						'</ul>',
 					sanitizeContent: true
 				});
@@ -158,13 +169,12 @@ sap.ui.define([
 		
 		},
 		
-			// chiude help
-		handleCloseButton: function(oEvent) {
-			this._oPopoverHelp.close();
-		},
+				// chiude help
+			handleCloseButton: function(oEvent) {
+				this._oPopoverHelp.close();
+			},
 
-		
-		
+	
 			onRefreshTable: function (oEvent) {
 				
 			var oView = this.getView();
@@ -175,7 +185,7 @@ sap.ui.define([
 			},
 		
 		
-				onNavBackDirect        : function (oEvent) {
+			onNavBackDirect        : function (oEvent) {
 			
 
 	 //		this.getRouter().navTo("view1s", {});
@@ -193,15 +203,36 @@ sap.ui.define([
 		},
 		
 
-			onTimePickerChange: function() {
-
-               	var oView ;
-		     	oView = this.getView();
+			onTimePickerChange: function(oArg) {
+				
+			var aCells = oArg.getSource().getParent().getAggregation("cells");
+			var aFullday_cell = aCells[3];
+				
+						
+            var oView ;
+		    oView = this.getView();
 		     	
-				var aSelectedDates = this.cale.getSelectedDates();
+		    // gestione new con tabella
+		     	
+		    var oObject = oArg.getSource().getBindingContext().getObject();
+		    var oExpTable = oView.byId("GiorniTabIns");
+			var aItems = oExpTable.getAggregation("items");
+			var oInput = oArg.getSource();
+			var oItem;
+
+		     var aZtimestart = oObject.inizio;
+			 var aZtimeend = oObject.fine;
+			 
+			 var aOreDay = oObject.oretotday; 
+
+
+		     	//////// vecchia gestione
+				/*var aSelectedDates = this.cale.getSelectedDates();
 
 				var aZtimestart = this.timeFrom.getValue();
 				var aZtimeend = this.timeTo.getValue();
+				*/
+				
 				var aOreTot,
 					aOrep;
 				var aOreDay = 8.0;
@@ -219,14 +250,16 @@ sap.ui.define([
 					var aTstartMinLast = aZtimestart.substring(4);
 						var aTendMinLast = aZtimeend.substring(4);
 				
-				this.timeFrom.setValueState(sap.ui.core.ValueState.None);	
-				this.timeTo.setValueState(sap.ui.core.ValueState.None);
-				
+				// vecchia gestione
+			/*	this.timeFrom.setValueState(sap.ui.core.ValueState.None);	
+				this.timeTo.setValueState(sap.ui.core.ValueState.None);*/
+
 				var minsEnd = parseInt(ary2[0], 10) * 60 + parseInt(ary2[1], 10);
 				var minsStart = parseInt(ary1[0], 10) * 60 + parseInt(ary1[1], 10);
 				
 					//controllo che almeno un giorno sia selezionato
-				if (aSelectedDates.length === 0) {
+					// vecchia gestione
+		/*		if (aSelectedDates.length === 0) {
 
 					//jQuery.sap.require("sap.m.MessageBox");
 					sap.m.MessageBox.show(
@@ -238,31 +271,56 @@ sap.ui.define([
 						});
 				
 					return "KO";
-				}
+				}*/
 
 
                 //////////////////////////////////////////
                 if (aZtimestart !== "") {
 						//controllo correttezza inserimento intervallo ore
-						if ((aTstart < 9 || aTstart > 18) || (aTstart === 13 || (aTstart === 14 & aTstartMin < 30)) ) {
-							sap.m.MessageBox.show(
-								"Inserimento ora inizio non corretto. Ora inizio >= 9:00, < 13:00, >= 14:30, < 18:30 ", {
+					//	if ((aTstart < 9 || aTstart > 18) || (aTstart === 13 || (aTstart === 14 & aTstartMin < 30)) ) {
+					//	(SE) richiesta modifica da WAFA consentire richiesta da ore 14	
+					//		if ((aTstart < 8 || aTstart > 19) || (aTstart === 13 ) ) {
+							if ( (aTstart < 8 || aTstart > 19) ) {
+							
+								oInput.setValue("");
+				
+
+								/*	for(var i=0;i<this._data.GiorniTab.length;i++){
+										if(this._data.GiorniTab[i] == oObject )
+												{
+												
+													this._data.GiorniTab[i].inizio = ""; 
+										//			this.jModel.refresh();
+													break;//quit the loop
+												}
+									}*/
+									
+								
+						
+								   // vecchia gestione			
+									//			oView.byId("LRS4_DAT_STARTTIME").setValue("");
+									//		this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
+									
+										sap.m.MessageBox.show(
+								"Inserimento ora inizio non corretto. Ora inizio >= 8:00, <= 19:00 ", {
 									icon: sap.m.MessageBox.Icon.ERROR,
 									title: "Error",
 									actions: [sap.m.MessageBox.Action.CLOSE]
 		
 								});
 								
-								oView.byId("LRS4_DAT_STARTTIME").setValue("");
-							this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
-                    
-							return "KO";
-						}
-						
+								//		oInput.setValueState(sap.ui.core.ValueState.Error);
+								return;		
+							} 
+							
 						//controllo correttezza inserimento intervallo minuti inizio
 						if (aTstartMinLast !== "0") {
 		
-							///jQuery.sap.require("sap.m.MessageBox");
+							oInput.setValue("");
+
+							//	oInput.setValueState(sap.ui.core.ValueState.Error);
+								
+								///jQuery.sap.require("sap.m.MessageBox");
 							sap.m.MessageBox.show(
 								"Ora inizio, sono selezionabili solo i minuti 00 o 30.", {
 									icon: sap.m.MessageBox.Icon.ERROR,
@@ -271,9 +329,11 @@ sap.ui.define([
 		
 								});
 								
-								oView.byId("LRS4_DAT_STARTTIME").setValue("");
-								this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
-							return "KO";
+						    // vecchia gestione
+							/*	oView.byId("LRS4_DAT_STARTTIME").setValue("");
+								this.timeFrom.setValueState(sap.ui.core.ValueState.Error);*/
+								
+							return;
 						}
 				
 				
@@ -282,24 +342,38 @@ sap.ui.define([
 			///////////////////////////////////////	
 			if (aZtimeend !== "") {
 						//controllo correttezza inserimento ora fine
-				if ( (aTend > 18 || aTend <= 9) || ((aTend === 13 & aTendMin > 0) || (aTend === 14 & aTendMin < 30)) ) {
-					sap.m.MessageBox.show(
-						"Inserimento intervallo ore non corretto. Ora fine > 9:00, <= 13:00, >= 14:30, <= 18:30", {
+			//	if ( (aTend > 18 || aTend <= 9) || ((aTend === 13 & aTendMin > 0) || (aTend === 14 & aTendMin < 30)) ) {
+					
+			//	if ( (aTend > 19 || aTend <= 8) || ((aTend === 13 & aTendMin > 0) || (aTend === 14 & aTendMin < 30)) ) {
+			if ( (aTend > 19 || aTend <= 8) ) {
+				
+				
+						oInput.setValue("");
+
+						//	oInput.setValueState(sap.ui.core.ValueState.Error);
+							
+								sap.m.MessageBox.show(
+						"Inserimento intervallo ore non corretto. Ora fine > 8:00, <= 19:00", {
 							icon: sap.m.MessageBox.Icon.ERROR,
 							title: "Error",
 							actions: [sap.m.MessageBox.Action.CLOSE]
 
 						});
-						
-							oView.byId("LRS4_DAT_ENDTIME").setValue("");
-							this.timeTo.setValueState(sap.ui.core.ValueState.Error);
-					return "KO";
+							
+						 // vecchia gestione
+							/*oView.byId("LRS4_DAT_ENDTIME").setValue("");
+							this.timeTo.setValueState(sap.ui.core.ValueState.Error);*/
+					return;
 				}
 				
 					//controllo correttezza inserimento intervallo minuti fine
 				if (aTendMinLast !== "0") {
 
-					//jQuery.sap.require("sap.m.MessageBox");
+					oInput.setValue("");
+						
+					//oInput.setValueState(sap.ui.core.ValueState.Error);
+							
+										//jQuery.sap.require("sap.m.MessageBox");
 					sap.m.MessageBox.show(
 						"Ora fine, sono selezionabili solo i minuti 00 o 30.", {
 							icon: sap.m.MessageBox.Icon.ERROR,
@@ -308,90 +382,226 @@ sap.ui.define([
 
 						});
 						
-					oView.byId("LRS4_DAT_ENDTIME").setValue("");
-					this.timeTo.setValueState(sap.ui.core.ValueState.Error);
-					return "KO"; 
+					 // vecchia gestione		
+					/*oView.byId("LRS4_DAT_ENDTIME").setValue("");
+					this.timeTo.setValueState(sap.ui.core.ValueState.Error);*/
+					return; 
 				}
 				
 				
 			}	
 			
 			/////////////////////////////////////
-			
-						//controllo correttezza inserimento intervallo ore
+				 // vecchia gestione
+			/*			//controllo correttezza inserimento intervallo ore
 				if  (aZtimestart === "" & aZtimeend !== "")  {
-
-					this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
+					oInput.setValueState(sap.ui.core.ValueState.Error);
+                    // vecchia gestione	
+			     	//	this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
+		
 				
 				}	
 				
 							//controllo correttezza inserimento intervallo ore
 				if  (aZtimestart !== "" & aZtimeend === "")  {
-
-					this.timeTo.setValueState(sap.ui.core.ValueState.Error);
+						oInput.setValueState(sap.ui.core.ValueState.Error);
+				// vecchia gestione	
+					//this.timeTo.setValueState(sap.ui.core.ValueState.Error);
 				
-				}	
+				}	*/
 			////////////////////////////////////
 			
-			
-				if (aZtimestart === "" & aZtimeend === "") {
+				// vecchia gestione	
+			//	if (aZtimestart === "" & aZtimeend === "") {
 
-					aOreTot = parseFloat(aSelectedDates.length * 8);
+				// vecchia gestione	
+				//	aOreTot = parseFloat(aSelectedDates.length * 8);
 
-					aOrep = 8;
+			//	aOrep = 8;
 					
-				} else if (aZtimestart !== "" & aZtimeend !== "") {
+			//	} else if (aZtimestart !== "" & aZtimeend !== "") {
                     
-                    
+                if (aZtimestart !== "" & aZtimeend !== "") {
 		                    // controllo che inizio non sia maggiore di fine
-					  if (minsStart > minsEnd) {
+					  if (minsStart >= minsEnd) {
 		
+							oInput.setValue("");
+								
+							oInput.setValueState(sap.ui.core.ValueState.Error);
+							
+								//jQuery.sap.require("sap.m.MessageBox");
+							sap.m.MessageBox.show(
+								"Inserimento intervallo ore non corretto: ora inizio deve essere antecedente a ora fine", {
+									icon: sap.m.MessageBox.Icon.ERROR,
+									title: "Error",
+									actions: [sap.m.MessageBox.Action.CLOSE]
+		
+								});
+									// vecchia gestione	
+							//	oView.byId("LRS4_DAT_STARTTIME").setValue("");
+						//	this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
+						//	this.timeTo.setValueState(sap.ui.core.ValueState.Error);
+							return;
+						}
+						
+						
+					aOrep = minsdiff / 60;	
+					//aOrep = parseFloat(minsdiff / 60);
+					//Number(aOrep).toFixed(1);
+
+					// alcuni utenti fanno orari di pausa diversi, 
+					// togliamo di deafault 1,5 ore ma lasciamo libero il campo per eventuale correzione utente
+					//sottraggo ore pausa in caso di assenza a cavallo tra mattina e rientro nel pome
+					/*if (aTstart < 13 & ((aTend > 14) || (aTend === 14 & aTendMin >= 30))) {
+						aOrep = aOrep - 1.5;
+					}*/
+					
+					if (aTstart < 13 & ((aTend > 14) || (aTend === 14 & aTendMin >= 30))) {
+					 // aFullday_cell.setValueState(sap.ui.core.ValueState.Warning);
+					//  aFullday_cell.setValueStateText("Considerare ore pausa se necessario");
+						aOrep = aOrep - 1.5;
 							//jQuery.sap.require("sap.m.MessageBox");
 							sap.m.MessageBox.show(
-								"Inserimento intervallo ore non corretto: ora inizio deve essere minore di ora fine", {
+								"Vengono sottratte 1.5 ore di pausa pranzo, in causa di durata pausa pranzo minore o maggiore correggere il totale ore", {
+									icon: sap.m.MessageBox.Icon.WARNING,
+									title: "Attenzione",
+									actions: [sap.m.MessageBox.Action.CLOSE]
+		
+								});
+					}
+
+
+					if (aOrep > 8) {
+						aOrep = 8;
+					}
+
+
+                   aFullday_cell.setValue(aOrep); 
+				//	aOreTot = parseFloat(aSelectedDates.length * aOrep);
+				//	Number(aOreTot).toFixed(1);
+
+				}
+				
+				 if (aZtimestart == "" & aZtimeend == "") {
+		             
+                    aFullday_cell.setValue("8"); 
+	
+				}
+				
+				this._checkFullDays  ();
+                // vecchia gestione, calcolo ore tot lo eseguo ora su array tabella
+				//this.getView().byId("LRS4_DAT_ORETOT").setValue(aOreTot);
+			},
+			
+			
+			// richiamato per controllo campi ore quando invio richiesta
+				onTimePickerCheck: function() {
+
+               	var oView ;
+		     	oView = this.getView();
+		     	
+		     	var oExpTable = oView.byId("GiorniTabIns");
+				var aItems = oExpTable.getAggregation("items");
+				var oItem;
+			
+				var aZtimestart_cell;
+				var aZtimeend_cell;
+				var aZtimestart;
+				var aZtimeend;
+				var error = 'N';
+			    
+			    	for (var i = 0; i < aItems.length; i++) {
+							oItem = aItems[i];
+					
+		     				aZtimestart_cell = oItem.getAggregation("cells")[1];
+		     				aZtimestart = aZtimestart_cell.getValue(); 
+							aZtimeend_cell = oItem.getAggregation("cells")[2];
+							aZtimeend = aZtimeend_cell.getValue(); 
+							
+							if  (aZtimestart === "" & aZtimeend !== "")  {
+
+						
+								//	oView.byId("LRS4_DAT_STARTTIME").setValue("");
+								//	this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
+									aZtimestart_cell.setValueState(sap.ui.core.ValueState.Error);
+									aZtimestart_cell.setValueStateText("Controllare inserimento");
+									
+										//jQuery.sap.require("sap.m.MessageBox");
+							sap.m.MessageBox.show(
+								"Inserimento ora inizio non corretto", {
 									icon: sap.m.MessageBox.Icon.ERROR,
 									title: "Error",
 									actions: [sap.m.MessageBox.Action.CLOSE]
 		
 								});
 								
-								oView.byId("LRS4_DAT_STARTTIME").setValue("");
-							this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
-							this.timeTo.setValueState(sap.ui.core.ValueState.Error);
-							return "KO";
-						}
-					
-					aOrep = parseFloat(minsdiff / 60);
-					Number(aOrep).toFixed(1);
+							error = 'Y';
+							break;
+										
+					    	}  
+					    	
+					    		if  (aZtimestart !== "" & aZtimeend === "")  {
 
-					//sottraggo ore pausa in caso di assenza a cavallo tra mattina e rientro nel pome
-					if (aTstart < 13 & ((aTend > 14) || (aTend === 14 & aTendMin >= 30))) {
-						aOrep = aOrep - 1.5;
-					}
-
-					if (aOrep > 8) {
-						aOrep = 8;
-					}
-
-					aOreTot = parseFloat(aSelectedDates.length * aOrep);
-					Number(aOreTot).toFixed(1);
-
-				}
-
-				this.getView().byId("LRS4_DAT_ORETOT").setValue(aOreTot);
-			},
+						
+								//	oView.byId("LRS4_DAT_STARTTIME").setValue("");
+								//	this.timeFrom.setValueState(sap.ui.core.ValueState.Error);
+								aZtimeend_cell.setValueState(sap.ui.core.ValueState.Error);
+								aZtimeend_cell.setValueStateText("Controllare inserimento");
+								
+									//	jQuery.sap.require("sap.m.MessageBox");
+								sap.m.MessageBox.show(
+									"Inserimento ora fine non corretto", {
+										icon: sap.m.MessageBox.Icon.ERROR,
+										title: "Error",
+										actions: [sap.m.MessageBox.Action.CLOSE]
 			
-				onTimePickerCheck: function() {
-
-               	var oView ;
-		     	oView = this.getView();
-		     	
-		     	var aZtimestart = this.timeFrom.getValue();
-				var aZtimeend = this.timeTo.getValue();
+									});
+									
+							error = 'Y';
+							break;
+										
+					    	}
+					    	
+					    	if  ( error == 'N' ) {
+									aZtimestart_cell.setValueState(sap.ui.core.ValueState.None);
+								    aZtimeend_cell.setValueState(sap.ui.core.ValueState.None);
+								    aZtimestart_cell.setValueStateText("");
+								    aZtimeend_cell.setValueStateText("");
+									
+								}
+			    	
+			    	}
+			    	
+			    	
+			    	var CheckErrorFullDay =  this._checkFullDays();
+			    	if (CheckErrorFullDay === "KO") {
+			    		error = 'Y';
+			    	}
+			    	
+			    	
+			    	if  ( error == 'Y' ) {
+			    	return "KO";
+			    	}
+			    	
+		     	// vecchia gestione
+		     /*	var aZtimestart = this.timeFrom.getValue();
+				var aZtimeend = this.timeTo.getValue();*/
+				
+			/*	for(var i=0;i<this._data.GiorniTab.length;i++){
+										if(this._data.GiorniTab[i] == oObject )
+												{
+												
+												if(	this._data.GiorniTab[i].inizio  === "" & this._data.GiorniTab[i].inizio !== "") {
+												oInput.setValueState(sap.ui.core.ValueState.Error);
+													break;//quit the loop
+												}
+									}*/
+									
+								//	oInput.setValueState(sap.ui.core.ValueState.Error);
 		     	
 				/////////////////////////////////////
 			
-						//controllo correttezza inserimento intervallo ore
+	/*					//controllo correttezza inserimento intervallo ore
 				if  (aZtimestart === "" & aZtimeend !== "")  {
 
 					//jQuery.sap.require("sap.m.MessageBox");
@@ -421,13 +631,325 @@ sap.ui.define([
 								oView.byId("LRS4_DAT_ENDTIME").setValue("");
 					this.timeTo.setValueState(sap.ui.core.ValueState.Error);
 					return "KO";
-				}	
+				}*/	
 			////////////////////////////////////
 
 				
 				
 				},
+			// controllo singolo campo di input tot ore day appena modificato	
+			handleTotday: function(oEvent) {
+ 
+		     	var aCells = oEvent.getSource().getParent().getAggregation("cells");
+				//var oInput;
+				//var oSaveButton = aCells[3].getAggregation("content")[1];
+			//	oSaveButton.setEnabled(true);
+				var aZtimestart_cell = aCells[1];
+				var aZtimeend_cell = aCells[2];
+				var aFullday = aCells[3];
+				
+				var	aZtimestart = aZtimestart_cell.getValue(""); 
+							
+				var	aZtimeend = aZtimeend_cell.getValue(""); 
+				var  aOreDay = 0;
+				
+					var tim1 = aZtimestart,
+						tim2 = aZtimeend;
+					var ary1 = tim1.split(':'),
+						ary2 = tim2.split(':');
+					var aTstart = parseInt(ary1[0], 10);
+					var aTstartMin = parseInt(ary1[1], 10);
+					var aTend = parseInt(ary2[0], 10);
+					var aTendMin = parseInt(ary2[1], 10);	
+					var minsdiff = parseInt(ary2[0], 10) * 60 + parseInt(ary2[1], 10) - parseInt(ary1[0], 10) * 60 - parseInt(ary1[1], 10);
+					var 	aTimeDiff = minsdiff / 60;	
+					var 	error = 'N';	
+				
+				var chk = aFullday.getValue();
+				
+				if (chk != "") {
+				aOreDay = parseFloat(aFullday.getValue());
+				
+					if (aZtimestart != "" & aZtimeend != "") {
+						
+									if (aOreDay >  aTimeDiff) { error = "Y";}
+								
+								
+											if (aTstart < 13 & ((aTend > 14) || (aTend === 14 & aTendMin >= 30))) {
+											 // aFullday_cell.setValueState(sap.ui.core.ValueState.Warning);
+											//  aFullday_cell.setValueStateText("Considerare ore pausa se necessario");
+											if (aTimeDiff  >  (aOreDay + 2)) { error = "Y";}
+											
+												
+											} else {
+												
+													if (aTimeDiff  != aOreDay) { error = "Y";}
+												
+											}
+										if (error == "Y")	  {		
+														//	jQuery.sap.require("sap.m.MessageBox");
+										sap.m.MessageBox.show(
+											"Attenzione: Intervallo ora inizio ora fine non rispecchia tot. ore", {
+												icon: sap.m.MessageBox.Icon.ERROR,
+												title: "Error",
+												actions: [sap.m.MessageBox.Action.CLOSE]
+					
+											});
+										}	
+							}
+					
+					
+				} else{
+				aOreDay = chk;
+				}
+				
+				if  ( (chk < "8" & (aZtimestart == "" || aZtimeend == ""))  || error == "Y")   {
+					
+				aZtimestart_cell.setValueState(sap.ui.core.ValueState.Error);
+				aZtimeend_cell.setValueState(sap.ui.core.ValueState.Error);
+				//		aZtimestart.setEnabled(true);
+				//			aZtimeend.setEnabled(true);
+				//			this.jModel.refresh();
+				
+				} else {
+					
+				aZtimestart_cell.setValueState(sap.ui.core.ValueState.None);
+				aZtimeend_cell.setValueState(sap.ui.core.ValueState.None);
+				
+				}
+				
+			    if (aOreDay == 0 || aOreDay == undefined || aOreDay == "") {
+					
+				aFullday.setValueState(sap.ui.core.ValueState.Error);
+				
+			    } else {
+					
+				aFullday.setValueState(sap.ui.core.ValueState.None);
+				
+				}
+				
+				
+				// richiamo function di controllo per tutti i giorni selezionati
+				this._checkFullDays();
+
+			},	
 			
+			 // controllo tutte le righe dei giorni
+				_checkFullDays: function() {
+					
+				var oView ;
+		     	oView = this.getView();
+		     	
+		     	var oExpTable = oView.byId("GiorniTabIns");
+				var aItems = oExpTable.getAggregation("items");
+				var oItem;
+			
+				var aZtimestart_cell;
+				var aZtimeend_cell;
+				var aZtimestart;
+				var aZtimeend;
+				var error = 'N';
+					var aFullday;
+			    var aFullday_cell;
+			    var aOreTot = 0;
+			    var aOreDay = 0;
+			  // var aFullday = aCells[3];
+			  	var error = 'N';
+
+
+				
+
+			    	for (var i = 0; i < aItems.length; i++) {
+							oItem = aItems[i];
+					
+					
+					
+						aZtimestart_cell = oItem.getAggregation("cells")[1];
+		     			aZtimestart = aZtimestart_cell.getValue(""); 
+						aZtimeend_cell = oItem.getAggregation("cells")[2];
+						aZtimeend = aZtimeend_cell.getValue(""); 
+						
+						aFullday_cell = oItem.getAggregation("cells")[3];
+						
+					var tim1 = aZtimestart,
+						tim2 = aZtimeend;
+					var ary1 = tim1.split(':'),
+						ary2 = tim2.split(':');
+					var aTstart = parseInt(ary1[0], 10);
+					var aTstartMin = parseInt(ary1[1], 10);
+					var aTend = parseInt(ary2[0], 10);
+					var aTendMin = parseInt(ary2[1], 10);	
+					var minsdiff = parseInt(ary2[0], 10) * 60 + parseInt(ary2[1], 10) - parseInt(ary1[0], 10) * 60 - parseInt(ary1[1], 10);
+					var 	aTimeDiff = minsdiff / 60;	
+					var 	error = 'N';	
+						
+					    var chk = aFullday_cell.getValue();
+
+					    aOreDay = aFullday_cell.getValue();
+					    
+						if (aOreDay != "") {
+						aOreDay  = parseFloat(aOreDay);
+					    aOreTot = parseFloat(aOreDay + aOreTot);
+					    Number(aOreTot).toFixed(1);
+					    
+					    	if (aZtimestart != "" & aZtimeend != "") {
+						
+									if (aOreDay >  aTimeDiff) { error = "Y";}
+								
+								
+											if (aTstart < 13 & ((aTend > 14) || (aTend === 14 & aTendMin >= 30))) {
+											 // aFullday_cell.setValueState(sap.ui.core.ValueState.Warning);
+											//  aFullday_cell.setValueStateText("Considerare ore pausa se necessario");
+											if (aTimeDiff  >  (aOreDay + 2)) { error = "Y";}
+											
+												
+											} else {
+												
+													if (aTimeDiff  != aOreDay) { error = "Y";}
+												
+											}
+							}
+						} 
+
+                        // se oretot è minore di 8 è necessario valorizzare i timepicker
+					//	if (chk < "8" & (aZtimestart == "" || aZtimeend == "")) {
+		     		    if  ( (chk < "8" & (aZtimestart == "" || aZtimeend == ""))  || error == "Y")   {
+							
+							aZtimestart_cell.setValueState(sap.ui.core.ValueState.Error);
+							aZtimeend_cell.setValueState(sap.ui.core.ValueState.Error);
+							
+							error = 'Y';
+							
+					//		aFullday_cell = oItem.getAggregation("cells")[4];
+					//		aFullday= aFullday_cell.setState(true);
+				//			aFullday_cell = oItem.getAggregation("cells")[4];
+				//			aFullday= aFullday_cell.setSelectedKey("NO"); 
+						}  else {
+					
+							aZtimestart_cell.setValueState(sap.ui.core.ValueState.None);
+							aZtimeend_cell.setValueState(sap.ui.core.ValueState.None);
+							
+						}	
+						
+						// oretot non può essere 0 o non valorizzato		
+						if (aOreDay == 0 || aOreDay == undefined || aOreDay == "") {
+							
+							aFullday_cell.setValueState(sap.ui.core.ValueState.Error);
+							error = 'Y';
+						
+					    } else {
+							
+							aFullday_cell.setValueState(sap.ui.core.ValueState.None);
+						
+						}
+						
+						
+					} 
+					
+					// valorizzo oreTotali richiesta nella vista
+					this.getView().byId("LRS4_DAT_ORETOT").setValue(aOreTot);
+					
+				    if  ( error == 'Y' ) {
+			    		return "KO";
+			    	}
+				
+					    			
+				},
+				
+	/*			handleComboBoxFullDay: function(oEvent) {
+ //var oObject = oEvent.getSource().getBindingContext().getObject();
+		     	
+		     	var aCells = oEvent.getSource().getParent().getAggregation("cells");
+				//var oInput;
+				//var oSaveButton = aCells[3].getAggregation("content")[1];
+			//	oSaveButton.setEnabled(true);
+				var aZtimestart = aCells[1];
+				var aZtimeend = aCells[2];
+				var aFullday = aCells[4];
+				
+					
+				var chk = aFullday.getSelectedKey();
+				if (chk == "NO") {
+				
+						aZtimestart.setEnabled(true);
+							aZtimeend.setEnabled(true);
+	
+				} else {
+			
+						aZtimestart.setEnabled(false);
+				
+						aZtimeend.setEnabled(false);
+				}
+
+			},*/
+			
+/*			handleFullDay: function(oEvent) {
+				 var oObject = oEvent.getSource().getBindingContext().getObject();
+		     	
+		     	var aCells = oEvent.getSource().getParent().getAggregation("cells");
+				//var oInput;
+				//var oSaveButton = aCells[3].getAggregation("content")[1];
+			//	oSaveButton.setEnabled(true);
+				var aZtimestart = aCells[1];
+				var aZtimeend = aCells[2];
+				var aFullday = aCells[4];
+				
+					
+				var chk = aFullday.getState();
+				if (!chk) {
+					aZtimestart.setEnabled(true);
+							aZtimeend.setEnabled(true);
+				} else {
+							aZtimestart.setValue("");
+							aZtimestart.setEnabled(false);
+
+							aZtimeend.setValue("");
+						aZtimeend.setEnabled(false);
+	
+		
+				}
+
+			},*/
+			
+		/*	handleGiorniTabSelection: function() {
+					
+						var oView ;
+		     	oView = this.getView();
+		     	
+		     	var oExpTable = oView.byId("GiorniTabIns");
+				var aItems = oExpTable.getAggregation("items");
+				var oItem;
+			
+				var aZtimestart_cell;
+				var aZtimeend_cell;
+				var aZtimestart;
+				var aZtimeend;
+				var error = 'N';
+					var aFullday;
+			    var aFullday_cell;
+			    	
+			    	for (var i = 0; i < aItems.length; i++) {
+							oItem = aItems[i];
+					
+		     				aZtimestart_cell = oItem.getAggregation("cells")[1];
+		     	//			aZtimestart = aZtimestart_cell.setValue(""); 
+							aZtimeend_cell = oItem.getAggregation("cells")[2];
+				//			aZtimeend = aZtimeend_cell.setValue(""); 
+							
+							aZtimestart.setValueState(sap.ui.core.ValueState.Error);
+							aZtimeend.setValueState(sap.ui.core.ValueState.Error);
+					//		aFullday_cell = oItem.getAggregation("cells")[4];
+					//		aFullday= aFullday_cell.setState(true);
+				//			aFullday_cell = oItem.getAggregation("cells")[4];
+				//			aFullday= aFullday_cell.setSelectedKey("NO"); 
+	
+										
+					    	} 
+					    			
+					    	} ,
+					    	*/
+			   
+					    	
 			checkCalendarSelection: function() {
 			var aSelectedDates = this.cale.getSelectedDates();
 			var oDate;
@@ -526,7 +1048,7 @@ sap.ui.define([
 			},
 			
 				//SE START CUSTOM CALENDAR
-			handleCalendarSelect: function(oEvent) {
+				handleCalendarSelect: function(oEvent) {
 
 				var oView;
 				oView = this.getView();
@@ -541,25 +1063,59 @@ sap.ui.define([
 				};
 
 				var aSpecialDates = this.cale.getSpecialDates();
-				
-					
+	
 				var now = new Date();
+				var oDateSapformat;
+				var oDateITformat;
+				var exist;
 				
                     //Subtract one day from it
                     now.setDate(now.getDate()-1);
                     // get current date
                     //var date = Date.parse(oEvent.oSource.getLiveValue());
-                    
-
+                
+                // ad ogni cambio selezione giorni dal calendario resetto modello tabella righe giorni    
+                // 	this._clearModelGiorniTab();
+                //oView.byId("LRS4_DAT_OREDAY").setValue("");
+                //  oView.byId("GiorniTabIns").getBinding("items").refresh();
 				if (aSelectedDates.length > 0) {
 					
 					var pastReqLimit = new Date();
-				    pastReqLimit.setDate(pastReqLimit.getDate()-31);
+				    pastReqLimit.setDate(pastReqLimit.getDate()-60);
 
 					for (var i = 0; i < aSelectedDates.length; i++) {
 
 						oDate = aSelectedDates[i].getStartDate();
 						
+						// devo confrontare date e aggiungere solo i giorni non ancora presenti
+						//nella tabella
+						oDateSapformat = this.oFormatYyyymmdd.format(oDate);
+						oDateITformat = formatter.formatDate(oDateSapformat);
+						exist = "N";
+						if (this._data.GiorniTab.length > 0) {
+							
+		
+							for(var k=0; k<this._data.GiorniTab.length; k++) {
+								if(this._data.GiorniTab[k].datasap == oDateSapformat )
+									{
+						              exist = "S";
+				         			  break;
+								    }
+								    
+		                	}
+		                   
+				                	if  (exist == "N") {
+			                	 	
+			                	 		this.addRow(oDateITformat, oDateSapformat);
+			                		 }
+			            
+	                	 } else {
+	                	 	
+	                	 		this.addRow(oDateITformat, oDateSapformat);
+	                	 }
+		
+					
+					
 						///CHECK DATE PASSATE///////////////////////////////////
 						// if current date lower than past dates, show error
 					//	if (oDate < now) {
@@ -567,7 +1123,7 @@ sap.ui.define([
 					
 								//jQuery.sap.require("sap.m.MessageBox");
 								sap.m.MessageBox.show(
-									"Attenzione: Non è possibile selezionare date nel passato di oltre 31 giorni, " + oDate, {
+									"Attenzione: Non è possibile selezionare date nel passato di oltre 60 giorni, " + oDate, {
 										icon: sap.m.MessageBox.Icon.WARNING,
 										title: "Error",
 										actions: [sap.m.MessageBox.Action.CLOSE]
@@ -598,10 +1154,11 @@ sap.ui.define([
 								return;
 							}
 						
-						
+				
+						// permetto inserimento di più richieste di diverso tipo nello stesso giorno
 						//CHECK RIHIESTE SOVRAPPOSTE///////////////////////////////
 						//	var	oDater = aSelectedDates[i].getStartDate();
-						oDate = this.oFormatYyyymmdd.format(oDate);
+					/*	oDate = this.oFormatYyyymmdd.format(oDate);
 						for (var ii = 0; ii < aSpecialDates.length; ii++) {
 
 							oSpecialDate = aSpecialDates[ii].getStartDate();
@@ -624,18 +1181,52 @@ sap.ui.define([
 								return;
 							}
 
-						}
+						}*/
 						
 						///////////////////////////////////////
 						// servirebbe per notificare a video date selezionate, serve un nuovo model json
 						//	 oDataSel.selectedDates.push({Date:oDate});
 
 					}
+					
+					// elimino dalla tabella dei giorni da inserire i giorni deselezionati dal calendario
+					for(var kk=0; kk<this._data.GiorniTab.length; kk++) {
+						exist = "N";
+						
+							for (var i = 0; i < aSelectedDates.length; i++) {
 
+										oDate = aSelectedDates[i].getStartDate();
+
+										oDateSapformat = this.oFormatYyyymmdd.format(oDate);
+										
+										if(this._data.GiorniTab[kk].datasap == oDateSapformat ) {
+											exist = "S";
+								         	break;
+										} 	
+							}
+							
+										if  (exist == "N") {
+					                	 	
+					                	 	this._data.GiorniTab.splice(kk,1); //removing 1 record from i th index.
+											this.jModel.refresh();
+					                	}
+					}		
+							
+<<<<<<< HEAD
+                    this._checkFullDays();
+                    
+=======
+                    	this._checkFullDays();
+                    	
+>>>>>>> 6b4dc996b0508ce6aea73d745a7bae72445e52f2
+				} else {
+					// resetto oreTotali e array giorni se nessun giorno del calendario è selezionato
+					this.getView().byId("LRS4_DAT_ORETOT").setValue("0");
+					this._clearModelGiorniTab();
 				}
-                
                 // se seleziono più di un giorno disabilito timepicker e calcolo ore tot
-				if (aSelectedDates.length > 1) {
+                  //    commento per nuova versione con tabella editabile per giorno
+				/*if (aSelectedDates.length > 1) {
 
 					oView.byId("LRS4_DAT_STARTTIME").setValue("");
 					oView.byId("LRS4_DAT_STARTTIME").rerender();
@@ -654,14 +1245,19 @@ sap.ui.define([
 
 					oView.byId("LRS4_DAT_ORETOT").setValue(aOreTot);
 
-				}
+				}*/
                  
                 // se seleziono solo un giorno abilito timepicker e calcolo ore
-				if (aSelectedDates.length > 0 & aSelectedDates.length < 2) {
+                //    commento per nuova versione con tabella editabile per giorno
+				/*if (aSelectedDates.length > 0 & aSelectedDates.length < 2) {
 
 					oView.byId("LRS4_DAT_STARTTIME").setValue("");
 					oView.byId("LRS4_DAT_STARTTIME").rerender();
 					oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
+					
+					oView.byId("LRS4_DAT_ORETOT").setValue("");
+					oView.byId("LRS4_DAT_ORETOT").rerender();
+					oView.byId("LRS4_DAT_ORETOT").setEnabled(true);
 
 					oView.byId("LRS4_DAT_ENDTIME").setValue("");
 					oView.byId("LRS4_DAT_ENDTIME").rerender();
@@ -690,10 +1286,11 @@ sap.ui.define([
                     // valorizzo oreTot nella vista
 					this.getView().byId("LRS4_DAT_ORETOT").setValue(aOreTot);
 
-				}
+				}*/
   
                 // se nessun giorno è selezionato disabilito timepicker
-				if (aSelectedDates.length === 0) {
+            //    commento per nuova versione con tabella editabile per giorno
+			/*	if (aSelectedDates.length === 0) {
 
 					oView.byId("LRS4_DAT_STARTTIME").setValue("");
 					oView.byId("LRS4_DAT_STARTTIME").setEnabled(false);
@@ -709,12 +1306,15 @@ sap.ui.define([
 					oView.byId("LRS4_DAT_ORETOT").setEnabled(false);
 					oView.byId("LRS4_DAT_ORETOT").rerender();
 
-				}
+				}*/
+				
+				
 
 			},
 			
 				handleRemoveSelection: function(oEvent) {
 				this.getView().byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+					this._clearModelGiorniTab();
 				//	this._clearModel();
 			},
 
@@ -723,7 +1323,11 @@ sap.ui.define([
 			this.oModel.setData(oData);
 		},*/
 		
-		
+		handleCalendarCancel: function(oEvent) {
+				this.getView().byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+				//	this._clearModel();
+			},
+			
 			onDisplayNotFound: function(oEvent) {
 				//display the "notFound" target without changing the hash
 				this.getRouter().getTargets().display("notFound", {
@@ -743,17 +1347,17 @@ sap.ui.define([
 					this.sButtonKey = oEvent.getSource().getId();
 					 
 					 
-		//estraggo id della view 
-		var sViewIdStart = oView.getId().indexOf("---");
-		sViewIdStart = sViewIdStart + 3;
-		
-	    //		var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---");) + "---"; 
-	   var sViewID = oView.getId().substring(sViewIdStart); 
-	   
-	   // l'alternativa è basarsi sul nome della view completa
-		//	var sViewName = oView.getViewName(); 
-		
-		// inserisco giorni selezionati un una stringa di testo per dettagli messagebox
+						//estraggo id della view 
+						var sViewIdStart = oView.getId().indexOf("---");
+						sViewIdStart = sViewIdStart + 3;
+						
+					    //		var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---");) + "---"; 
+					   var sViewID = oView.getId().substring(sViewIdStart); 
+					   
+					   // l'alternativa è basarsi sul nome della view completa
+						//	var sViewName = oView.getViewName(); 
+						
+						// inserisco giorni selezionati un una stringa di testo per dettagli messagebox
 	                    var aSelectedDates = this.cale.getSelectedDates();
 						//var oDataSel = {
 						//	selectedDates: []
@@ -793,13 +1397,27 @@ sap.ui.define([
 	                    if (calCheck === "KO") {return;}
 	                    
 	                       // richiamo function in baseController per verifica ore   
-	                    var timeCheck = this.onTimePickerChange();
-	                    if (timeCheck === "KO") {return;}
+	             //new tab       var timeCheck = this.onTimePickerChange();
+	              //new tab       if (timeCheck === "KO") {return;}
 	                 
-	                   // richiamo function in baseController per verifica ore campi vuoti   
-	                   var timeCheckBlank = this.onTimePickerCheck();   
-	                    if (timeCheckBlank === "KO") {return;}
+	               //richiamo function in baseController per verifica ore campi vuoti   
+	                    var timeCheckBlank = this.onTimePickerCheck();   
+	                    if (timeCheckBlank === "KO") {
+	                    	
+	                    		//jQuery.sap.require("sap.m.MessageBox");
+								sap.m.MessageBox.show(
+									"Attenzione: Correggere gli inserimenti e riprovare ", {
+										icon: sap.m.MessageBox.Icon.WARNING,
+										title: "Error",
+										actions: [sap.m.MessageBox.Action.CLOSE]
+
+									});
+									
+									return;
+	                    	
+	                    }
 	                    
+	        
 
 						MessageBox.confirm("Confermi l'invio della richiesta?", {
 							icon: MessageBox.Icon.QUESTION,
@@ -808,8 +1426,10 @@ sap.ui.define([
 							initialFocus : MessageBox.Action.NO,
 							id: "messageBoxId1",
 							defaultAction: MessageBox.Action.NO,
-							details: "Tipo di richiesta: " + tabsType + " \nApprovatore: " + this.slctApprover.getSelectedKey() + " \nOre totali: " + this.oreTot.getValue()
-							+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà inoltrata, riceverai una notifica via mail sul suo esito. Puoi modificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
+							details: 'Tipo di richiesta: ' + tabsType + ' \nApprovatore: ' + this.slctApprover.getSelectedKey() + ' \nOre totali: ' + this.oreTot.getValue()
+							+ ' \nGiorno/i assenza: ' + oDateTxt + ' \nCliccando SI, la richiesta verrà inoltrata e riceverai una notifica via mail sul suo esito.' +
+							' Puoi modificare o eliminare le richieste accedendo allo storico nel caso in cui queste non siano state ancora approvate oppure' +
+							' che si riferiscano a giorni di assenza con date nel futuro.',
 							styleClass: bCompact ? "sapUiSizeCompact" : "",
 							contentWidth: "100px",
 							
@@ -838,12 +1458,12 @@ sap.ui.define([
 	                    if (calCheck === "KO") {return;}
 	                    
 	                       // richiamo function in baseController per verifica ore   
-	                    var timeCheck = this.onTimePickerChange();
-	                    if (timeCheck === "KO") {return;}
+	               //new tab        var timeCheck = this.onTimePickerChange();
+	               //new tab     if (timeCheck === "KO") {return;}
 	                 
 	                   // richiamo function in baseController per verifica ore campi vuoti   
-	                   var timeCheckBlank = this.onTimePickerCheck();   
-	                    if (timeCheckBlank === "KO") {return;}
+			               var timeCheckBlank = this.onTimePickerCheck();   
+			                   if (timeCheckBlank === "KO") {return;}
 					   		
 					   		MessageBox.confirm("Confermi la modifica della richiesta?", {
 								icon: MessageBox.Icon.QUESTION,
@@ -911,7 +1531,7 @@ sap.ui.define([
 				sap.ui.getCore().setModel(oModel);
 				
 					var that = this;
-                
+                //(SE)
 				//causa bug di versione sono costretto a forzare xml, altrimenti i campi di tipo 
 				//decimali fanno andare la chiamata post create_deep_entity in errore: CX_SXML_PARSE_ERROR
 				//note sap:
@@ -930,7 +1550,7 @@ sap.ui.define([
 				var sZrequestId = "";
 				var sAction = "creata"; 
 				
-						//estraggo id della view 
+				//estraggo id della view 
 				var sViewIdStart = oView.getId().indexOf("---");
 				sViewIdStart = sViewIdStart + 3;
 				
@@ -955,9 +1575,62 @@ sap.ui.define([
 					 
 					 }
 				}
+			
+			// nuova gestione tabella	
+				var aSelectedDates = this._data.GiorniTab;
 				
+				//	var aSelectedDates = this.cale.getSelectedDates();
+			//	var oDate;
+                
+                
+				//var aZtimestart = this.timeFrom.getValue();
+				//var aZtimeend = this.timeTo.getValue();
+				var aOreTot = this.oreTot.getValue();
+			//	var	aOrep = aOreTot / aSelectedDates.length;
+				
+				var aPferie = this.pferie.getState();
+				if (aPferie) {
+								aPferie = "X";
+							}
+							else 
+							{
+								aPferie = "";
+							}
+
+				
+				var oUrlParams = {
+					ZrequestId: sZrequestId,
+					Tmsapprover: this.slctApprover.getSelectedKey(),
+					ZabsType: this.slctLvType.getSelectedKey(),
+					ZreqStatus: "I",
+					ZoreTotali: aOreTot, // da calcolare
+					Znote: this.note.getValue(),
+					Zdeleted: sDeleted,
+					ZpianoFerie: aPferie
+
+				};
+
+				oUrlParams.ToLeaveReqPos = [];
+				if (aSelectedDates.length > 0) {
+					for (var i = 0; i < aSelectedDates.length; i++) {
+					//	oDate = aSelectedDates[i].datasap;
+						oUrlParams.ToLeaveReqPos.push({
+							Zdate: aSelectedDates[i].datasap,
+							Ztimestart: aSelectedDates[i].inizio,
+							Ztimeend: aSelectedDates[i].fine,
+							Tmsapprover: this.slctApprover.getSelectedKey(),
+							ZabsType: this.slctLvType.getSelectedKey(),
+							Zorep: aSelectedDates[i].oretotday,
+							ZreqStatus: "I"
+						});
+
+					}
+					//	this.oModel.setData(oData);
+				} else {
+					//	this._clearModel();
+				}
 				 
-				var aSelectedDates = this.cale.getSelectedDates();
+			/*	var aSelectedDates = this.cale.getSelectedDates();
 				var oDate;
                 
                 
@@ -966,6 +1639,16 @@ sap.ui.define([
 				var aOreTot = this.oreTot.getValue();
 				var	aOrep = aOreTot / aSelectedDates.length;
 				
+				var aPferie = this.pferie.getState();
+				if (aPferie) {
+								aPferie = "X";
+							}
+							else 
+							{
+								aPferie = "";
+							}
+
+				
 				var oUrlParams = {
 					ZrequestId: sZrequestId,
 					Tmsapprover: this.slctApprover.getSelectedKey(),
@@ -973,7 +1656,8 @@ sap.ui.define([
 					ZreqStatus: "I",
 					ZoreTotali: aOreTot,
 					Znote: this.note.getValue(),
-					Zdeleted: sDeleted
+					Zdeleted: sDeleted,
+					ZpianoFerie: aPferie
 
 				};
 
@@ -995,7 +1679,7 @@ sap.ui.define([
 					//	this.oModel.setData(oData);
 				} else {
 					//	this._clearModel();
-				}
+				}*/
 
 				//jQuery.sap.require("sap.ui.commons.MessageBox");
 				oModel.create('/LeaveRequestSet', oUrlParams, {
@@ -1028,12 +1712,12 @@ sap.ui.define([
 						// ripulisco campi  	
 						oView.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
 
-						oView.byId("LRS4_DAT_STARTTIME").setValue("");
-						oView.byId("LRS4_DAT_STARTTIME").rerender();
+					//new tab	oView.byId("LRS4_DAT_STARTTIME").setValue("");
+						//new tab	oView.byId("LRS4_DAT_STARTTIME").rerender();
 						//oView.byId("LRS4_DAT_STARTTIME").setEnabled(true);
 
-						oView.byId("LRS4_DAT_ENDTIME").setValue("");
-						oView.byId("LRS4_DAT_ENDTIME").rerender();
+						//new tab	oView.byId("LRS4_DAT_ENDTIME").setValue("");
+						//new tab	oView.byId("LRS4_DAT_ENDTIME").rerender();
 						//oView.byId("LRS4_DAT_ENDTIME").setEnabled(true);
 
 						oView.byId("LRS4_TXA_NOTE").setValue("");
@@ -1083,6 +1767,41 @@ sap.ui.define([
 			},
 			
 			
+				//********* Funzione per getione Popover alla pressione del tasto help su Multiday *********//
+			// Funzione per getione Popover alla pressione del tasto help su Multiday
+			handleResponsivePopoverMultydayPress: function(oEvent) {
+				if (!this._PopoverHelpMulti) {
+					this._PopoverHelpMulti = sap.ui.xmlfragment("eone_zleave_req_create.view.PopoverHelpMulti", this);
+
+					this.getView().addDependent(this._PopoverHelpMulti);
+
+				}
+				
+				var oView;
+				oView = this.getView();
+				 	var oVboxM =  sap.ui.getCore().byId("VboxM");
+			//	var oVboxM = 	oView.byId("VboxM");
+				oVboxM.destroyItems();
+		//		var sId = oEvent.getSource().getParent().getParent().getId();
+				var oHTML;
+
+				oHTML = new sap.ui.core.HTML({
+					content: '<strong>Inserimento richiesta legata ad un piano ferie</strong>' +
+						'<ul>' +
+
+						'<li>Se la richiesta che si sta inserendo fa parte di un piano ferie già inviato e approvato dalla direzione aziendale selezionare "SI".' +
+						' La richiesta verrà elaborata direttamente dall\'amministrazione. </li>' +
+						'</ul>',
+					sanitizeContent: true
+				});
+
+				oVboxM.addItem(oHTML);
+				this._PopoverHelpMulti.openBy(oEvent.getSource());
+			},
+			//******************************************************************************************//
+			
+			
+			
 			_initCntrls: function() {
 			//	this.changeMode = false;
 			//	this.withdrawMode = false;
@@ -1105,8 +1824,9 @@ sap.ui.define([
 			//	this.timeInputElem = this.byId("LRS4_FELEM_TIMEINPUT");
 			//	this.balanceElem = this.byId("LRS4_FELEM_BALANCES");
 			//	this.noteElem = this.byId("LRS4_FELEM_NOTE");
-				this.timeFrom = this.byId("LRS4_DAT_STARTTIME");
-				this.timeTo = this.byId("LRS4_DAT_ENDTIME");
+			    this.pferie = this.byId("LRS4_DAT_PFERIE");
+				//new tab	this.timeFrom = this.byId("LRS4_DAT_STARTTIME");
+				//new tab	this.timeTo = this.byId("LRS4_DAT_ENDTIME");
 				this.oreTot = this.byId("LRS4_DAT_ORETOT");
 				this.legend = this.byId("LRS4_LEGEND");
 			//	this.remainingVacation = this.byId("LRS4_TXT_REMAINING_DAYS");
