@@ -34,10 +34,19 @@
             "name": "view/Dialog.fragment.xml"
         },
         {
+            "name": "view/PopoverHelp.fragment.xml"
+        },
+        {
+            "name": "view/CopyOfView1s.view.xml"
+        },
+        {
             "name": "view/View2.view.xml"
         },
         {
             "name": "view/NotFound.view.xml"
+        },
+        {
+            "name": "view/PopoverHelpMulti.fragment.xml"
         },
         {
             "name": "index.html"
