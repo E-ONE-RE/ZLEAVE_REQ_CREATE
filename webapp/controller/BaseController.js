@@ -1048,7 +1048,7 @@ sap.ui.define([
 			},
 			
 				//SE START CUSTOM CALENDAR
-			handleCalendarSelect: function(oEvent) {
+				handleCalendarSelect: function(oEvent) {
 
 				var oView;
 				oView = this.getView();
@@ -1212,8 +1212,13 @@ sap.ui.define([
 					                	}
 					}		
 							
+<<<<<<< HEAD
+                    this._checkFullDays();
+                    
+=======
                     	this._checkFullDays();
                     	
+>>>>>>> 6b4dc996b0508ce6aea73d745a7bae72445e52f2
 				} else {
 					// resetto oreTotali e array giorni se nessun giorno del calendario è selezionato
 					this.getView().byId("LRS4_DAT_ORETOT").setValue("0");

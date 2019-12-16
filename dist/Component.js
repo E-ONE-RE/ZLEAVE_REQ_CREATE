@@ -2,11 +2,11 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/Device",
-	"ZLEAVE_REQ_CREATE/model/models"
+	"eone_zleave_req_create/model/models"
 ], function(UIComponent, JSONModel, Device, models) {
 	"use strict";
 
-	return UIComponent.extend("ZLEAVE_REQ_CREATE.Component", {
+	return UIComponent.extend("eone_zleave_req_create.Component", {
 
 		metadata: {
 			manifest: "json"
@@ -45,12 +45,12 @@ sap.ui.define([
 			 * @public
 			 * @override
 			 */
-		//	destroy : function () {
+			destroy : function () {
 		//		this.oListSelector.destroy();
 		//		this._oErrorHandler.destroy();
 		//		// call the base component's destroy function
-		//		UIComponent.prototype.destroy.apply(this, arguments);
-		//	},
+				UIComponent.prototype.destroy.apply(this, arguments);
+			},
 			
 				/**
 			 * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy
