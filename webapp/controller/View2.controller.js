@@ -260,7 +260,6 @@ sap.ui.define([
 						}
 					}
 				});
-
 			},
 
 			_onBindingChange: function(oEvent) {
@@ -320,7 +319,21 @@ sap.ui.define([
 				if (oCtx.getProperty("ZuserAction") !== "" & (oCtx.getProperty("ZuserAction") !== oCtx.getProperty("Tmsapprover"))) {
 					oView.byId("SLCT_APPROVER").setSelectedKey(oCtx.getProperty("ZuserAction"));
 				} else {
-					oView.byId("SLCT_APPROVER").setSelectedKey(oCtx.getProperty("Tmsapprover"));
+					//oView.byId("SLCT_APPROVER").setSelectedKey(oCtx.getProperty("Tmsapprover"));
+					if (oCtx.getProperty("ZabsType") == "0005"){
+/*						oView.byId("SLCT_APPROVER").removeAllItems();
+						var oItem = new sap.ui.core.Item();
+						oItem.setKey("ADMIN");
+						oItem.setText("Amministrazione");
+						oView.byId("SLCT_APPROVER").addItem(oItem);
+						oView.byId("SLCT_APPROVER").setSelectedItem(oItem);*/
+						var oFilter = new sap.ui.model.Filter("Abs_key", sap.ui.model.FilterOperator.EQ, "0005");
+						oView.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, sap.ui.model.FilterType.Application);
+					} else {
+						oFilter = new sap.ui.model.Filter("Abs_key", sap.ui.model.FilterOperator.EQ, "0001");
+						oView.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, sap.ui.model.FilterType.Application);
+						oView.byId("SLCT_APPROVER").setSelectedKey(oCtx.getProperty("Tmsapprover"));
+					}
 				}
 
 				oView.byId("LRS4_DAT_ORETOT").setValue(oCtx.getProperty("ZoreTotali"));

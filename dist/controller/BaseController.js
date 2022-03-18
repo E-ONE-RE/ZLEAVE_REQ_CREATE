@@ -488,7 +488,7 @@ sap.ui.define([
 	
 				}
 				
-		//		this._checkFullDay();
+				this._checkFullDays  ();
                 // vecchia gestione, calcolo ore tot lo eseguo ora su array tabella
 				//this.getView().byId("LRS4_DAT_ORETOT").setValue(aOreTot);
 			},
@@ -1048,7 +1048,7 @@ sap.ui.define([
 			},
 			
 				//SE START CUSTOM CALENDAR
-			handleCalendarSelect: function(oEvent) {
+				handleCalendarSelect: function(oEvent) {
 
 				var oView;
 				oView = this.getView();
@@ -1082,6 +1082,9 @@ sap.ui.define([
 					
 					var pastReqLimit = new Date();
 				    pastReqLimit.setDate(pastReqLimit.getDate()-60);
+				    
+				    var vToday3 = new Date(); //10.03.2022 slavoro agile
+				    vToday3.setDate(vToday3.getDate()+3); //10.03.2022 slavoro agile
 
 					for (var i = 0; i < aSelectedDates.length; i++) {
 
@@ -1104,14 +1107,38 @@ sap.ui.define([
 								    
 		                	}
 		                   
-				                	if  (exist == "N") {
-			                	 	
-			                	 		this.addRow(oDateITformat, oDateSapformat);
-			                		 }
+		                	if  (exist == "N") {
+		                		//10.03.2022 se sto facendo smart working verifico 3 giorni di anticipo ed eventualmente blocco
+		                		//this.addRow(oDateITformat, oDateSapformat);
+	                	 		if (oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0005"){
+	                	 			//oDate deve essere maggiore uguale
+									if (oDate<=vToday3){
+										MessageBox.information("Sono necessari 3 giorni d'anticipo per la richiesta");
+										oCalendar.removeSelectedDate(i);
+									} else {
+										this.addRow(oDateITformat, oDateSapformat);	
+									}
+	                	 		}else{
+	                	 			this.addRow(oDateITformat, oDateSapformat);	
+	                	 		}
+	                	 		//\\0.03.2022
+	                		 }
 			            
 	                	 } else {
-	                	 	
-	                	 		this.addRow(oDateITformat, oDateSapformat);
+		                		//10.03.2022 se sto facendo smart working verifico 3 giorni di anticipo ed eventualmente blocco
+		                		//this.addRow(oDateITformat, oDateSapformat);
+	                	 		if (oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0005"){
+	                	 			//oDate deve essere maggiore uguale
+									if (oDate<=vToday3){
+										MessageBox.information("Sono necessari 3 giorni d'anticipo per la richiesta");
+										oCalendar.removeSelectedDate(i);
+									} else {
+										this.addRow(oDateITformat, oDateSapformat);	
+									}
+	                	 		}else{
+	                	 			this.addRow(oDateITformat, oDateSapformat);	
+	                	 		}
+	                	 		//\\0.03.2022
 	                	 }
 		
 					
@@ -1211,8 +1238,7 @@ sap.ui.define([
 											this.jModel.refresh();
 					                	}
 					}		
-							
-
+                    	this._checkFullDays();
 				} else {
 					// resetto oreTotali e array giorni se nessun giorno del calendario è selezionato
 					this.getView().byId("LRS4_DAT_ORETOT").setValue("0");
@@ -1341,17 +1367,17 @@ sap.ui.define([
 					this.sButtonKey = oEvent.getSource().getId();
 					 
 					 
-		//estraggo id della view 
-		var sViewIdStart = oView.getId().indexOf("---");
-		sViewIdStart = sViewIdStart + 3;
-		
-	    //		var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---");) + "---"; 
-	   var sViewID = oView.getId().substring(sViewIdStart); 
-	   
-	   // l'alternativa è basarsi sul nome della view completa
-		//	var sViewName = oView.getViewName(); 
-		
-		// inserisco giorni selezionati un una stringa di testo per dettagli messagebox
+						//estraggo id della view 
+						var sViewIdStart = oView.getId().indexOf("---");
+						sViewIdStart = sViewIdStart + 3;
+						
+					    //		var sPrefix = oView.getId().substring(0, oView.getId().indexOf("---");) + "---"; 
+					   var sViewID = oView.getId().substring(sViewIdStart); 
+					   
+					   // l'alternativa è basarsi sul nome della view completa
+						//	var sViewName = oView.getViewName(); 
+						
+						// inserisco giorni selezionati un una stringa di testo per dettagli messagebox
 	                    var aSelectedDates = this.cale.getSelectedDates();
 						//var oDataSel = {
 						//	selectedDates: []
@@ -1411,6 +1437,7 @@ sap.ui.define([
 	                    	
 	                    }
 	                    
+	        
 
 						MessageBox.confirm("Confermi l'invio della richiesta?", {
 							icon: MessageBox.Icon.QUESTION,
@@ -1419,8 +1446,10 @@ sap.ui.define([
 							initialFocus : MessageBox.Action.NO,
 							id: "messageBoxId1",
 							defaultAction: MessageBox.Action.NO,
-							details: "Tipo di richiesta: " + tabsType + " \nApprovatore: " + this.slctApprover.getSelectedKey() + " \nOre totali: " + this.oreTot.getValue()
-							+ " \nGiorno/i assenza: " + oDateTxt + " \nCliccando SI, la richiesta verrà inoltrata, riceverai una notifica via mail sul suo esito. Puoi modificare o eliminare solo le richieste in stato 'Inviata' accedendo allo storico. ",
+							details: 'Tipo di richiesta: ' + tabsType + ' \nApprovatore: ' + this.slctApprover.getSelectedKey() + ' \nOre totali: ' + this.oreTot.getValue()
+							+ ' \nGiorno/i assenza: ' + oDateTxt + ' \nCliccando SI, la richiesta verrà inoltrata e riceverai una notifica via mail sul suo esito.' +
+							' Puoi modificare o eliminare le richieste accedendo allo storico nel caso in cui queste non siano state ancora approvate oppure' +
+							' che si riferiscano a giorni di assenza con date nel futuro.',
 							styleClass: bCompact ? "sapUiSizeCompact" : "",
 							contentWidth: "100px",
 							
