@@ -4,8 +4,11 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"sap/m/MessageBox",
-	"eone_zleave_req_create/model/formatter"
-], function(Controller, DateTypeRange, JSONModel, History, MessageBox, formatter) {
+	"eone_zleave_req_create/model/formatter",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
+	"sap/ui/model/FilterType"
+], function(Controller, DateTypeRange, JSONModel, History, MessageBox, formatter,Filter,FilterOperator,FilterType) {
 	"use strict";
      var sRendered; 
      jQuery.sap.require("sap.m.MessageBox");
@@ -1030,25 +1033,34 @@ sap.ui.define([
 			handleAbsTypeSelect: function(oEvent) {
 				var oAbsType = oEvent.oSource;
 				var aAbsTypeKey = oAbsType.getSelectedKey();
-				
-					if (aAbsTypeKey === "0003") {
-							
-								sap.m.MessageBox.show(
-									"Attenzione: Specificare nelle note giorno/i di lavoro ai quali si riferisce il recupero. Es.: assenza del 21/09/2017 come recupero del 16/09/2017 8 ore", {
-										icon: sap.m.MessageBox.Icon.INFORMATION,
-										title: "Information",
-										actions: [sap.m.MessageBox.Action.CLOSE]
+				var fViews = this.getView();
+				if (aAbsTypeKey === "0005"){
+					var oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
+					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+				} else {
+					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0001"); //questo filtro non è gestito e fa un'estrazione totale
+					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter);
+					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+				}
 
-									});
-								
-							return;
-							
-						}		
+				if (aAbsTypeKey === "0003") {
+						
+							sap.m.MessageBox.show(
+								"Attenzione: Specificare nelle note giorno/i di lavoro ai quali si riferisce il recupero. Es.: assenza del 21/09/2017 come recupero del 16/09/2017 8 ore", {
+									icon: sap.m.MessageBox.Icon.INFORMATION,
+									title: "Information",
+									actions: [sap.m.MessageBox.Action.CLOSE]
 
+								});
+							
+						return;
+				} 
 			},
 			
 				//SE START CUSTOM CALENDAR
-				handleCalendarSelect: function(oEvent) {
+			handleCalendarSelect: function(oEvent) {
 
 				var oView;
 				oView = this.getView();
@@ -1856,6 +1868,7 @@ sap.ui.define([
 				this.cale = this.byId("LRS4_DAT_CALENDAR");
 				this.slctLvType = this.byId("SLCT_LEAVETYPE");
 				this.slctApprover = this.byId("SLCT_APPROVER");
+				this.originApprover = this.byId("SLCT_APPROVER");
 			//	this.calSelResetData = [];
 				//SE
 				//this._initCalendar();
