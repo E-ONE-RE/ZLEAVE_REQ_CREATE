@@ -137,7 +137,7 @@ sap.ui.define([
  	        return "ROL";     
  	    	break;
  	   case "0005":
- 	   		return "Lavoro Agile";
+ 	   		return "Lavoro agile";
  	}
  	
  	
