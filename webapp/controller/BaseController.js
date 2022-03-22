@@ -1037,8 +1037,9 @@ sap.ui.define([
 				if (aAbsTypeKey === "0005"){
 					var oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
 					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
-					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
 					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+					fViews.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+					this._clearModelGiorniTab();
 				} else {
 					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0001"); //questo filtro non è gestito e fa un'estrazione totale
 					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter);
@@ -1095,9 +1096,16 @@ sap.ui.define([
 					var pastReqLimit = new Date();
 				    pastReqLimit.setDate(pastReqLimit.getDate()-60);
 				    
-				    var vToday3 = new Date(); //10.03.2022 slavoro agile
-				    vToday3.setDate(vToday3.getDate()+3); //10.03.2022 slavoro agile
-
+				    //{ 10.03.2022 lavoro agile
+				    var vToday3 = new Date(); 
+				    vToday3.setDate(vToday3.getDate()+3);
+				    vToday3.setSeconds(0);
+					vToday3.setMinutes(0);
+					vToday3.setHours(0);
+					vToday3.setMilliseconds(0);
+					//} 10.03.2022 lavoro agile
+					
+					
 					for (var i = 0; i < aSelectedDates.length; i++) {
 
 						oDate = aSelectedDates[i].getStartDate();
@@ -1124,7 +1132,7 @@ sap.ui.define([
 		                		//this.addRow(oDateITformat, oDateSapformat);
 	                	 		if (oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0005"){
 	                	 			//oDate deve essere maggiore uguale
-									if (oDate<=vToday3){
+									if (oDate<vToday3){
 										MessageBox.information("Sono necessari 3 giorni d'anticipo per la richiesta");
 										oCalendar.removeSelectedDate(i);
 									} else {
@@ -1141,7 +1149,7 @@ sap.ui.define([
 		                		//this.addRow(oDateITformat, oDateSapformat);
 	                	 		if (oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0005"){
 	                	 			//oDate deve essere maggiore uguale
-									if (oDate<=vToday3){
+									if (oDate<vToday3){
 										MessageBox.information("Sono necessari 3 giorni d'anticipo per la richiesta");
 										oCalendar.removeSelectedDate(i);
 									} else {
