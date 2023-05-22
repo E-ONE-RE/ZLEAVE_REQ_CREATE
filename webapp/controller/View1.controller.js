@@ -7,9 +7,12 @@ sap.ui.define([
 		'sap/m/Label',
 	//	'sap/m/MessageToast',
 	//	'sap/m/MessageBox',
-		"eone_zleave_req_create/model/formatter"
+		"eone_zleave_req_create/model/formatter",
+		"sap/ui/model/Filter",
+		"sap/ui/model/FilterOperator",
+		"sap/ui/model/FilterType"
 	],
-	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange, Button, Dialog, Label, formatter) {
+	function(BaseController, JSONModel, CalendarLegendItem, DateTypeRange, Button, Dialog, Label, formatter, Filter, FilterOperator, FilterType) {
 		"use strict";
 
 		//	jQuery.sap.require("eone_zleave_req_create.utils.Formatters");
@@ -508,8 +511,21 @@ sap.ui.define([
 			getRouter: function() {
 				return sap.ui.core.UIComponent.getRouterFor(this);
 
+			},
+			onSwitchChange: function(oEvent) {
+				//quanto la richiesta è di piano ferie l'approvatore è l'amministrazione
+				//per fare questo applico il filtro come se stessi facendo una richiesta di lavoro agile poichè è gestito allo stesso modo
+				var oFilter;
+				var fViews = this.getView();
+				if (oEvent.getParameter("state") || fViews.byId("SLCT_LEAVETYPE").getSelectedKey() === "0005") {
+					//0005 corrisponde a lavoro agile e attiva solo amministrazione come approvatore
+					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
+				} else {
+					//questo filtro non è gestito e estrae tutti gli approvatori 
+					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0001");
+				}
+				fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
 			}
-
 
 		});
 	});
