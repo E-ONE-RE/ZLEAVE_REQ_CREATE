@@ -1034,7 +1034,7 @@ sap.ui.define([
 				var oAbsType = oEvent.oSource;
 				var aAbsTypeKey = oAbsType.getSelectedKey();
 				var fViews = this.getView();
-				if (aAbsTypeKey === "0005"){
+				if (aAbsTypeKey === "0005" || fViews.byId("LRS4_DAT_PFERIE").getState()){
 					var oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
 					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
 					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
