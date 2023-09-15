@@ -7,7 +7,7 @@
     "targetFolder": "dist",
     "sourceFolder": "webapp",
     "buildRequired": true,
-    "lastBuildDateTime": "Mon, 07 May 2018 14:13:48 GMT"
+    "lastBuildDateTime": "Tue, 22 Aug 2023 10:45:55 GMT"
   },
   "generation": [
     {
@@ -51,5 +51,9 @@
     "loadJSONFiles": false,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""
+  },
+  "deploy": {
+    "destination": "DEV",
+    "name": "ZLEAVE_C_V3"
   }
 }

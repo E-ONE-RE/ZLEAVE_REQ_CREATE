@@ -502,7 +502,7 @@ sap.ui.define([
 					//		
 					
 					that.sAppointmentTitle = '';
-					
+
 	                switch (oData.results[i].ZabsType){
 	                		case "0001":
 	                	abs_type_title = "Permesso";
@@ -540,8 +540,18 @@ sap.ui.define([
 						abs_tooltip = "ROL" + abs_tooltip;
 					
 						abs_type_icon = "sap-icon://customer-history";
-						
-								
+							break;
+						case "0005":
+							abs_type_title = "Lavoro Agile";
+							that.sAppointmentTitle = "LA ID: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " \nStato: " + formatter.formatStatus(oData.results[i].ZreqStatus) + " \nGiorno: " + formatter.formatDate(oData.results[i].Zdate);
+							abs_tooltip = "LA" + abs_tooltip;
+							abs_type_icon = "sap-icon://customer-history";
+							break;
+						case "0006":
+							abs_type_title = "Permesso 104";
+							that.sAppointmentTitle = "104 ID: " + formatter.formatRequestId(oData.results[i].ZrequestId) + " \nStato: " + formatter.formatStatus(oData.results[i].ZreqStatus) + " \nGiorno: " + formatter.formatDate(oData.results[i].Zdate);
+							abs_tooltip = "104" + abs_tooltip;
+							abs_type_icon = "sap-icon://customer-history";
 	                }
 	                
 	                if (oData.results[i].ZreqStatus == "A"){

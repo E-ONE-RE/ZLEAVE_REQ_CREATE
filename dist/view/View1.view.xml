@@ -177,7 +177,7 @@
 												<sap.ui.layout:VerticalLayout width="100%">
 													<Label id="LRS4_LBL_PFERIE" text="{i18n>LR_PFERIE}"/>
 													<Hbox>
-														<Switch xmlns="sap.m" id="LRS4_DAT_PFERIE" state="false" customTextOn="Si" customTextOff="No">
+														<Switch xmlns="sap.m" id="LRS4_DAT_PFERIE" state="false" customTextOn="Si" customTextOff="No" change="onSwitchChange">
 															<layoutData>
 																<FlexItemData growFactor="1"/>
 															</layoutData>
