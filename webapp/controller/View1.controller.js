@@ -522,7 +522,7 @@ sap.ui.define([
 					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
 				} else {
 					//questo filtro non è gestito e estrae tutti gli approvatori 
-					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0001");
+					oFilter = new Filter("Abs_key", FilterOperator.EQ, fViews.byId("SLCT_LEAVETYPE").getSelectedKey());
 				}
 				fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
 			}

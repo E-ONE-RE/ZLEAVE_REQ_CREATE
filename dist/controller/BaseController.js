@@ -1031,11 +1031,17 @@ sap.ui.define([
 			
 			// NON USATA
 			handleAbsTypeSelect: function(oEvent) {
-				//var oAbsType = oEvent.oSource;
+				// 0001	PERMESSO (EX-FESTIVITÀ)
+				// 0002	FERIE
+				// 0003	RECUPERO
+				// 0004	ROL
+				// 0005	LAVORO AGILE
+				// 0006	PERMESSO 104
+
 				var oAbsType = oEvent.getSource();
 				var aAbsTypeKey = oAbsType.getSelectedKey();
 				var fViews = this.getView();
-				if (aAbsTypeKey === "0005" || fViews.byId("LRS4_DAT_PFERIE").getState()){
+				/*if (aAbsTypeKey === "0005" || fViews.byId("LRS4_DAT_PFERIE").getState()){
 					var oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
 					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
 					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
@@ -1050,8 +1056,18 @@ sap.ui.define([
 					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0001"); //questo filtro non è gestito e fa un'estrazione totale
 					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter);
 					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+				}*/
+				if (aAbsTypeKey === "0005" || aAbsTypeKey === "0006" || fViews.byId("LRS4_DAT_PFERIE").getState()){
+					//Se lavoro agile oppure 104 oppure piano ferie va ad amministrazione
+					var oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
+					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+					fViews.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+					this._clearModelGiorniTab();				
+				} else {
+					oFilter = new Filter("Abs_key", FilterOperator.EQ, aAbsTypeKey); //questo filtro non è gestito e fa un'estrazione totale
+					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
 				}
-
+				
 				if (aAbsTypeKey === "0003") {
 						
 							sap.m.MessageBox.show(
