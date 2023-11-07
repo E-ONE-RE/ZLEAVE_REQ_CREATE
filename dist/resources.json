@@ -1,31 +1,55 @@
 {
     "resources": [
         {
-            "name": "Component-changes.json"
+            "name": "css/style.css"
         },
         {
             "name": "css/scfld-dbg.css"
         },
         {
-            "name": "css/style.css"
-        },
-        {
             "name": "css/scfld.css"
         },
         {
-            "name": "view/CopyOfView1.view.xml"
+            "name": "Component.js"
         },
         {
-            "name": "view/View1s.view.xml"
+            "name": "localService/metadata.xml"
         },
         {
-            "name": "view/backup.txt"
+            "name": "localService/ZLEAVE_REQUEST_SRV/metadata.xml"
         },
         {
-            "name": "view/App.view.xml"
+            "name": "index.html"
         },
         {
-            "name": "view/View1.view.xml"
+            "name": "Component-changes.json"
+        },
+        {
+            "name": "controller/App.controller.js"
+        },
+        {
+            "name": "controller/NotFound.controller.js"
+        },
+        {
+            "name": "controller/View2.controller.js"
+        },
+        {
+            "name": "controller/BaseController.js"
+        },
+        {
+            "name": "controller/View1s.controller.js"
+        },
+        {
+            "name": "controller/View1.controller.js"
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "model/formatter.js"
+        },
+        {
+            "name": "view/CopyOfView1s.view.xml"
         },
         {
             "name": "view/CopyO2fView1.view.xml"
@@ -34,56 +58,34 @@
             "name": "view/Dialog.fragment.xml"
         },
         {
-            "name": "view/PopoverHelp.fragment.xml"
+            "name": "view/App.view.xml"
         },
         {
-            "name": "view/CopyOfView1s.view.xml"
+            "name": "view/View1.view.xml"
         },
         {
             "name": "view/View2.view.xml"
         },
         {
-            "name": "view/NotFound.view.xml"
-        },
-        {
             "name": "view/PopoverHelpMulti.fragment.xml"
         },
         {
-            "name": "index.html"
+            "name": "view/backup.txt"
         },
         {
-            "name": "localService/ZLEAVE_REQUEST_SRV/metadata.xml"
+            "name": "view/View1s.view.xml"
         },
         {
-            "name": "localService/metadata.xml"
+            "name": "view/NotFound.view.xml"
         },
         {
-            "name": "Component.js"
+            "name": "view/PopoverHelp.fragment.xml"
         },
         {
-            "name": "controller/View1.controller.js"
-        },
-        {
-            "name": "controller/View1s.controller.js"
-        },
-        {
-            "name": "controller/NotFound.controller.js"
-        },
-        {
-            "name": "controller/BaseController.js"
-        },
-        {
-            "name": "controller/View2.controller.js"
-        },
-        {
-            "name": "controller/App.controller.js"
+            "name": "view/CopyOfView1.view.xml"
         },
         {
             "name": "i18n/i18n_it.properties",
-            "raw": "i18n/i18n.properties"
-        },
-        {
-            "name": "i18n/i18n_en.properties",
             "raw": "i18n/i18n.properties"
         },
         {
@@ -91,13 +93,11 @@
             "raw": "i18n/i18n.properties"
         },
         {
+            "name": "i18n/i18n_en.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
             "name": "manifest.json"
-        },
-        {
-            "name": "model/models.js"
-        },
-        {
-            "name": "model/formatter.js"
         },
         {
             "name": "Component-preload.js",

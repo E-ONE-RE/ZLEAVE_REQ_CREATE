@@ -1031,20 +1031,43 @@ sap.ui.define([
 			
 			// NON USATA
 			handleAbsTypeSelect: function(oEvent) {
-				var oAbsType = oEvent.oSource;
+				// 0001	PERMESSO (EX-FESTIVITÀ)
+				// 0002	FERIE
+				// 0003	RECUPERO
+				// 0004	ROL
+				// 0005	LAVORO AGILE
+				// 0006	PERMESSO 104
+
+				var oAbsType = oEvent.getSource();
 				var aAbsTypeKey = oAbsType.getSelectedKey();
 				var fViews = this.getView();
-				if (aAbsTypeKey === "0005"){
+				/*if (aAbsTypeKey === "0005" || fViews.byId("LRS4_DAT_PFERIE").getState()){
 					var oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
 					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
-					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
 					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+					fViews.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+					this._clearModelGiorniTab();
+				} else if (aAbsTypeKey === "0006") {
+					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0006");
+					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+					fViews.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+					this._clearModelGiorniTab();
 				} else {
 					oFilter = new Filter("Abs_key", FilterOperator.EQ, "0001"); //questo filtro non è gestito e fa un'estrazione totale
 					//this.byId("SLCT_APPROVER").getBinding("items").filter(oFilter);
 					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+				}*/
+				if (aAbsTypeKey === "0005" || aAbsTypeKey === "0006" || fViews.byId("LRS4_DAT_PFERIE").getState()){
+					//Se lavoro agile oppure 104 oppure piano ferie va ad amministrazione
+					var oFilter = new Filter("Abs_key", FilterOperator.EQ, "0005");
+					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
+					fViews.byId("LRS4_DAT_CALENDAR").removeAllSelectedDates();
+					this._clearModelGiorniTab();				
+				} else {
+					oFilter = new Filter("Abs_key", FilterOperator.EQ, aAbsTypeKey); //questo filtro non è gestito e fa un'estrazione totale
+					fViews.byId("SLCT_APPROVER").getBinding("items").filter(oFilter, FilterType.Application);
 				}
-
+				
 				if (aAbsTypeKey === "0003") {
 						
 							sap.m.MessageBox.show(
@@ -1095,9 +1118,16 @@ sap.ui.define([
 					var pastReqLimit = new Date();
 				    pastReqLimit.setDate(pastReqLimit.getDate()-60);
 				    
-				    var vToday3 = new Date(); //10.03.2022 slavoro agile
-				    vToday3.setDate(vToday3.getDate()+3); //10.03.2022 slavoro agile
-
+				    //{ 10.03.2022 lavoro agile
+				    var vToday3 = new Date(); 
+				    vToday3.setDate(vToday3.getDate()+3);
+				    vToday3.setSeconds(0);
+					vToday3.setMinutes(0);
+					vToday3.setHours(0);
+					vToday3.setMilliseconds(0);
+					//} 10.03.2022 lavoro agile
+					
+					
 					for (var i = 0; i < aSelectedDates.length; i++) {
 
 						oDate = aSelectedDates[i].getStartDate();
@@ -1122,9 +1152,10 @@ sap.ui.define([
 		                	if  (exist == "N") {
 		                		//10.03.2022 se sto facendo smart working verifico 3 giorni di anticipo ed eventualmente blocco
 		                		//this.addRow(oDateITformat, oDateSapformat);
-	                	 		if (oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0005"){
+	                	 		if (oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0005" ||
+	                	 			oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0006"){
 	                	 			//oDate deve essere maggiore uguale
-									if (oDate<=vToday3){
+									if (oDate<vToday3){
 										MessageBox.information("Sono necessari 3 giorni d'anticipo per la richiesta");
 										oCalendar.removeSelectedDate(i);
 									} else {
@@ -1139,9 +1170,10 @@ sap.ui.define([
 	                	 } else {
 		                		//10.03.2022 se sto facendo smart working verifico 3 giorni di anticipo ed eventualmente blocco
 		                		//this.addRow(oDateITformat, oDateSapformat);
-	                	 		if (oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0005"){
+	                	 		if (oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0005" ||
+	                	 			oView.byId("SLCT_LEAVETYPE").getSelectedKey() == "0006"){
 	                	 			//oDate deve essere maggiore uguale
-									if (oDate<=vToday3){
+									if (oDate<vToday3){
 										MessageBox.information("Sono necessari 3 giorni d'anticipo per la richiesta");
 										oCalendar.removeSelectedDate(i);
 									} else {

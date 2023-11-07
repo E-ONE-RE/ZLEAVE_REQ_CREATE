@@ -135,7 +135,11 @@ sap.ui.define([
  	        break;
  	   case "0004":
  	        return "ROL";     
- 	    	
+ 	    	break;
+ 	   case "0005":
+ 	   		return "Lavoro agile";
+ 	   case "0006":
+ 	   		return "Permesso 104";
  	}
  	
  	
