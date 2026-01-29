@@ -388,11 +388,15 @@ sap.ui.define([
 								var oZdate = oData.results[i].Zdate;
 								var oZdate2 = oFormatYYyyymmdd.parse(oZdate);
 
-								if (oData.results[i].ZreqStatus != "I" & (oZdate2 < oRefDate || oData.results[i].ZreqStatus == "R")) {
+								/*if (oData.results[i].ZreqStatus != "I" & (oZdate2 < oRefDate || oData.results[i].ZreqStatus == "R")) {
 
 									locked = "Y";
 									break;
 
+								}*/
+								if (oData.results[i].ZreqStatus === "A" || oData.results[i].ZreqStatus === "R") {
+									locked = "Y";
+									break;
 								}
 							}
 						}
